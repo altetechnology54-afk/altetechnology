@@ -1,0 +1,261 @@
+{
+    "shark": {
+        "id": "shark",
+        "name": "Shark Implants",
+        "description": "SHARK IMPLANTS with deep thread design. It's designed for easy penetration, high stability and immediate loading.",
+        "subDescription": "Alle Implantatetypen werden in Bone level eingesetzt.",
+        "benefitBar": "easy penetration - high stability - immediate loading",
+        "applicationArea": "Einsatzgebiet: geeignet zum Einsatz im Oberkiefer und Unterkiefer.",
+        "variants": [
+            {
+                "diameter": "3.30",
+                "color": "Yellow",
+                "hex": "#FFEB3B",
+                "label": "Ø 3.30",
+                "lengths": [
+                    "8,0 mm",
+                    "10 mm",
+                    "11,5 mm",
+                    "13 mm",
+                    "16 mm"
+                ],
+                "boxImage": "/images/products/shark_implant_330_box_1771708466837.png",
+                "implantImage": "/images/products/shark_implant_render_330_1771708565427.png"
+            },
+            {
+                "diameter": "3.75",
+                "color": "Red",
+                "hex": "#F44336",
+                "label": "Ø 3.75",
+                "lengths": [
+                    "8,0 mm",
+                    "10 mm",
+                    "11,5 mm",
+                    "13 mm",
+                    "16 mm"
+                ],
+                "boxImage": "/images/products/shark_implant_375_box_1771708480864.png",
+                "implantImage": "/images/products/shark_implant_render_375_1771708581719.png"
+            },
+            {
+                "diameter": "4.20",
+                "color": "Blue",
+                "hex": "#03A9F4",
+                "label": "Ø 4.20",
+                "lengths": [
+                    "8,0 mm",
+                    "10 mm",
+                    "11,5 mm",
+                    "13 mm",
+                    "16 mm"
+                ],
+                "boxImage": "/images/products/shark_implant_420_box_1771708508837.png",
+                "implantImage": "/images/products/shark_implant_render_420_500_600_1771708650492.png"
+            },
+            {
+                "diameter": "5.00",
+                "color": "Green",
+                "hex": "#4CAF50",
+                "label": "Ø 5.00",
+                "lengths": [
+                    "8,0 mm",
+                    "10 mm",
+                    "11,5 mm",
+                    "13 mm",
+                    "16 mm"
+                ],
+                "boxImage": "/images/products/shark_implant_500_box_1771708523308.png",
+                "implantImage": "/images/products/shark_implant_render_420_500_600_1771708650492.png"
+            },
+            {
+                "diameter": "6.00",
+                "color": "White",
+                "hex": "#FFFFFF",
+                "label": "Ø 6.00",
+                "lengths": [
+                    "8,0 mm",
+                    "10 mm",
+                    "11,5 mm",
+                    "13 mm",
+                    "16 mm"
+                ],
+                "boxImage": "/images/products/shark_implant_600_box_1771708539258.png",
+                "implantImage": "/images/products/shark_implant_render_420_500_600_1771708650492.png"
+            }
+        ],
+        "images": {
+            "hero": "/images/products/shark_hero_image_1771708446990.png"
+        }
+    },
+    "cylinder": {
+        "id": "cylinder",
+        "name": "Cylinder Implants",
+        "title": "CYLINDER FINE IMPLANTS",
+        "description": "CYLINDER FINE IMPLANTS with fine thread design. It's designed for stable placement and high aesthetic results.",
+        "subDescription": "Einsatzgebiet: geeignet zum Einsatz im Unterkiefer / Application: suitable for use in the mandible",
+        "benefitBar": "fine thread - stable placement - high aesthetics",
+        "applicationArea": "Einsatzgebiet: geeignet zum Einsatz im Unterkiefer",
+        "variants": [
+            {
+                "diameter": "3.5",
+                "color": "Yellow",
+                "hex": "#FFEB3B",
+                "label": "Ø 3.5",
+                "lengths": [
+                    "8,0 mm",
+                    "10 mm",
+                    "11,5 mm",
+                    "13 mm",
+                    "16 mm"
+                ],
+                "boxImage": "/images/products/cylinder_implant_yellow_box_1771709208614.png",
+                "implantImage": "/images/products/cylinder_implant_fine_render_1771709266690.png"
+            },
+            {
+                "diameter": "3.75",
+                "color": "Red",
+                "hex": "#F44336",
+                "label": "Ø 3.75",
+                "lengths": [
+                    "8,0 mm",
+                    "10 mm",
+                    "11,5 mm",
+                    "13 mm",
+                    "16 mm"
+                ],
+                "boxImage": "/images/products/cylinder_implant_red_box_1771709223052.png",
+                "implantImage": "/images/products/cylinder_implant_fine_render_1771709266690.png"
+            },
+            {
+                "diameter": "4.2",
+                "color": "Blue",
+                "hex": "#03A9F4",
+                "label": "Ø 4.2",
+                "lengths": [
+                    "8,0 mm",
+                    "10 mm",
+                    "11,5 mm",
+                    "13 mm",
+                    "16 mm"
+                ],
+                "boxImage": "/images/products/cylinder_implant_blue_box_1771709239533.png",
+                "implantImage": "/images/products/cylinder_implant_fine_render_1771709266690.png"
+            },
+            {
+                "diameter": "5.0",
+                "color": "Green",
+                "hex": "#4CAF50",
+                "label": "Ø 5.0",
+                "lengths": [
+                    "8,0 mm",
+                    "10 mm",
+                    "11,5 mm",
+                    "13 mm",
+                    "16 mm"
+                ],
+                "boxImage": "/images/products/cylinder_implant_green_box_1771709252748.png",
+                "implantImage": "/images/products/cylinder_implant_fine_render_1771709266690.png"
+            }
+        ],
+        "images": {
+            "hero": "/images/products/cylinder_hero_image_1771709193918.png"
+        }
+    },
+    "safe": {
+        "id": "safe",
+        "name": "Safe Implants",
+        "title": "Safe Implants: a special design with fine deep thread",
+        "description": "Safe Implants: a special design with fine deep thread and Stopper for safe use in small bone depth.",
+        "subDescription": "Einsatzgebiet: geeignet zum Einsatz im Unterkiefer + Oberkiefer / Application: suitable for use in the mandible and maxilla",
+        "benefitBar": "Stopper for safe use - fine deep thread - high security",
+        "variants": [
+            {
+                "diameter": "4.20",
+                "color": "Blue",
+                "hex": "#03A9F4",
+                "label": "Ø 4.20",
+                "lengths": [
+                    "6mm",
+                    "8mm",
+                    "10mm"
+                ]
+            },
+            {
+                "diameter": "5.00",
+                "color": "Green",
+                "hex": "#4CAF50",
+                "label": "Ø 5.00",
+                "lengths": [
+                    "8mm",
+                    "10mm",
+                    "11,5mm",
+                    "13mm"
+                ]
+            },
+            {
+                "diameter": "6.00",
+                "color": "White",
+                "hex": "#FFFFFF",
+                "label": "Ø 6.00",
+                "lengths": [
+                    "6mm",
+                    "8mm",
+                    "10mm"
+                ]
+            }
+        ],
+        "images": {
+            "hero": "/images/products/safe_hero_image_clinical_1771709767133.png"
+        }
+    },
+    "smart": {
+        "id": "smart",
+        "name": "Smart Implants",
+        "title": "Smart Implants: Einteiliges Implantatsystem / One piece Implant System",
+        "description": "Smart ( One piece ) implants designed for immediate loading where there is not enough bone in width drill should be easy 2mm drill and implant is designed for easy penetration.",
+        "subDescription": "Nach dem Chirurgischen Einbringung des Implantats schaut dieser Aufbau aus dem Zahnfleisch heraus.",
+        "benefitBar": "one piece system - immediate loading - easy penetration",
+        "applicationArea": "Smart gehört zu den Implantatformen, bei denen der für den Zahnersatz notwendige Implantataufbau bereits in die Implantatschraube integriert ist.",
+        "variants": [
+            {
+                "diameter": "2.4",
+                "color": "Grey",
+                "hex": "#94A3B8",
+                "label": "Ø 2.4",
+                "lengths": [
+                    "10mm",
+                    "11,5mm",
+                    "13mm",
+                    "16mm"
+                ]
+            },
+            {
+                "diameter": "3.0",
+                "color": "Yellow",
+                "hex": "#FFEB3B",
+                "label": "Ø 3.0",
+                "lengths": [
+                    "10mm",
+                    "11,5mm",
+                    "13mm",
+                    "16mm"
+                ]
+            },
+            {
+                "diameter": "3.6",
+                "color": "Red",
+                "hex": "#F44336",
+                "label": "Ø 3.6",
+                "lengths": [
+                    "10mm",
+                    "11,5mm",
+                    "13mm",
+                    "16mm"
+                ]
+            }
+        ],
+        "images": {
+            "hero": "/images/products/smart_hero_image_clinical_1771709782854.png"
+        }
+    }
+}

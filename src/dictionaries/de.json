@@ -1,0 +1,60 @@
+{
+  "navigation": {
+    "home": "Home",
+    "catalog": "Katalog",
+    "legal": "Impressum",
+    "implantSystems": "Implantate",
+    "instructions": "Anweisung",
+    "surgicalTrays": "Chirurgie - OP-Tray",
+    "prosthetics": "Prothetik",
+    "contact": "Vertrieb + Service",
+    "warranty": "Garantie + Reparatur",
+    "shipping": "Versand",
+    "payment": "Bezahlung"
+  },
+  "hero": {
+    "welcome": "Willkommen bei AL-Technology Implants",
+    "subtitle": "Hochpräzise Zahnimplantatsysteme für professionelle Anwender seit 2001.",
+    "cta": "Katalog ansehen"
+  },
+  "products": {
+    "shark": "Shark Implantate",
+    "cylinder": "Cylinder Implantate",
+    "safe": "Safe Implantate",
+    "smart": "Smart Implantate",
+    "orderNow": "Jetzt bestellen!",
+    "prosthetics": "Ganzheitliche Prothetik",
+    "surgicalTrays": "Chirurgie - OP-Tray"
+  },
+  "catalogPage": {
+    "parentTitle": "Das Implantatsystem",
+    "subTitle": "Das spezielle Implantatsystem",
+    "intro": "Stabilität durch konisches Design. Gleichmäßige Verteilung der Okklusalkräfte durch Innensechskantverbindung. Ideale Integration mit dem Knochen durch SLA-Oberflächenbehandlung.",
+    "sections": {
+      "conicalDesign": {
+        "title": "Das spezielle konische Implantatdesign",
+        "content": "Die speziell selbstschneidende und tiefe Gewinde der Implantatform ermöglicht eine einfache Implantation, garantiert hohe primäre Stabilität sofort nach der Implantation, und ist geeignet für alle Knochentypen."
+      },
+      "hexConnection": {
+        "title": "Die Innensechskantverbindung",
+        "content": "Ermöglicht eine erhöhte prothetische Genauigkeit, Festigkeit, Stabilität und leichteres Platzieren der Aufbauteile und Abformpfosten und gewährleistet eine gleichmäßige Verteilung der Okklusalkräfte."
+      },
+      "combinedBenefits": {
+        "title": "Das spezielle konische Design und die tiefe Innensechskantverbindung",
+        "content": "Verbinden die chirurgische Flexibilität eines parallelwandigen und konischen Implantatdesigns mit der Stabilität und den ästhetischen Vorteilen einer internen Prothetikverbindung."
+      },
+      "slaSurface": {
+        "title": "SLA Oberflächenbehandlung: (Sand-blasted, Acid-etched)",
+        "content": "Die SLA-Oberfläche entsteht durch grobes Sandstrahlen mit Korund-Partikeln, wodurch eine Makrorauheit der Titanoberfläche erreicht wird.",
+        "advantages": {
+          "title": "Vorteile der SLA Oberflächenbehandlung:",
+          "items": [
+            "garantiert eine ideale Integration und eine schnelle Verankerung des Implantats in den umgebenden Knochen, dadurch resultiert eine schnelle Heilung bzw. Osseointegration.",
+            "eine bewährtes Verfahren für die Implantatkontaktfläche.",
+            "bietet ausgezeichnete und rasche Knochenintegration der SLA-Implantate in der Initialen Einheilphase."
+          ]
+        }
+      }
+    }
+  }
+}

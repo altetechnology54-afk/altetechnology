@@ -1,0 +1,60 @@
+{
+    "navigation": {
+        "home": "Home",
+        "catalog": "Catalog",
+        "legal": "Legal Notice",
+        "implantSystems": "Implant Systems",
+        "instructions": "Instructions",
+        "surgicalTrays": "Surgery - Surgical Tray",
+        "prosthetics": "Prosthetics",
+        "contact": "Sales + Service",
+        "warranty": "Warranty + Repair",
+        "shipping": "Shipping",
+        "payment": "Payment"
+    },
+    "hero": {
+        "welcome": "Welcome to AL-Technology Implants",
+        "subtitle": "High-precision dental implant systems for professionals since 2001.",
+        "cta": "View Catalog"
+    },
+    "products": {
+        "shark": "Shark Implants",
+        "cylinder": "Cylinder Implants",
+        "safe": "Safe Implants",
+        "smart": "Smart Implants",
+        "orderNow": "Order Now!",
+        "prosthetics": "Holistic Prosthetics",
+        "surgicalTrays": "Surgery - Surgical Tray"
+    },
+    "catalogPage": {
+        "parentTitle": "The Implant System",
+        "subTitle": "The Special Implant System",
+        "intro": "Stability of conical design. Uniform distribution of occlusal forces through internal hex connection. Ideal integration with the bone through SLA surface treatment.",
+        "sections": {
+            "conicalDesign": {
+                "title": "The Special Conical Implant Design",
+                "content": "The special self-tapping and deep threads of the implant shape allow for easy implantation, guarantee high primary stability immediately after implantation, and are suitable for all bone types."
+            },
+            "hexConnection": {
+                "title": "The Internal Hex Connection",
+                "content": "Enables increased prosthetic accuracy, strength, stability, and easier placement of abutments and impression posts, and ensures uniform distribution of occlusal forces."
+            },
+            "combinedBenefits": {
+                "title": "The Special Conical Design and Deep Internal Hex Connection",
+                "content": "Combine the surgical flexibility of a parallel-walled and conical implant design with the stability and aesthetic benefits of an internal prosthetic connection."
+            },
+            "slaSurface": {
+                "title": "SLA Surface Treatment: (Sand-blasted, Acid-etched)",
+                "content": "The SLA surface is created by coarse sandblasting with corundum particles, achieving a macro-roughness of the titanium surface.",
+                "advantages": {
+                    "title": "Advantages of SLA Surface Treatment:",
+                    "items": [
+                        "Guarantees ideal integration and rapid anchoring of the implant in the surrounding bone, resulting in fast healing and osseointegration.",
+                        "A proven process for the implant contact surface.",
+                        "Offers excellent and rapid bone integration of SLA implants in the initial healing phase."
+                    ]
+                }
+            }
+        }
+    }
+}
