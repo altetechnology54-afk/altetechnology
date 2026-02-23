@@ -1,6 +1,7 @@
 import { getDictionary } from '../../../lib/get-dictionary';
 import Image from 'next/image';
 import Link from 'next/link';
+import { fetchCatalogSections } from '../../../lib/api';
 
 export default async function CatalogPage({ params }) {
     const resolvedParams = await params;
@@ -8,8 +9,8 @@ export default async function CatalogPage({ params }) {
     const dict = await getDictionary(lang);
     const catalog = dict.catalogPage;
 
-    // Use standard <img> for now to bypass any Turbopack/Next.js image issues during dev
-    // and ensuring absolute consistency in visibility.
+    // Fetch dynamic systems from API
+    const products = await fetchCatalogSections();
 
     return (
         <main className="min-h-screen bg-white">
@@ -58,7 +59,7 @@ export default async function CatalogPage({ params }) {
                             </div>
                         </div>
                     </div>
-                    <div className="relative aspect-square bg-slate-100 rounded-[80px] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)]">
+                    <div className="relative aspect-square bg-slate-100 rounded-[80px] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)]">
                         <img
                             src="/imagescat1/bld01.jpg"
                             alt="Implant Design"
@@ -138,12 +139,12 @@ export default async function CatalogPage({ params }) {
             <section className="py-24 px-4 md:px-12 max-w-6xl mx-auto text-center">
                 <h2 className="text-3xl font-bold mb-12 text-slate-900 tracking-tight">Entdecken Sie unsere Systeme</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-                    {['shark', 'cylinder', 'safe', 'smart'].map((id) => (
-                        <Link key={id} href={`/${lang}/catalog/${id}`} className="group aspect-[4/5] bg-slate-50 rounded-[40px] p-8 flex flex-col items-center justify-center gap-6 border border-slate-100 hover:border-primary/30 transition-all hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2">
+                    {products.map((product) => (
+                        <Link key={product.id} href={`/${lang}/catalog/${product.id}`} className="group aspect-[4/5] bg-slate-50 rounded-[40px] p-8 flex flex-col items-center justify-center gap-6 border border-slate-100 hover:border-primary/30 transition-all hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2">
                             <div className="w-16 h-16 rounded-3xl bg-white shadow-sm flex items-center justify-center text-primary font-black text-3xl group-hover:bg-primary group-hover:text-white transition-all">
-                                {id[0].toUpperCase()}
+                                {(product.name?.[lang]?.[0] || product.id?.[0])?.toUpperCase()}
                             </div>
-                            <span className="font-bold text-slate-700 capitalize">{id}</span>
+                            <span className="font-bold text-slate-700 capitalize">{product.name?.[lang] || product.id}</span>
                         </Link>
                     ))}
                 </div>
