@@ -8,7 +8,7 @@ import { Trash2, Minus, Plus, ShoppingBag, ArrowLeft, ArrowRight } from 'lucide-
 export default function CartPage({ params }) {
     const { lang } = React.use(params);
     const { cart, removeFromCart, updateQuantity, cartCount, cartTotal, clearCart } = useCart();
-
+    /*  */
     const isDe = lang === 'de';
 
     if (cart.length === 0) {
