@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useCart } from '../lib/CartContext';
+import { useCart } from '@/lib/CartContext';
 import { ShoppingCart, Check } from 'lucide-react';
 
 export default function AddToCartButton({ product, variant, length, article, className = "" }) {

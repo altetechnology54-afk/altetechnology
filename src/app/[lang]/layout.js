@@ -1,8 +1,8 @@
 import "../globals.css";
-import Navigation from "../../components/Navigation";
-import { getDictionary } from "../../lib/get-dictionary";
+import Navigation from "@/components/Navigation";
+import { getDictionary } from "@/lib/get-dictionary";
 
-import { CartProvider } from "../../lib/CartContext";
+import { CartProvider } from "@/lib/CartContext";
 
 export const metadata = {
     title: "AL-Technology Implants",

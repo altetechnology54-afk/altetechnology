@@ -1,7 +1,7 @@
-import { getDictionary } from '../../../../lib/get-dictionary';
+import { getDictionary } from '@/lib/get-dictionary';
 import Link from 'next/link';
-import { fetchCatalogSection } from '../../../../lib/api';
-import AddToCartButton from '../../../../components/AddToCartButton';
+import { fetchCatalogSection } from '@/lib/api';
+import AddToCartButton from '@/components/AddToCartButton';
 
 export default async function SubCatalogPage({ params }) {
     const resolvedParams = await params;

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useCart } from '../lib/CartContext';
+import { useCart } from '@/lib/CartContext';
 import { ShoppingCart } from 'lucide-react';
 
 export default function Navigation({ lang, dict }) {

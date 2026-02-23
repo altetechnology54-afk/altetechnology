@@ -1,7 +1,7 @@
-import { getDictionary } from '../../lib/get-dictionary';
+import { getDictionary } from '@/lib/get-dictionary';
 import Link from 'next/link';
-import { fetchCatalogSections, fetchHomeContent } from '../../lib/api';
-import HeroSlider from '../../components/HeroSlider';
+import { fetchCatalogSections, fetchHomeContent } from '@/lib/api';
+import HeroSlider from '@/components/HeroSlider';
 
 export default async function Home({ params }) {
     const resolvedParams = await params;

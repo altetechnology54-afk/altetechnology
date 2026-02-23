@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useCart } from '../../lib/CartContext';
+import { useCart } from '@/lib/CartContext';
 import Link from 'next/link';
 import { Trash2, Minus, Plus, ShoppingBag, ArrowLeft, ArrowRight } from 'lucide-react';
 

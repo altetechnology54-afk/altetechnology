@@ -1,5 +1,5 @@
-import { fetchCatalogSection } from '../../../../lib/api';
-import AddToCartButton from '../../../../components/AddToCartButton';
+import { fetchCatalogSection } from '@/lib/api';
+import AddToCartButton from '@/components/AddToCartButton';
 
 export default async function BohrsystemPage({ params }) {
     const resolvedParams = await params;
