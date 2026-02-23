@@ -38,3 +38,29 @@ export async function fetchHomeContent(section) {
         return null;
     }
 }
+
+export async function fetchHomeSections() {
+    try {
+        const res = await fetch(`${API_BASE_URL}/home`, {
+            next: { revalidate: 0 }
+        });
+        const data = await res.json();
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        console.error('Error fetching home sections:', error);
+        return [];
+    }
+}
+
+export async function fetchStaticPage(page) {
+    try {
+        const res = await fetch(`${API_BASE_URL}/static-pages/${page}`, {
+            next: { revalidate: 0 }
+        });
+        if (!res.ok) return null;
+        return await res.json();
+    } catch (error) {
+        console.error(`Error fetching static page ${page}:`, error);
+        return null;
+    }
+}

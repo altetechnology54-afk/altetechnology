@@ -11,8 +11,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
-export default function HeroSlider({ slides, lang }) {
-    if (!slides || slides.length === 0) return null;
+export default function HeroSlider({ slides, data, lang }) {
+    // Check both props for compatibility
+    const activeSlides = (data?.slides || slides) || [];
+    if (activeSlides.length === 0) return null;
 
     return (
         <section className="w-full h-[600px] md:h-[800px] relative overflow-hidden">
@@ -25,7 +27,7 @@ export default function HeroSlider({ slides, lang }) {
                 loop={true}
                 className="w-full h-full"
             >
-                {slides.map((slide, index) => (
+                {activeSlides.map((slide, index) => (
                     <SwiperSlide key={index}>
                         <div className="relative w-full h-full">
                             {/* Background Image with Overlay */}

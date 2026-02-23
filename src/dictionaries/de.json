@@ -7,11 +7,15 @@
     "instructions": "Anweisung",
     "surgicalTrays": "Chirurgie - OP-Tray",
     "prosthetics": "Prothetik",
-    "contact": "Vertrieb + Service",
     "warranty": "Garantie + Reparatur",
     "shipping": "Versand",
     "payment": "Bezahlung",
-    "cart": "Warenkorb"
+    "cart": "Warenkorb",
+    "about": "Über uns",
+    "contact": "Kontakt",
+    "impressum": "Impressum",
+    "datenschutz": "Datenschutz",
+    "agb": "AGB"
   },
   "cart": {
     "title": "Warenkorb",
@@ -57,7 +61,7 @@
       },
       "combinedBenefits": {
         "title": "Das spezielle konische Design und die tiefe Innensechskantverbindung",
-        "content": "Verbinden die chirurgische Flexibilität eines parallelwandigen und konischen Implantatdesigns mit der Stabilität und den ästhetischen Vorteilen einer internen Prothetikverbindung."
+        "content": "Verbinden die chirurgische Flexibilität eines parallelwandigen und konischen Implantatdesigns with the Stabilität und den ästhetischen Vorteilen einer internen Prothetikverbindung."
       },
       "slaSurface": {
         "title": "SLA Oberflächenbehandlung: (Sand-blasted, Acid-etched)",
@@ -71,6 +75,49 @@
           ]
         }
       }
+    }
+  },
+  "aboutPage": {
+    "title": "Über AL-Technology",
+    "subtitle": "Premium Zahnimplantatsysteme seit 2001.",
+    "mission": "Unsere Mission ist es, Zahnärzten und Chirurgen weltweit hochpräzise, zuverlässige und ästhetisch ansprechende Implantatlösungen anzubieten.",
+    "historyTitle": "Unsere Geschichte",
+    "historyContent": "AL-Technology wurde mit dem Ziel gegründet, die Qualität der dentalen Implantologie durch Innovation und technische Exzellenz zu verbessern.",
+    "values": {
+      "precision": "Präzision in jedem Mikrometer",
+      "safety": "Geprüfte Sicherheit für Patienten",
+      "innovation": "Stetige Weiterentwicklung"
+    }
+  },
+  "contactPage": {
+    "title": "Kontaktieren Sie uns",
+    "subtitle": "Wir sind für Sie da. Haben Sie Fragen zu unseren Produkten?",
+    "form": {
+      "name": "Name",
+      "email": "E-Mail",
+      "subject": "Betreff",
+      "message": "Nachricht",
+      "submit": "Nachricht senden"
+    },
+    "info": {
+      "title": "Firmensitz",
+      "address": "Musterstraße 123, 12345 Berlin, Germany",
+      "email": "info@at-implantate.de",
+      "phone": "+49 (0) 30 1234567"
+    }
+  },
+  "legalPages": {
+    "impressum": {
+      "title": "Impressum",
+      "content": "Verantwortlich für den Inhalt nach § 5 TMG..."
+    },
+    "datenschutz": {
+      "title": "Datenschutz",
+      "content": "Hier finden Sie Informationen zum Schutz Ihrer persönlichen Daten..."
+    },
+    "agb": {
+      "title": "AGB",
+      "content": "Allgemeine Geschäftsbedingungen..."
     }
   }
 }

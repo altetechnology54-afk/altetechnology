@@ -2,15 +2,32 @@
     "navigation": {
         "home": "Home",
         "catalog": "Catalog",
-        "legal": "Legal Notice",
+        "legal": "Legal",
         "implantSystems": "Implant Systems",
         "instructions": "Instructions",
         "surgicalTrays": "Surgery - Surgical Tray",
         "prosthetics": "Prosthetics",
-        "contact": "Sales + Service",
-        "warranty": "Warranty + Repair",
-        "shipping": "Shipping",
-        "payment": "Payment"
+        "cart": "Cart",
+        "about": "About Us",
+        "contact": "Contact",
+        "impressum": "Legal Notice",
+        "datenschutz": "Privacy Policy",
+        "agb": "T&C"
+    },
+    "cart": {
+        "title": "Shopping Cart",
+        "empty": "Your cart is empty.",
+        "backToShop": "back to shop",
+        "toCheckout": "to checkout",
+        "image": "Image",
+        "description": "Description",
+        "unitPrice": "Unit Price",
+        "quantity": "Quantity",
+        "totalPrice": "Total Price",
+        "delete": "Delete",
+        "subtotal": "Subtotal",
+        "inclVat": "Incl. VAT",
+        "grandTotal": "Grand Total"
     },
     "hero": {
         "welcome": "Welcome to AL-Technology Implants",
@@ -55,6 +72,49 @@
                     ]
                 }
             }
+        }
+    },
+    "aboutPage": {
+        "title": "About AL-Technology",
+        "subtitle": "Premium dental implant systems since 2001.",
+        "mission": "Our mission is to provide dentists and surgeons worldwide with high-precision, reliable, and aesthetically pleasing implant solutions.",
+        "historyTitle": "Our History",
+        "historyContent": "AL-Technology was founded with the aim of improving the quality of dental implantology through innovation and technical excellence.",
+        "values": {
+            "precision": "Precision in every micrometer",
+            "safety": "Tested safety for patients",
+            "innovation": "Constant development"
+        }
+    },
+    "contactPage": {
+        "title": "Contact Us",
+        "subtitle": "We are here for you. Have questions about our products?",
+        "form": {
+            "name": "Name",
+            "email": "Email",
+            "subject": "Subject",
+            "message": "Message",
+            "submit": "Send Message"
+        },
+        "info": {
+            "title": "Headquarters",
+            "address": "Musterstraße 123, 12345 Berlin, Germany",
+            "email": "info@at-implantate.de",
+            "phone": "+49 (0) 30 1234567"
+        }
+    },
+    "legalPages": {
+        "impressum": {
+            "title": "Legal Notice",
+            "content": "Responsible for content according to § 5 TMG..."
+        },
+        "datenschutz": {
+            "title": "Privacy Policy",
+            "content": "Information on the protection of your personal data..."
+        },
+        "agb": {
+            "title": "Terms & Conditions",
+            "content": "General Terms and Conditions..."
         }
     }
 }

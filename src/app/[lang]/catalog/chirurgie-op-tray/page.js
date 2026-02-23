@@ -1,3 +1,4 @@
+import { getDictionary } from '@/lib/get-dictionary';
 import { fetchCatalogSection } from '@/lib/api';
 import AddToCartButton from '@/components/AddToCartButton';
 

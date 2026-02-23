@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Menu, X, ChevronRight, ChevronDown } from 'lucide-react';
 
 export default function CatalogLayout({ children, params }) {
     const pathname = usePathname();
     const [dict, setDict] = useState(null);
     const [lang, setLang] = useState('de');
     const [expandedGroups, setExpandedGroups] = useState({ 0: true });
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         const pathParts = pathname.split('/');
@@ -31,6 +33,11 @@ export default function CatalogLayout({ children, params }) {
             }
         });
     }, [pathname, dict]);
+
+    // Close sidebar on path change (mobile)
+    useEffect(() => {
+        setIsSidebarOpen(false);
+    }, [pathname]);
 
     if (!dict) return <div className="flex h-screen items-center justify-center bg-slate-900 text-white font-bold tracking-widest uppercase animate-pulse">Loading Catalog...</div>;
 
@@ -110,7 +117,7 @@ export default function CatalogLayout({ children, params }) {
     };
 
     return (
-        <div className="flex min-h-[calc(100vh-80px)] bg-white">
+        <div className="flex min-h-[calc(100vh-80px)] bg-white relative">
             <style jsx global>{`
                 .sidebar-header-pattern {
                     background-image: linear-gradient(
@@ -140,8 +147,25 @@ export default function CatalogLayout({ children, params }) {
                 }
             `}</style>
 
+            {/* Mobile Toggle Button */}
+            <button
+                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                className="lg:hidden fixed bottom-6 right-6 z-[110] bg-primary text-white p-4 rounded-full shadow-2xl transform active:scale-95 transition-all"
+                aria-label="Toggle Catalog Navigation"
+            >
+                {isSidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+
+            {/* Backdrop for Mobile */}
+            {isSidebarOpen && (
+                <div
+                    onClick={() => setIsSidebarOpen(false)}
+                    className="lg:hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] animate-in fade-in duration-300"
+                />
+            )}
+
             {/* Catalog Sidebar */}
-            <aside className="w-80 bg-slate-900 text-white hidden lg:flex flex-col sticky top-[80px] h-[calc(100vh-80px)] border-r border-slate-800 shadow-2xl z-30">
+            <aside className={`w-80 bg-slate-900 text-white flex flex-col fixed lg:sticky top-0 lg:top-[80px] h-screen lg:h-[calc(100vh-80px)] border-r border-slate-800 shadow-2xl z-[101] lg:z-30 transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
                 <nav className="flex-1 overflow-y-auto custom-scrollbar">
                     {navGroups.map((group, groupIdx) => (
                         <div key={groupIdx} className="border-b border-slate-800/30">
@@ -152,30 +176,25 @@ export default function CatalogLayout({ children, params }) {
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-r from-[#2B87B1] to-[#60ADC9]"></div>
                                     <div className="absolute inset-0 sidebar-header-pattern opacity-40"></div>
-                                    <div className="relative p-7 flex justify-between items-center shadow-lg">
+                                    <div className="relative p-7 flex justify-between items-center shadow-lg text-left">
                                         <span className="font-bold text-xl text-white text-shadow-premium tracking-tight">{group.title}</span>
-                                        <svg
+                                        <ChevronDown
                                             className={`w-5 h-5 text-white transition-transform duration-300 ${expandedGroups[groupIdx] ? 'rotate-0' : '-rotate-90'}`}
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
-                                        </svg>
+                                            strokeWidth={3}
+                                        />
                                     </div>
                                 </button>
                             ) : (
                                 <Link
                                     href={`/${lang}/catalog/${group.id}`}
                                     className={`block relative group transition-all ${isActive(group.id) ? 'ring-2 ring-primary ring-inset' : ''}`}
+                                    onClick={() => setIsSidebarOpen(false)}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-r from-[#2B87B1] to-[#60ADC9]"></div>
                                     <div className="absolute inset-0 sidebar-header-pattern opacity-40"></div>
                                     <div className="relative p-7 flex justify-between items-center shadow-lg">
                                         <span className="font-bold text-xl text-white text-shadow-premium tracking-tight">{group.title}</span>
-                                        <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-                                        </svg>
+                                        <ChevronRight className="w-5 h-5 text-white" strokeWidth={3} />
                                     </div>
                                 </Link>
                             )}
@@ -191,6 +210,7 @@ export default function CatalogLayout({ children, params }) {
                                                     ? 'text-white bg-[#153a5c] shadow-inner'
                                                     : 'text-slate-300 hover:text-white hover:bg-white/5'
                                                     }`}
+                                                onClick={() => setIsSidebarOpen(false)}
                                             >
                                                 {item.name}
                                             </Link>

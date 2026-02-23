@@ -1,5 +1,6 @@
 import "../globals.css";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { getDictionary } from "@/lib/get-dictionary";
 
 import { CartProvider } from "@/lib/CartContext";
@@ -25,6 +26,7 @@ export default async function RootLayout({ children, params }) {
                 <CartProvider>
                     <Navigation lang={lang} dict={dict} />
                     {children}
+                    <Footer lang={lang} dict={dict} />
                 </CartProvider>
             </body>
         </html>
