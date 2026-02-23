@@ -59,6 +59,41 @@ export default function CatalogLayout({ children, params }) {
             title: "Farbleitsystem",
             id: 'farbleitsystem',
             items: [] // No children
+        },
+        {
+            title: "Bohrsystem",
+            id: 'bohrsystem',
+            items: [] // No children
+        },
+        {
+            title: "Chirurgie - OP-Tray",
+            id: 'chirurgie-op-tray',
+            items: [] // No children
+        },
+        {
+            title: "Garantie + Reparatur",
+            id: 'garantie-reparatur',
+            items: [] // No children
+        },
+        {
+            title: "Versand",
+            id: 'versand',
+            items: [] // No children
+        },
+        {
+            title: "Bezahlung",
+            id: 'bezahlung',
+            items: [] // No children
+        },
+        {
+            title: "Widerrufsrecht",
+            id: 'widerrufsrecht',
+            items: [] // No children
+        },
+        {
+            title: "AGB",
+            id: 'agb',
+            items: [] // No children
         }
     ];
 

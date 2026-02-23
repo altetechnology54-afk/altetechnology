@@ -10,7 +10,23 @@
     "contact": "Vertrieb + Service",
     "warranty": "Garantie + Reparatur",
     "shipping": "Versand",
-    "payment": "Bezahlung"
+    "payment": "Bezahlung",
+    "cart": "Warenkorb"
+  },
+  "cart": {
+    "title": "Warenkorb",
+    "empty": "Ihr Warenkorb ist leer.",
+    "backToShop": "zurück zum Shop",
+    "toCheckout": "zur Kasse",
+    "image": "Bild",
+    "description": "Bezeichnung",
+    "unitPrice": "Einzelpreis",
+    "quantity": "Anzahl",
+    "totalPrice": "Gesamtpreis",
+    "delete": "Löschen",
+    "subtotal": "Zwischensumme",
+    "inclVat": "Inkl. MwSt.",
+    "grandTotal": "Gesamtpreis"
   },
   "hero": {
     "welcome": "Willkommen bei AL-Technology Implants",

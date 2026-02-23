@@ -1,6 +1,7 @@
 import { getDictionary } from '../../../../lib/get-dictionary';
 import Link from 'next/link';
 import { fetchCatalogSection } from '../../../../lib/api';
+import AddToCartButton from '../../../../components/AddToCartButton';
 
 export default async function SubCatalogPage({ params }) {
     const resolvedParams = await params;
@@ -113,8 +114,14 @@ export default async function SubCatalogPage({ params }) {
                                     </div>
                                     <div className="bg-white divide-y divide-slate-50">
                                         {variant.lengths.map((len, lIdx) => (
-                                            <div key={lIdx} className="text-center text-lg font-black text-[#1B3A5A] py-2 transition-colors hover:bg-slate-50 uppercase">
-                                                {len}
+                                            <div key={lIdx} className="group relative text-center text-lg font-black text-[#1B3A5A] py-2 transition-colors hover:bg-slate-50 uppercase flex items-center justify-center gap-4">
+                                                <span>{len}</span>
+                                                <AddToCartButton
+                                                    product={productData}
+                                                    variant={variant}
+                                                    length={len}
+                                                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                                                />
                                             </div>
                                         ))}
                                     </div>
@@ -251,8 +258,14 @@ export default async function SubCatalogPage({ params }) {
                                 </div>
                                 <div className="bg-white divide-y divide-slate-50">
                                     {variant.lengths.map((len, lIdx) => (
-                                        <div key={lIdx} className="text-center text-lg font-black text-[#1B3A5A] py-2 transition-colors hover:bg-slate-50 uppercase">
-                                            {len}
+                                        <div key={lIdx} className="group relative text-center text-lg font-black text-[#1B3A5A] py-2 transition-colors hover:bg-slate-50 uppercase flex items-center justify-center gap-4">
+                                            <span>{len}</span>
+                                            <AddToCartButton
+                                                product={productData}
+                                                variant={variant}
+                                                length={len}
+                                                className="opacity-0 group-hover:opacity-100 transition-opacity"
+                                            />
                                         </div>
                                     ))}
                                 </div>

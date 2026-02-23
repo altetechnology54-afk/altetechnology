@@ -2,6 +2,8 @@ import "../globals.css";
 import Navigation from "../../components/Navigation";
 import { getDictionary } from "../../lib/get-dictionary";
 
+import { CartProvider } from "../../lib/CartContext";
+
 export const metadata = {
     title: "AL-Technology Implants",
     description: "High-precision dental implant systems",
@@ -20,8 +22,10 @@ export default async function RootLayout({ children, params }) {
                 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet" />
             </head>
             <body suppressHydrationWarning className="antialiased font-outfit">
-                <Navigation lang={lang} dict={dict} />
-                {children}
+                <CartProvider>
+                    <Navigation lang={lang} dict={dict} />
+                    {children}
+                </CartProvider>
             </body>
         </html>
     );

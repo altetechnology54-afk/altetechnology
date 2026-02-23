@@ -1,6 +1,7 @@
 import { getDictionary } from '../../lib/get-dictionary';
 import Link from 'next/link';
-import { fetchCatalogSections } from '../../lib/api';
+import { fetchCatalogSections, fetchHomeContent } from '../../lib/api';
+import HeroSlider from '../../components/HeroSlider';
 
 export default async function Home({ params }) {
     const resolvedParams = await params;
@@ -10,30 +11,14 @@ export default async function Home({ params }) {
     // Fetch dynamic products from API
     const products = await fetchCatalogSections();
 
+    // Fetch home slider data
+    const homeData = await fetchHomeContent('hero-slider');
+    const slides = homeData?.slides || [];
+
     return (
-        <main className="min-h-screen bg-gradient-to-br from-white to-bg-sky">
-            {/* Hero Section */}
-            <section className="relative pt-20 pb-32 px-6 overflow-hidden">
-                <div className="max-w-5xl mx-auto text-center relative z-10">
-                    <div className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-primary uppercase bg-primary/10 rounded-full border border-primary/20">
-                        Precision Engineering Since 2001
-                    </div>
-                    <h1 className="text-5xl md:text-7xl font-bold mb-8 text-slate-900 tracking-tight leading-[1.1]">
-                        {dict.hero.welcome.split(' ').slice(0, -1).join(' ')} <span className="text-primary">{dict.hero.welcome.split(' ').slice(-1)}</span>
-                    </h1>
-                    <p className="text-xl md:text-2xl text-slate-500 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-                        {dict.hero.subtitle}
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <Link href={`/${lang}/catalog`} className="w-full sm:w-auto bg-primary text-white px-10 py-5 rounded-3xl text-lg font-bold hover:bg-primary-dark transition-all shadow-xl shadow-primary/20 transform hover:-translate-y-1">
-                            {dict.hero.cta}
-                        </Link>
-                        <Link href={`/${lang}/about`} className="w-full sm:w-auto px-10 py-5 text-lg font-bold text-slate-700 bg-white border border-slate-200 rounded-3xl hover:bg-slate-50 transition-all">
-                            Learn More
-                        </Link>
-                    </div>
-                </div>
-            </section>
+        <main className="min-h-screen bg-slate-50/50">
+            {/* Full-width Hero Slider */}
+            <HeroSlider slides={slides} lang={lang} />
 
             {/* Product Categories */}
             <section className="max-w-7xl mx-auto px-6 pb-40">

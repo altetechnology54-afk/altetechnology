@@ -25,3 +25,16 @@ export async function fetchCatalogSection(id) {
         return null;
     }
 }
+
+export async function fetchHomeContent(section) {
+    try {
+        const res = await fetch(`${API_BASE_URL}/home/${section}`, {
+            next: { revalidate: 0 }
+        });
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        console.error(`Error fetching home content ${section}:`, error);
+        return null;
+    }
+}
