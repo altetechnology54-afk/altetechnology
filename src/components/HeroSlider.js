@@ -34,27 +34,21 @@ export default function HeroSlider({ slides, data, lang }) {
                             <div className="absolute inset-0 z-0">
                                 <img
                                     src={slide.image}
-                                    alt={slide.title?.[lang] || 'Slide'}
+                                    alt="Slide"
                                     className="w-full h-full object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent z-10" />
                             </div>
 
-                            {/* Content */}
+                            {/* Content (Simplified) */}
                             <div className="relative z-20 h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center items-start text-white">
                                 <div className="animate-in fade-in slide-in-from-left-8 duration-1000">
-                                    <h2 className="text-4xl md:text-7xl font-black mb-6 tracking-tighter uppercase italic leading-[0.9]">
-                                        {slide.title?.[lang] || slide.title?.['de']}
-                                    </h2>
-                                    <p className="text-lg md:text-2xl font-medium mb-10 max-w-2xl text-slate-200 leading-relaxed">
-                                        {slide.subtitle?.[lang] || slide.subtitle?.['de']}
-                                    </p>
                                     <div className="flex gap-4">
                                         <Link
                                             href={slide.link || `/${lang}/catalog`}
                                             className="bg-primary text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-widest hover:bg-primary-dark transition-all transform hover:scale-105 active:scale-95 shadow-2xl shadow-primary/40 italic"
                                         >
-                                            Katalog ansehen
+                                            {lang === 'de' ? 'Katalog ansehen' : 'View Catalog'}
                                         </Link>
                                     </div>
                                 </div>

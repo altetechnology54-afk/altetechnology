@@ -45,12 +45,12 @@ export default async function BohrsystemPage({ params }) {
                 <div className="grid grid-cols-1 gap-1 px-1 bg-slate-100 border border-slate-200 rounded-lg md:rounded-2xl overflow-hidden shadow-2xl">
                     <div className="bg-[#E8EAF6] p-3 md:p-8 lg:p-12 space-y-2 md:space-y-6">
                         <h2 className="text-[#1B3A5A] font-black text-sm md:text-xl lg:text-2xl uppercase tracking-tighter">
-                            {sectionData.title.de}
+                            {title}
                         </h2>
                         <div className="space-y-2 md:space-y-4 text-slate-700 font-medium leading-relaxed text-[10px] md:text-sm lg:text-base">
-                            <p className="border-l-2 border-blue-600 pl-2">{sectionData.description.de}</p>
-                            <p>{sectionData.subDescription.de}</p>
-                            <p className="text-[9px] md:text-xs lg:text-sm italic text-slate-500">{sectionData.applicationArea.de}</p>
+                            <p className="border-l-2 border-blue-600 pl-2">{description}</p>
+                            <p>{subDescription}</p>
+                            <p className="text-[9px] md:text-xs lg:text-sm italic text-slate-500">{applicationArea}</p>
                         </div>
                     </div>
                 </div>
@@ -68,19 +68,29 @@ export default async function BohrsystemPage({ params }) {
                             </div>
                             <div className="w-full bg-[#DDE2EF] rounded-xl md:rounded-3xl lg:rounded-[60px] p-3 md:p-8 lg:p-12 shadow-inner border border-white/50 flex justify-between items-end relative overflow-hidden group">
                                 <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/20 to-transparent"></div>
-                                {sectionData.variants?.map((v, vIdx) => (
-                                    <div key={vIdx} className="flex flex-col items-center gap-1 md:gap-4 group/drill relative z-10 transition-all hover:-translate-y-4">
-                                        <div className="relative h-16 md:h-40 lg:h-64 w-4 md:w-8 lg:w-12 flex items-center justify-center">
-                                            <div className="w-0.5 md:w-1 lg:w-1.5 h-full bg-slate-300 rounded-full relative overflow-hidden shadow-sm">
-                                                <div className="absolute top-2 md:top-6 lg:top-10 inset-x-0 h-0.5" style={{ backgroundColor: v.hex }}></div>
-                                                <div className="absolute bottom-1 md:bottom-3 lg:bottom-4 inset-x-0 h-3 md:h-6 lg:h-10 bg-gradient-to-b from-slate-400 to-slate-200 skew-y-12"></div>
+                                <div className="flex justify-between items-end w-full">
+                                    {sectionData.variants?.map((v, vIdx) => (
+                                        <div key={vIdx} className="flex flex-col items-center gap-1 md:gap-4 group/drill relative z-10 transition-all hover:-translate-y-4">
+                                            <div className="relative h-16 md:h-40 lg:h-64 w-8 md:w-16 lg:w-24 flex items-center justify-center">
+                                                {v.implantImage || v.boxImage ? (
+                                                    <img
+                                                        src={v.implantImage || v.boxImage}
+                                                        alt={`Drill ø${v.diameter}`}
+                                                        className="w-full h-full object-contain filter drop-shadow-lg"
+                                                    />
+                                                ) : (
+                                                    <div className="w-0.5 md:w-1 lg:w-1.5 h-full bg-slate-300 rounded-full relative overflow-hidden shadow-sm">
+                                                        <div className="absolute top-2 md:top-6 lg:top-10 inset-x-0 h-0.5" style={{ backgroundColor: v.hex }}></div>
+                                                        <div className="absolute bottom-1 md:bottom-3 lg:bottom-4 inset-x-0 h-3 md:h-6 lg:h-10 bg-gradient-to-b from-slate-400 to-slate-200 skew-y-12"></div>
+                                                    </div>
+                                                )}
                                             </div>
+                                            <span className="text-[8px] md:text-[10px] lg:text-xs font-black text-slate-900 bg-white/60 px-1 md:px-2 lg:px-3 py-0.5 rounded-full shadow-sm border border-white">
+                                                ø{v.diameter}
+                                            </span>
                                         </div>
-                                        <span className="text-[6px] md:text-[10px] lg:text-xs font-black text-slate-900 bg-white/60 px-1 md:px-2 lg:px-3 py-0.5 rounded-full shadow-sm border border-white">
-                                            ø{v.diameter}
-                                        </span>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </section>

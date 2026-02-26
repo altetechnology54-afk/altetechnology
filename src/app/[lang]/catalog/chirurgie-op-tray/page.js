@@ -59,24 +59,30 @@ export default async function ChirurgieOPTrayPage({ params }) {
                             ))}
                         </div>
 
-                        {/* Tray Placeholder Visualization */}
-                        <div className="w-full aspect-[2/1] bg-[#F5F7FA] rounded-xl md:rounded-[60px] border-4 md:border-8 border-white shadow-inner relative flex items-center justify-center p-3 md:p-12 group">
-                            <div className="absolute inset-x-3 md:inset-x-12 inset-y-2 md:inset-y-8 bg-slate-200/50 rounded-xl md:rounded-[40px] border-2 border-dashed border-slate-300 flex flex-col items-center justify-center space-y-2 md:space-y-4">
-                                <p className="text-[6px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-slate-400">Surgery Tray Architecture</p>
-                                <div className="hidden md:grid grid-cols-8 gap-4 opacity-30">
-                                    {Array.from({ length: 24 }).map((_, i) => (
-                                        <div key={i} className="w-8 h-8 rounded-full bg-white shadow-sm"></div>
-                                    ))}
-                                </div>
-                            </div>
+                        {/* Tray Visualization */}
+                        <div className="w-full aspect-[2/1] bg-[#F5F7FA] rounded-xl md:rounded-[60px] border-4 md:border-8 border-white shadow-inner relative flex items-center justify-center p-3 md:p-12 group overflow-hidden">
+                            {sectionData.images?.diagramImage ? (
+                                <img src={sectionData.images.diagramImage} className="w-full h-full object-contain" alt="Surgery Tray Diagram" />
+                            ) : (
+                                <>
+                                    <div className="absolute inset-x-3 md:inset-x-12 inset-y-2 md:inset-y-8 bg-slate-200/50 rounded-xl md:rounded-[40px] border-2 border-dashed border-slate-300 flex flex-col items-center justify-center space-y-2 md:space-y-4">
+                                        <p className="text-[6px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-slate-400">Surgery Tray Architecture</p>
+                                        <div className="hidden md:grid grid-cols-8 gap-4 opacity-30">
+                                            {Array.from({ length: 24 }).map((_, i) => (
+                                                <div key={i} className="w-8 h-8 rounded-full bg-white shadow-sm"></div>
+                                            ))}
+                                        </div>
+                                    </div>
 
-                            {/* Floating Labels simulating image calls */}
-                            <div className="absolute bottom-2 md:bottom-12 left-2 md:left-12 bg-white/90 backdrop-blur p-1.5 md:p-4 rounded-lg md:rounded-2xl shadow-xl border border-slate-100 animate-bounce">
-                                <p className="text-[6px] md:text-[10px] font-black text-blue-600 uppercase tracking-widest">Tiefensonde</p>
-                            </div>
-                            <div className="absolute top-2 md:top-12 right-2 md:right-20 bg-white/90 backdrop-blur p-1.5 md:p-4 rounded-lg md:rounded-2xl shadow-xl border border-slate-100 animate-pulse">
-                                <p className="text-[6px] md:text-[10px] font-black text-red-600 uppercase tracking-widest">Drehmoment-Ratsche</p>
-                            </div>
+                                    {/* Floating Labels simulating image calls */}
+                                    <div className="absolute bottom-2 md:bottom-12 left-2 md:left-12 bg-white/90 backdrop-blur p-1.5 md:p-4 rounded-lg md:rounded-2xl shadow-xl border border-slate-100 animate-bounce">
+                                        <p className="text-[6px] md:text-[10px] font-black text-blue-600 uppercase tracking-widest">Tiefensonde</p>
+                                    </div>
+                                    <div className="absolute top-2 md:top-12 right-2 md:right-20 bg-white/90 backdrop-blur p-1.5 md:p-4 rounded-lg md:rounded-2xl shadow-xl border border-slate-100 animate-pulse">
+                                        <p className="text-[6px] md:text-[10px] font-black text-red-600 uppercase tracking-widest">Drehmoment-Ratsche</p>
+                                    </div>
+                                </>
+                            )}
                         </div>
 
                         <div className="mt-6 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 w-full max-w-5xl">
