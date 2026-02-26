@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FileText, Home, ShieldAlert } from 'lucide-react';
+import { FileText, Home, ShieldAlert, Phone, Mail } from 'lucide-react';
 import { fetchStaticPage } from '../../../lib/api';
 
 export default function CatalogTabs({
@@ -43,8 +43,27 @@ export default function CatalogTabs({
 
     return (
         <div className="w-full bg-slate-50 min-h-screen">
-            {/* Tab Navigation - Matching the reference image style */}
+            {/* Contact Information */}
             <div className="max-w-7xl mx-auto px-2 md:px-4 pt-2 md:pt-4">
+                <div className="bg-[#1B3A5A] text-white rounded-lg md:rounded-xl p-2 md:p-3 mb-2 shadow-sm">
+                    <div className="text-[8px] md:text-[10px] font-bold uppercase tracking-wider text-blue-200 mb-1">
+                        {lang === 'de' ? 'Kontakt Information' : 'Contact Information'}
+                    </div>
+                    <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
+                        <a href="tel:+498974747760" className="flex items-center gap-1 md:gap-2 text-[10px] md:text-xs font-bold hover:text-blue-300 transition-colors">
+                            <Phone className="w-3 h-3 md:w-4 md:h-4" />
+                            +49 89 7474 7760
+                        </a>
+                        <a href="mailto:at-implantate@t-online.de" className="flex items-center gap-1 md:gap-2 text-[10px] md:text-xs font-bold hover:text-blue-300 transition-colors">
+                            <Mail className="w-3 h-3 md:w-4 md:h-4" />
+                            at-implantate@t-online.de
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {/* Tab Navigation - Matching the reference image style */}
+            <div className="max-w-7xl mx-auto px-2 md:px-4">
                 <div className="bg-white border border-slate-200 rounded-t-lg md:rounded-t-xl overflow-hidden shadow-sm">
                     <div className="flex bg-slate-50/50 p-1 md:p-2 gap-1 md:gap-2">
                         {tabs.map((tab) => (
