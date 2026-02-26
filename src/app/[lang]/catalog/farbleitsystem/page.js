@@ -33,24 +33,24 @@ export default async function FarbleitsystemPage({ params }) {
     }));
 
     return (
-        <main className="min-h-screen bg-white font-sans text-slate-900 pb-48">
+        <main className="min-h-screen bg-white font-sans text-slate-900 pb-16 md:pb-48">
             {/* Header */}
-            <header className="pt-20 px-4 md:px-12 max-w-7xl mx-auto mb-16">
-                <h1 className="text-6xl font-light text-slate-800 tracking-[-0.02em] font-sans mb-16">
+            <header className="pt-8 md:pt-20 px-3 md:px-12 max-w-7xl mx-auto mb-8 md:mb-16">
+                <h1 className="text-2xl md:text-4xl lg:text-6xl font-light text-slate-800 tracking-[-0.02em] font-sans mb-6 md:mb-16">
                     {getT(sectionData.name)}
                 </h1>
 
-                <div className="space-y-2">
-                    <h2 className="text-3xl font-bold text-[#1B3A5A]">{title.split(' / ')[0]}</h2>
-                    <h3 className="text-2xl font-bold text-[#1B3A5A] italic">
+                <div className="space-y-1 md:space-y-2">
+                    <h2 className="text-lg md:text-2xl lg:text-3xl font-bold text-[#1B3A5A]">{title.split(' / ')[0]}</h2>
+                    <h3 className="text-base md:text-xl lg:text-2xl font-bold text-[#1B3A5A] italic">
                         {title.includes(' / ') ? title.split(' / ')[0] : title} / <span className="text-slate-500 font-normal not-italic">{subTitle}</span>
                     </h3>
                 </div>
             </header>
 
             {/* Implant Grid Section */}
-            <section className="px-4 md:px-12 max-w-7xl mx-auto mb-32">
-                <div className="grid grid-cols-[150px_1fr] gap-8">
+            <section className="px-3 md:px-12 max-w-7xl mx-auto mb-16 md:mb-32">
+                <div className="hidden md:grid grid-cols-[150px_1fr] gap-8">
                     {/* Labels Column */}
                     <div className="flex flex-col justify-between py-12 text-sm font-bold text-slate-800 border-r border-slate-100 pr-8">
                         <div className="space-y-1">
@@ -108,30 +108,50 @@ export default async function FarbleitsystemPage({ params }) {
                         ))}
                     </div>
                 </div>
+
+                {/* Mobile Color Grid */}
+                <div className="md:hidden grid grid-cols-3 gap-3">
+                    {systems.map((sys, idx) => (
+                        <div key={idx} className="flex flex-col items-center space-y-2 p-2 bg-slate-50 rounded-xl">
+                            <div
+                                className={`w-10 h-10 rounded-full shadow-lg flex items-center justify-center text-[8px] font-black ring-2 ring-white ${sys.border}`}
+                                style={{ backgroundColor: sys.colorHex }}
+                            >
+                                <span className="bg-white/40 px-1 py-0.5 rounded">{sys.diameter}</span>
+                            </div>
+                            <div
+                                className={`w-full py-1 rounded shadow-sm flex items-center justify-center font-bold text-[10px] text-slate-700 ${sys.border}`}
+                                style={{ backgroundColor: sys.colorHex }}
+                            >
+                                {sys.colorName}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </section>
 
             {/* Component Detail Section */}
-            <section className="px-4 md:px-12 max-w-7xl mx-auto mb-32 border-t border-slate-100 pt-24 text-center">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
-                    <div className="space-y-6">
-                        <div className="bg-slate-100 p-4 rounded inline-block font-bold text-slate-700 border border-slate-200">Tube in Tube</div>
-                        <div className="mx-auto max-w-[200px] aspect-[1/2] rounded-3xl overflow-hidden shadow-2xl relative border-8 border-white bg-slate-50">
+            <section className="px-3 md:px-12 max-w-7xl mx-auto mb-16 md:mb-32 border-t border-slate-100 pt-8 md:pt-24 text-center">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 items-start">
+                    <div className="space-y-3 md:space-y-6">
+                        <div className="bg-slate-100 p-2 md:p-4 rounded inline-block font-bold text-slate-700 border border-slate-200 text-xs md:text-base">Tube in Tube</div>
+                        <div className="mx-auto max-w-[120px] md:max-w-[200px] aspect-[1/2] rounded-xl md:rounded-3xl overflow-hidden shadow-2xl relative border-4 md:border-8 border-white bg-slate-50">
                             <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" />
                         </div>
                     </div>
-                    <div className="space-y-6">
-                        <div className="bg-slate-100 p-4 rounded inline-block font-bold text-slate-700 border border-slate-200 text-center text-sm h-[80px] flex items-center justify-center">
+                    <div className="space-y-3 md:space-y-6">
+                        <div className="bg-slate-100 p-2 md:p-4 rounded inline-block font-bold text-slate-700 border border-slate-200 text-center text-[10px] md:text-sm h-[50px] md:h-[80px] flex items-center justify-center">
                             Inklusive Einbringhilfe<br />(Insert Mount)
                         </div>
-                        <div className="mx-auto max-w-[200px] aspect-[1/2] rounded-3xl overflow-hidden shadow-2xl relative border-8 border-white bg-slate-50 flex items-center justify-center p-8">
+                        <div className="mx-auto max-w-[120px] md:max-w-[200px] aspect-[1/2] rounded-xl md:rounded-3xl overflow-hidden shadow-2xl relative border-4 md:border-8 border-white bg-slate-50 flex items-center justify-center p-4 md:p-8">
                             <img src="https://images.unsplash.com/photo-1576091160550-217359f42f8c?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" />
                         </div>
                     </div>
-                    <div className="space-y-6">
-                        <div className="bg-slate-100 p-4 rounded inline-block font-bold text-slate-700 border border-slate-200 text-sm h-[80px] flex items-center justify-center">
+                    <div className="space-y-3 md:space-y-6">
+                        <div className="bg-slate-100 p-2 md:p-4 rounded inline-block font-bold text-slate-700 border border-slate-200 text-[10px] md:text-sm h-[50px] md:h-[80px] flex items-center justify-center">
                             Inklusive Deckschraube
                         </div>
-                        <div className="mx-auto max-w-[200px] aspect-[1/2] rounded-3xl overflow-hidden shadow-2xl relative border-8 border-white bg-slate-50">
+                        <div className="mx-auto max-w-[120px] md:max-w-[200px] aspect-[1/2] rounded-xl md:rounded-3xl overflow-hidden shadow-2xl relative border-4 md:border-8 border-white bg-slate-50">
                             <img src="https://images.unsplash.com/photo-1581056344415-3abb473d756c?auto=format&fit=crop&q=80&w=800" className="w-full h-full object-cover" />
                         </div>
                     </div>
@@ -139,25 +159,25 @@ export default async function FarbleitsystemPage({ params }) {
             </section>
 
             {/* Drill Section */}
-            <section className="px-4 md:px-12 max-w-7xl mx-auto">
-                <div className="space-y-8 mb-16">
-                    <h2 className="text-3xl font-bold text-[#1B3A5A]">{getT(sectionData.subDescription)}</h2>
+            <section className="px-3 md:px-12 max-w-7xl mx-auto">
+                <div className="space-y-4 md:space-y-8 mb-8 md:mb-16">
+                    <h2 className="text-xl md:text-3xl font-bold text-[#1B3A5A]">{getT(sectionData.subDescription)}</h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+                <div className="grid grid-cols-3 gap-3 md:gap-8 max-w-6xl mx-auto mb-8 md:mb-16">
                     {[
                         "https://images.unsplash.com/photo-1588776814227-19fbaba614a0?auto=format&fit=crop&q=80&w=800",
                         "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&q=80&w=800",
                         "https://images.unsplash.com/photo-1445522467332-901777265886?auto=format&fit=crop&q=80&w=800"
                     ].map((src, i) => (
-                        <div key={i} className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border border-slate-100 bg-white relative group">
+                        <div key={i} className="aspect-[3/4] rounded-lg md:rounded-2xl overflow-hidden shadow-2xl border border-slate-100 bg-white relative group">
                             <img src={src} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         </div>
                     ))}
                 </div>
 
                 <div className="max-w-4xl mx-auto">
-                    <div className="p-8 border-l-4 border-primary bg-slate-50 rounded-r-2xl space-y-6 shadow-sm text-lg text-slate-700 leading-relaxed font-medium">
+                    <div className="p-4 md:p-8 border-l-4 border-primary bg-slate-50 rounded-r-xl md:rounded-r-2xl space-y-3 md:space-y-6 shadow-sm text-sm md:text-lg text-slate-700 leading-relaxed font-medium">
                         {applicationArea}
                     </div>
                 </div>

@@ -35,65 +35,48 @@ export default async function BohrsystemPage({ params }) {
     const categories = Array.from(new Set(sectionData.articles?.map(a => getT(a.category)) || []));
 
     return (
-        <main className="min-h-screen bg-white font-sans text-slate-900 pb-48">
+        <main className="min-h-screen bg-white font-sans text-slate-900 pb-16 md:pb-48 overflow-x-hidden">
             {/* Legend / Info Header */}
-            <header className="pt-20 px-4 md:px-12 max-w-7xl mx-auto mb-20 animate-fade-in">
-                <h1 className="text-7xl font-light text-slate-200 tracking-[-0.04em] mb-12 uppercase">
+            <header className="pt-4 md:pt-20 px-2 md:px-6 lg:px-12 mb-6 md:mb-20 animate-fade-in">
+                <h1 className="text-lg md:text-4xl lg:text-7xl font-light text-slate-200 tracking-[-0.04em] mb-4 md:mb-12 uppercase">
                     {sectionData.id}
                 </h1>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-1 px-1 bg-slate-100 border border-slate-200 rounded-2xl overflow-hidden shadow-2xl">
-                    <div className="bg-[#E8EAF6] p-12 space-y-6">
-                        <h2 className="text-[#1B3A5A] font-black text-2xl uppercase tracking-tighter">
+                <div className="grid grid-cols-1 gap-1 px-1 bg-slate-100 border border-slate-200 rounded-lg md:rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="bg-[#E8EAF6] p-3 md:p-8 lg:p-12 space-y-2 md:space-y-6">
+                        <h2 className="text-[#1B3A5A] font-black text-sm md:text-xl lg:text-2xl uppercase tracking-tighter">
                             {sectionData.title.de}
                         </h2>
-                        <div className="space-y-4 text-slate-700 font-medium leading-relaxed">
-                            <p className="border-l-4 border-blue-600 pl-4">{sectionData.description.de}</p>
+                        <div className="space-y-2 md:space-y-4 text-slate-700 font-medium leading-relaxed text-[10px] md:text-sm lg:text-base">
+                            <p className="border-l-2 border-blue-600 pl-2">{sectionData.description.de}</p>
                             <p>{sectionData.subDescription.de}</p>
-                            <p className="text-sm italic text-slate-500">{sectionData.applicationArea.de}</p>
-                        </div>
-                    </div>
-                    <div className="bg-white p-12 space-y-6 border-l border-slate-100">
-                        <h2 className="text-slate-900 font-black text-2xl uppercase tracking-tighter">
-                            {sectionData.title.en}
-                        </h2>
-                        <div className="space-y-4 text-slate-600 font-medium leading-relaxed">
-                            <p className="border-l-4 border-slate-200 pl-4">{sectionData.description.en}</p>
-                            <p>{sectionData.subDescription.en}</p>
-                            <p className="text-sm italic text-slate-400">{sectionData.applicationArea.en}</p>
+                            <p className="text-[9px] md:text-xs lg:text-sm italic text-slate-500">{sectionData.applicationArea.de}</p>
                         </div>
                     </div>
                 </div>
             </header>
 
             {/* Drill Sets Section */}
-            <div className="space-y-32 mb-40">
+            <div className="space-y-6 md:space-y-16 lg:space-y-32 mb-8 md:mb-40">
                 {drillSets.map((set, sIdx) => (
-                    <section key={sIdx} className="px-4 md:px-12 max-w-7xl mx-auto">
-                        <div className="flex flex-col md:flex-row gap-12 items-center">
-                            <div className="w-full md:w-1/3 space-y-4">
-                                <h3 className="text-3xl font-black text-slate-800 whitespace-pre-line leading-tight">
+                    <section key={sIdx} className="px-2 md:px-6 lg:px-12">
+                        <div className="flex flex-col gap-3 md:gap-8 items-start">
+                            <div className="w-full space-y-1 md:space-y-4">
+                                <h3 className="text-xs md:text-xl lg:text-3xl font-black text-slate-800 whitespace-pre-line leading-tight">
                                     {set.title}
                                 </h3>
-                                <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-xs">
-                                    {set.stopper} -------------------------------------------
-                                </p>
                             </div>
-                            <div className="w-full md:w-2/3 bg-[#DDE2EF] rounded-[60px] p-12 shadow-inner border border-white/50 flex justify-between items-end relative overflow-hidden group">
+                            <div className="w-full bg-[#DDE2EF] rounded-xl md:rounded-3xl lg:rounded-[60px] p-3 md:p-8 lg:p-12 shadow-inner border border-white/50 flex justify-between items-end relative overflow-hidden group">
                                 <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/20 to-transparent"></div>
                                 {sectionData.variants?.map((v, vIdx) => (
-                                    <div key={vIdx} className="flex flex-col items-center gap-6 group/drill relative z-10 transition-all hover:-translate-y-4">
-                                        <div className="relative h-64 w-12 flex items-center justify-center">
-                                            {/* Drill Image Placeholder / Vector */}
-                                            <div className="w-1.5 h-full bg-slate-300 rounded-full relative overflow-hidden shadow-sm">
-                                                <div className="absolute top-10 inset-x-0 h-1" style={{ backgroundColor: v.hex }}></div>
-                                                <div className="absolute bottom-4 inset-x-0 h-10 bg-gradient-to-b from-slate-400 to-slate-200 skew-y-12"></div>
-                                            </div>
-                                            <div className="absolute -bottom-2 text-[10px] font-black text-slate-800 tracking-tighter whitespace-nowrap bg-white/80 px-2 py-0.5 rounded shadow-sm opacity-0 group-hover/drill:opacity-100 transition-opacity">
-                                                AL-TECH
+                                    <div key={vIdx} className="flex flex-col items-center gap-1 md:gap-4 group/drill relative z-10 transition-all hover:-translate-y-4">
+                                        <div className="relative h-16 md:h-40 lg:h-64 w-4 md:w-8 lg:w-12 flex items-center justify-center">
+                                            <div className="w-0.5 md:w-1 lg:w-1.5 h-full bg-slate-300 rounded-full relative overflow-hidden shadow-sm">
+                                                <div className="absolute top-2 md:top-6 lg:top-10 inset-x-0 h-0.5" style={{ backgroundColor: v.hex }}></div>
+                                                <div className="absolute bottom-1 md:bottom-3 lg:bottom-4 inset-x-0 h-3 md:h-6 lg:h-10 bg-gradient-to-b from-slate-400 to-slate-200 skew-y-12"></div>
                                             </div>
                                         </div>
-                                        <span className="text-xs font-black text-slate-900 bg-white/60 px-3 py-1 rounded-full shadow-sm border border-white">
+                                        <span className="text-[6px] md:text-[10px] lg:text-xs font-black text-slate-900 bg-white/60 px-1 md:px-2 lg:px-3 py-0.5 rounded-full shadow-sm border border-white">
                                             ø{v.diameter}
                                         </span>
                                     </div>
@@ -105,54 +88,45 @@ export default async function BohrsystemPage({ params }) {
             </div>
 
             {/* Detailed Articles Table */}
-            <section className="px-4 md:px-12 max-w-7xl mx-auto border-t border-slate-100 pt-32">
-                <header className="mb-16 flex items-end justify-between">
-                    <div className="space-y-4">
-                        <h2 className="text-4xl font-black text-slate-900 tracking-tighter uppercase italic">{lang === 'de' ? 'Artikelübersicht' : 'Article Overview'}</h2>
-                        <div className="h-1.5 w-24 bg-blue-600 rounded-full"></div>
+            <section className="px-2 md:px-6 lg:px-12 border-t border-slate-100 pt-6 md:pt-16 lg:pt-32">
+                <header className="mb-4 md:mb-10 lg:mb-16">
+                    <div className="space-y-2">
+                        <h2 className="text-base md:text-2xl lg:text-4xl font-black text-slate-900 tracking-tighter uppercase italic">{lang === 'de' ? 'Artikelübersicht' : 'Article Overview'}</h2>
+                        <div className="h-0.5 md:h-1 lg:h-1.5 w-12 md:w-20 lg:w-24 bg-blue-600 rounded-full"></div>
                     </div>
-                    <p className="text-slate-400 font-bold uppercase tracking-widest text-xs hidden md:block">
-                        {lang === 'de' ? 'Klicken Sie auf Cat.Nr. für Details' : 'Click Cat.Nr. for details'}
-                    </p>
                 </header>
 
-                <div className="space-y-20">
+                <div className="space-y-4 md:space-y-10 lg:space-y-20">
                     {categories.map((cat, cIdx) => (
-                        <div key={cIdx} className="space-y-6">
-                            <h3 className="text-xl font-black text-blue-900 tracking-tight flex items-center gap-4 uppercase bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                                <span className="w-2 h-8 bg-blue-600 rounded-full"></span>
+                        <div key={cIdx} className="space-y-2 md:space-y-4">
+                            <h3 className="text-[10px] md:text-base lg:text-xl font-black text-blue-900 tracking-tight flex items-center gap-1 md:gap-3 uppercase bg-slate-50 p-1.5 md:p-3 lg:p-4 rounded-lg md:rounded-xl border border-slate-100">
+                                <span className="w-0.5 md:w-1.5 h-3 md:h-6 bg-blue-600 rounded-full"></span>
                                 {cat}
                             </h3>
-                            <div className="divide-y divide-slate-100 border border-slate-100 rounded-[40px] overflow-hidden bg-white shadow-xl">
-                                <div className="grid grid-cols-12 bg-slate-50/80 p-6 text-[11px] font-black text-blue-900 uppercase tracking-widest border-b border-slate-100">
-                                    <div className="col-span-2">Art. Nr.</div>
-                                    <div className="col-span-3 text-center">{lang === 'de' ? 'Ansicht' : 'View'}</div>
-                                    <div className="col-span-5">{lang === 'de' ? 'Artikelbeschreibung' : 'Description'}</div>
-                                    <div className="col-span-2 text-right">Action</div>
-                                </div>
+                            <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg md:rounded-2xl lg:rounded-[40px] overflow-hidden bg-white shadow-xl">
                                 {sectionData.articles?.filter(a => getT(a.category) === cat).map((article, aIdx) => (
-                                    <div key={aIdx} className="grid grid-cols-12 p-8 items-center gap-8 hover:bg-slate-50 transition-colors group">
-                                        <div className="col-span-2 font-black text-slate-800 text-lg uppercase">{article.artNr}</div>
-                                        <div className="col-span-3 flex justify-center">
-                                            <div className="w-32 h-20 bg-slate-50 rounded-2xl border border-slate-100 overflow-hidden shadow-sm group-hover:scale-110 transition-transform">
+                                    <div key={aIdx} className="flex flex-col p-2 md:p-4 lg:p-8 items-start gap-1.5 md:gap-3 hover:bg-slate-50 transition-colors group">
+                                        <div className="flex items-center gap-2 md:gap-4 w-full">
+                                            <div className="font-black text-slate-800 text-[10px] md:text-sm lg:text-lg uppercase">{article.artNr}</div>
+                                            <div className="w-12 h-8 md:w-24 md:h-14 lg:w-32 lg:h-20 bg-slate-50 rounded-md md:rounded-xl border border-slate-100 overflow-hidden shadow-sm flex-shrink-0">
                                                 {article.image ? (
                                                     <img src={article.image} alt={article.artNr} className="w-full h-full object-contain" />
                                                 ) : (
-                                                    <div className="w-full h-full flex flex-col items-center justify-center space-y-1">
-                                                        <div className="w-20 h-1 bg-slate-300 rounded-full"></div>
-                                                        <div className="w-16 h-1 bg-slate-200 rounded-full"></div>
+                                                    <div className="w-full h-full flex flex-col items-center justify-center space-y-0.5">
+                                                        <div className="w-8 md:w-16 h-0.5 bg-slate-300 rounded-full"></div>
+                                                        <div className="w-6 md:w-12 h-0.5 bg-slate-200 rounded-full"></div>
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="col-span-5 text-slate-600 font-medium leading-relaxed italic text-sm">
+                                        <div className="text-slate-600 font-medium leading-relaxed italic text-[8px] md:text-xs lg:text-sm">
                                             {getT(article.description)}
                                         </div>
-                                        <div className="col-span-2 flex justify-end">
+                                        <div className="flex justify-start mt-1">
                                             <AddToCartButton
                                                 product={sectionData}
                                                 article={article}
-                                                className="!bg-orange-600 !text-white hover:!bg-orange-700 px-6 py-3 rounded-xl shadow-lg shadow-orange-500/20"
+                                                className="!bg-orange-600 !text-white hover:!bg-orange-700 px-2 md:px-4 lg:px-6 py-1 md:py-2 lg:py-3 rounded-md md:rounded-lg shadow-lg shadow-orange-500/20 text-[8px] md:text-xs lg:text-sm"
                                             />
                                         </div>
                                     </div>
@@ -163,8 +137,8 @@ export default async function BohrsystemPage({ params }) {
                 </div>
             </section>
 
-            <div className="max-w-7xl mx-auto px-4 md:px-12 mt-48">
-                <p className="text-slate-400 font-bold italic border-t border-slate-100 pt-8 uppercase tracking-widest text-sm text-center">
+            <div className="px-2 md:px-6 lg:px-12 mt-8 md:mt-24 lg:mt-48">
+                <p className="text-slate-400 font-bold italic border-t border-slate-100 pt-3 md:pt-6 uppercase tracking-widest text-[8px] md:text-[10px] lg:text-sm text-center">
                     {getT(sectionData.benefitBar)}
                 </p>
             </div>
