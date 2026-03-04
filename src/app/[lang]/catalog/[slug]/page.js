@@ -50,23 +50,26 @@ export default async function SubCatalogPage({ params }) {
     const productBenefitBar = getT(productData.benefitBar);
     const productApplicationArea = getT(productData.applicationArea);
 
+    // Group articles by category
+    const categories = Array.from(new Set(productData.articles?.map(a => getT(a.category)) || []));
+
     // Special layout for SMART (One-piece system)
     if (slug === 'smart' || productData.id === 'smart') {
         return (
             <main className="min-h-screen bg-white font-sans text-slate-900">
-                <div className="pt-6 md:pt-12 px-3 md:px-12 max-w-7xl mx-auto">
+                <div className="pt-6 md:pt-12 px-3 md:px-12 max-w-[1600px] mx-auto">
                     <h1 className="text-xl md:text-4xl lg:text-5xl font-light text-slate-400 mb-4 md:mb-8 tracking-tight italic">
                         <span className="font-bold text-slate-800">{productName}</span> Shop
                     </h1>
                 </div>
 
                 <div className="bg-[#1B3A5A] text-white py-2 md:py-4 mb-6 md:mb-12">
-                    <div className="max-w-7xl mx-auto px-3 md:px-12">
+                    <div className="max-w-[1600px] mx-auto px-3 md:px-12">
                         <p className="text-sm md:text-xl lg:text-2xl font-bold tracking-tight uppercase italic">{productTitle || productName}</p>
                     </div>
                 </div>
 
-                <section className="px-3 md:px-12 max-w-7xl mx-auto mb-12 md:mb-24">
+                <section className="px-3 md:px-12 max-w-[1600px] mx-auto mb-12 md:mb-24">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-16 items-start">
                         <div className="relative rounded-xl md:rounded-3xl overflow-hidden shadow-2xl border border-slate-100 aspect-[4/5] bg-slate-50">
                             {productData.images?.hero ? (
@@ -92,7 +95,7 @@ export default async function SubCatalogPage({ params }) {
                     </div>
                 </section>
 
-                <section className="px-3 md:px-12 max-w-7xl mx-auto pb-16 md:pb-32">
+                <section className="px-3 md:px-12 max-w-[1600px] mx-auto pb-16 md:pb-32">
                     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-12 max-w-5xl mx-auto">
                         {productData.variants.map((variant, idx) => (
                             <div key={idx} className="flex flex-col items-center bg-slate-50/50 p-3 md:p-8 rounded-xl md:rounded-[40px] border border-slate-100 shadow-sm group">
@@ -148,7 +151,88 @@ export default async function SubCatalogPage({ params }) {
                     </div>
                 </section>
 
-                <footer className="max-w-7xl mx-auto px-3 md:px-12 pb-12 md:pb-24">
+                {categories.length > 0 && (
+                    <section className="px-3 md:px-12 max-w-[1600px] mx-auto mb-16 md:mb-40 border-t border-slate-100 pt-16 md:pt-32">
+                        <header className="mb-12 md:mb-24 text-center">
+                            <h2 className="text-2xl md:text-5xl font-black text-[#1B3A5A] tracking-tighter uppercase italic mb-4">
+                                {lang === 'de' ? 'Artikelübersicht' : 'Article Overview'}
+                            </h2>
+                            <div className="h-1.5 w-24 bg-primary mx-auto rounded-full"></div>
+                        </header>
+
+                        <div className="space-y-24 md:space-y-48">
+                            {categories.map((cat, cIdx) => (
+                                <div key={cIdx} className="space-y-12 md:space-y-20 animate-fade-in" style={{ animationDelay: `${cIdx * 100}ms` }}>
+                                    <div className="flex items-center gap-6">
+                                        <span className="text-3xl md:text-6xl font-black text-slate-100">0{cIdx + 1}</span>
+                                        <h3 className="text-xl md:text-3xl font-black text-[#1B3A5A] uppercase tracking-tighter">{cat}</h3>
+                                        <div className="h-px bg-slate-100 flex-1"></div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 gap-16 md:gap-32">
+                                        {productData.articles?.filter(a => getT(a.category) === cat).map((article, aIdx) => (
+                                            <div key={aIdx} className="group relative flex flex-col items-center">
+                                                <div className="w-full bg-white rounded-3xl md:rounded-[60px] overflow-hidden shadow-2xl border border-slate-50 transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.1)] group-hover:-translate-y-2">
+                                                    <div className="relative flex items-center justify-center bg-white">
+                                                        {article.image ? (
+                                                            <img
+                                                                src={article.image}
+                                                                alt={article.artNr}
+                                                                className="w-full h-auto block"
+                                                            />
+                                                        ) : (
+                                                            <div className="flex flex-col items-center gap-4 opacity-20 py-20">
+                                                                <div className="w-24 md:w-48 h-2 md:h-4 bg-slate-200 rounded-full"></div>
+                                                                <div className="w-16 md:w-32 h-2 md:h-4 bg-slate-100 rounded-full"></div>
+                                                            </div>
+                                                        )}
+
+                                                        {/* Floating Add to Cart for Desktop */}
+                                                        <div className="absolute bottom-8 right-8 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                            <AddToCartButton
+                                                                product={productData}
+                                                                article={article}
+                                                                className="!bg-primary !text-white !px-10 !py-5 !rounded-full !text-lg !font-black !shadow-2xl hover:!scale-105 active:!scale-95 transition-all"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="bg-slate-50/50 p-6 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-slate-100">
+                                                        <div className="text-center md:text-left space-y-2">
+                                                            <div className="font-black text-slate-900 text-xl md:text-3xl tracking-tighter uppercase">
+                                                                {article.artNr}
+                                                            </div>
+                                                            <div className="text-slate-500 font-bold leading-relaxed italic text-sm md:text-xl max-w-2xl">
+                                                                {getT(article.description)}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="md:hidden w-full">
+                                                            <AddToCartButton
+                                                                product={productData}
+                                                                article={article}
+                                                                className="!bg-[#1B3A5A] !text-white w-full py-4 rounded-2xl font-black text-sm"
+                                                            />
+                                                        </div>
+                                                        <div className="hidden md:block">
+                                                            <AddToCartButton
+                                                                product={productData}
+                                                                article={article}
+                                                                className="!bg-[#1B3A5A] !text-white px-12 py-5 rounded-3xl hover:!bg-primary transition-colors font-black text-sm uppercase tracking-widest shadow-lg"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                <footer className="max-w-[1600px] mx-auto px-3 md:px-12 pb-12 md:pb-24">
                     <p className="text-slate-400 font-bold italic border-t border-slate-100 pt-4 md:pt-8 uppercase tracking-widest text-[10px] md:text-sm text-center">
                         Für Ihre Bestellungen Klicken sie bitte auf die jeweilige Cat.Nr.
                     </p>
@@ -159,13 +243,13 @@ export default async function SubCatalogPage({ params }) {
 
     return (
         <main className="min-h-screen bg-white font-sans text-slate-900">
-            <div className="pt-6 md:pt-12 px-3 md:px-12 max-w-7xl mx-auto">
+            <div className="pt-6 md:pt-12 px-3 md:px-12 max-w-[1600px] mx-auto">
                 <h1 className="text-xl md:text-4xl lg:text-5xl font-light text-slate-400 mb-4 md:mb-8 tracking-tight italic">
                     <span className="font-bold text-slate-800">{productName}</span> Shop
                 </h1>
             </div>
 
-            <section className="px-3 md:px-12 max-w-7xl mx-auto mb-8 md:mb-16">
+            <section className="px-3 md:px-12 max-w-[1600px] mx-auto mb-8 md:mb-16">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
                     <div className="relative rounded-xl md:rounded-3xl overflow-hidden shadow-2xl border border-slate-100 aspect-[4/3] bg-slate-50">
                         {productData.images?.hero ? (
@@ -213,7 +297,7 @@ export default async function SubCatalogPage({ params }) {
 
             <div className="bg-[#1B3A5A] py-3 md:py-6 mb-8 md:mb-16 shadow-xl relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(45deg, white 25%, transparent 25%, transparent 50%, white 50%, white 75%, transparent 75%, transparent)', backgroundSize: '20px 20px' }}></div>
-                <div className="max-w-7xl mx-auto px-3 md:px-12 relative z-10">
+                <div className="max-w-[1600px] mx-auto px-3 md:px-12 relative z-10">
                     <p className="text-white text-xs md:text-2xl lg:text-3xl font-black tracking-tighter flex flex-wrap justify-center lg:justify-between items-center uppercase gap-2 md:gap-4 italic text-center">
                         {(productBenefitBar || '').split(' - ').map((benefit, i, arr) => (
                             <span key={i} className="flex items-center">
@@ -225,10 +309,10 @@ export default async function SubCatalogPage({ params }) {
                 </div>
             </div>
 
-            <section className="px-3 md:px-12 max-w-7xl mx-auto pb-16 md:pb-48">
-                <div className={`grid grid-cols-2 md:grid-cols-2 ${(slug === 'safe' || productData.id === 'safe') ? 'lg:grid-cols-3 md:max-w-5xl' : 'lg:grid-cols-5'} gap-3 md:gap-12 mx-auto`}>
+            <section className="px-3 md:px-12 max-w-[1600px] mx-auto pb-16 md:pb-48">
+                <div className={`grid grid-cols-2 md:grid-cols-2 ${(slug === 'safe' || productData.id === 'safe') ? 'lg:grid-cols-3 md:max-w-5xl' : 'lg:grid-cols-5'} gap-3 md:gap-12 mx-auto items-stretch`}>
                     {productData.variants.map((variant, idx) => (
-                        <div key={idx} className={`flex flex-col items-center group ${(slug === 'safe' || productData.id === 'safe') ? 'bg-slate-50/50 p-3 md:p-8 rounded-xl md:rounded-[40px] border border-slate-100 shadow-sm' : ''}`}>
+                        <div key={idx} className={`flex flex-col items-center group h-full ${(slug === 'safe' || productData.id === 'safe') ? 'bg-slate-50/50 p-3 md:p-8 rounded-xl md:rounded-[40px] border border-slate-100 shadow-sm' : ''}`}>
                             {variant.boxImage && (
                                 <div className="w-full aspect-[4/5] bg-white rounded-xl md:rounded-3xl border border-slate-100 flex items-center justify-center p-2 md:p-4 shadow-sm group-hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-2 relative mb-3 md:mb-6">
                                     <img
@@ -252,11 +336,11 @@ export default async function SubCatalogPage({ params }) {
                                 <div className="h-0.5 md:h-1 w-8 md:w-12 bg-primary rounded-full"></div>
                             </div>
 
-                            <div className="w-full mb-4 md:mb-10 overflow-hidden rounded-lg md:rounded-2xl border border-slate-100 shadow-sm group-hover:shadow-md transition-shadow bg-white">
+                            <div className="w-full mb-4 md:mb-10 overflow-hidden rounded-lg md:rounded-2xl border border-slate-100 shadow-sm group-hover:shadow-md transition-shadow bg-white flex flex-col flex-grow min-h-[150px] md:min-h-[300px]">
                                 <div className={`text-[8px] md:text-[10px] font-black text-white uppercase tracking-[0.1em] md:tracking-[0.2em] text-center py-1 md:py-2 ${(slug === 'safe' || productData.id === 'safe') ? 'bg-primary/80' : 'bg-[#1B3A5A]'}`}>
                                     Länge / Length
                                 </div>
-                                <div className="bg-white divide-y divide-slate-50">
+                                <div className="bg-white divide-y divide-slate-50 flex-grow">
                                     {variant.lengths.map((len, lIdx) => (
                                         <div key={lIdx} className="group relative text-center text-xs md:text-lg font-black text-[#1B3A5A] py-1 md:py-2 transition-colors hover:bg-slate-50 uppercase flex items-center justify-center gap-2 md:gap-4">
                                             <span>{len}</span>
@@ -272,7 +356,7 @@ export default async function SubCatalogPage({ params }) {
                             </div>
 
                             {variant.implantImage ? (
-                                <div className="relative w-12 h-24 md:w-24 md:h-48 group-hover:scale-110 transition-transform duration-700">
+                                <div className="relative w-12 h-24 md:w-24 md:h-48 group-hover:scale-110 transition-transform duration-700 mt-auto">
                                     <img
                                         src={variant.implantImage}
                                         alt={`Product render ${variant.diameter}`}
@@ -283,6 +367,71 @@ export default async function SubCatalogPage({ params }) {
                         </div>
                     ))}
                 </div>
+
+                {categories.length > 0 && (
+                    <div className="mt-20 md:mt-40 space-y-24 md:space-y-48 border-t border-slate-100 pt-20 max-w-[1600px] mx-auto">
+                        <header className="mb-12 md:mb-24 text-center">
+                            <h2 className="text-2xl md:text-5xl font-black text-[#1B3A5A] tracking-tighter uppercase italic mb-4">
+                                {lang === 'de' ? 'Artikelübersicht' : 'Article Overview'}
+                            </h2>
+                            <div className="h-1.5 w-24 bg-primary mx-auto rounded-full"></div>
+                        </header>
+
+                        <div className="space-y-24 md:space-y-48">
+                            {categories.map((cat, cIdx) => (
+                                <div key={cIdx} className="space-y-12 md:space-y-20 animate-fade-in" style={{ animationDelay: `${cIdx * 100}ms` }}>
+                                    <div className="flex items-center gap-6">
+                                        <span className="text-3xl md:text-6xl font-black text-slate-100">0{cIdx + 1}</span>
+                                        <h3 className="text-xl md:text-3xl font-black text-[#1B3A5A] uppercase tracking-tighter">{cat}</h3>
+                                        <div className="h-px bg-slate-100 flex-1"></div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 gap-16 md:gap-32">
+                                        {productData.articles?.filter(a => getT(a.category) === cat).map((article, aIdx) => (
+                                            <div key={aIdx} className="group relative flex flex-col items-center">
+                                                <div className="w-full bg-white rounded-3xl md:rounded-[60px] overflow-hidden shadow-2xl border border-slate-50 transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.1)] group-hover:-translate-y-2">
+                                                    <div className="relative flex items-center justify-center bg-white">
+                                                        {article.image ? (
+                                                            <img
+                                                                src={article.image}
+                                                                alt={article.artNr}
+                                                                className="w-full h-auto block"
+                                                            />
+                                                        ) : (
+                                                            <div className="flex flex-col items-center gap-4 opacity-20 py-20">
+                                                                <div className="w-24 md:w-48 h-2 md:h-4 bg-slate-200 rounded-full"></div>
+                                                                <div className="w-16 md:w-32 h-2 md:h-4 bg-slate-100 rounded-full"></div>
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="bg-slate-50/50 p-6 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-slate-100">
+                                                        <div className="text-center md:text-left space-y-2">
+                                                            <div className="font-black text-slate-900 text-xl md:text-3xl tracking-tighter uppercase">
+                                                                {article.artNr}
+                                                            </div>
+                                                            <div className="text-slate-500 font-bold leading-relaxed italic text-sm md:text-xl max-w-2xl">
+                                                                {getT(article.description)}
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="w-full md:w-auto">
+                                                            <AddToCartButton
+                                                                product={productData}
+                                                                article={article}
+                                                                className="!bg-[#1B3A5A] !text-white w-full md:px-12 py-4 md:py-5 rounded-2xl md:rounded-3xl hover:!bg-primary transition-colors font-black text-sm uppercase tracking-widest shadow-lg"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 <div className="mt-8 md:mt-20 border-t border-slate-100 pt-4 md:pt-8 text-slate-400 font-bold italic uppercase tracking-widest text-[10px] md:text-sm text-center">
                     Für Ihre Bestellungen Klicken sie bitte auf die jeweilige Cat.Nr.
