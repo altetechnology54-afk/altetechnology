@@ -39,8 +39,9 @@ export default function CatalogLayout({ children, params }) {
     const navGroups = [
         {
             title: dict.catalogPage.parentTitle,
+            id: '',
             items: [
-                { id: '', name: dict.catalogPage.subTitle }
+                { id: 'special-system', name: "Das spezielle Implantatsystem" }
             ]
         },
         {
@@ -147,21 +148,8 @@ export default function CatalogLayout({ children, params }) {
                 <nav className="flex-1 overflow-y-auto custom-scrollbar">
                     {navGroups.map((group, groupIdx) => (
                         <div key={groupIdx} className="border-b border-white/5">
-                            {group.items.length > 0 ? (
-                                <button
-                                    onClick={() => toggleGroup(groupIdx)}
-                                    className="w-full relative group transition-all"
-                                >
-                                    <div className={`absolute inset-0 bg-gradient-to-r ${isActive(group.id) || group.items.some(item => isActive(item.id)) ? 'from-primary/20 to-transparent' : 'from-transparent to-transparent'}`}></div>
-                                    <div className="relative p-3 md:p-4 lg:p-6 flex justify-between items-center text-left hover:bg-white/5 transition-colors">
-                                        <span className="font-bold text-[10px] md:text-xs lg:text-lg text-slate-100 tracking-tight uppercase italic">{group.title}</span>
-                                        <ChevronDown
-                                            className={`w-3 h-3 md:w-4 md:h-4 text-slate-400 transition-transform duration-300 ${expandedGroups[groupIdx] ? 'rotate-0' : '-rotate-90'}`}
-                                            strokeWidth={2.5}
-                                        />
-                                    </div>
-                                </button>
-                            ) : (
+                            {/* Group with no sub-items: plain link */}
+                            {group.items.length === 0 && (
                                 <Link
                                     href={`/${lang}/catalog/${group.id}`}
                                     className={`block relative group transition-all hover:bg-white/5 ${isActive(group.id) ? 'bg-primary/20 border-r-4 border-primary' : ''}`}
@@ -173,10 +161,21 @@ export default function CatalogLayout({ children, params }) {
                                 </Link>
                             )}
 
-                            {group.items.length > 0 && (
-                                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedGroups[groupIdx] ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                            {/* Group WITH sub-items AND its own id: title is a link, sub-items always visible */}
+                            {group.items.length > 0 && group.id !== undefined && (
+                                <>
+                                    <Link
+                                        href={`/${lang}/catalog${group.id ? `/${group.id}` : ''}`}
+                                        className={`block relative group transition-all hover:bg-white/5 ${isActive(group.id) ? 'bg-primary/20 border-r-4 border-primary' : ''}`}
+                                    >
+                                        <div className={`absolute inset-0 bg-gradient-to-r ${isActive(group.id) || group.items.some(item => isActive(item.id)) ? 'from-primary/20 to-transparent' : 'from-transparent to-transparent'}`}></div>
+                                        <div className="relative p-3 md:p-4 lg:p-6 flex justify-between items-center">
+                                            <span className="font-bold text-[10px] md:text-xs lg:text-lg text-slate-100 tracking-tight uppercase italic">{group.title}</span>
+                                            <ChevronDown className="w-3 h-3 md:w-4 md:h-4 text-slate-400 rotate-0" strokeWidth={2.5} />
+                                        </div>
+                                    </Link>
                                     <div className="bg-black/20">
-                                        {group.items.map((item, itemIdx) => (
+                                        {group.items.map((item) => (
                                             <Link
                                                 key={item.id}
                                                 href={`/${lang}/catalog${item.id ? `/${item.id}` : ''}`}
@@ -189,7 +188,42 @@ export default function CatalogLayout({ children, params }) {
                                             </Link>
                                         ))}
                                     </div>
-                                </div>
+                                </>
+                            )}
+
+                            {/* Group WITH sub-items but NO own id: collapsible toggle */}
+                            {group.items.length > 0 && group.id === undefined && (
+                                <>
+                                    <button
+                                        onClick={() => toggleGroup(groupIdx)}
+                                        className="w-full relative group transition-all"
+                                    >
+                                        <div className={`absolute inset-0 bg-gradient-to-r ${group.items.some(item => isActive(item.id)) ? 'from-primary/20 to-transparent' : 'from-transparent to-transparent'}`}></div>
+                                        <div className="relative p-3 md:p-4 lg:p-6 flex justify-between items-center text-left hover:bg-white/5 transition-colors">
+                                            <span className="font-bold text-[10px] md:text-xs lg:text-lg text-slate-100 tracking-tight uppercase italic">{group.title}</span>
+                                            <ChevronDown
+                                                className={`w-3 h-3 md:w-4 md:h-4 text-slate-400 transition-transform duration-300 ${expandedGroups[groupIdx] ? 'rotate-0' : '-rotate-90'}`}
+                                                strokeWidth={2.5}
+                                            />
+                                        </div>
+                                    </button>
+                                    <div className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedGroups[groupIdx] ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                                        <div className="bg-black/20">
+                                            {group.items.map((item) => (
+                                                <Link
+                                                    key={item.id}
+                                                    href={`/${lang}/catalog${item.id ? `/${item.id}` : ''}`}
+                                                    className={`block px-4 md:px-6 lg:px-10 py-2 md:py-3 lg:py-4 text-[9px] md:text-xs lg:text-sm font-bold border-b border-white/5 transition-all duration-200 uppercase italic ${isActive(item.id)
+                                                        ? 'text-white bg-primary/40'
+                                                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                                                        }`}
+                                                >
+                                                    {item.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </>
                             )}
                         </div>
                     ))}

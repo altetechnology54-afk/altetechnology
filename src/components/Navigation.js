@@ -98,6 +98,11 @@ export default function Navigation({ lang, dict }) {
                                 </Link>
                             </li>
                             <li>
+                                <Link onClick={closeMenu} href={`/${lang}/catalog/special-system`} className="block hover:text-primary transition-colors">
+                                    Das spezielle Implantatsystem
+                                </Link>
+                            </li>
+                            <li>
                                 <Link onClick={closeMenu} href={`/${lang}/about`} className="block hover:text-primary transition-colors">
                                     {dict.navigation.about}
                                 </Link>
