@@ -103,7 +103,7 @@ export default async function ContactPage({ params }) {
                             <img
                                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop"
                                 alt="Office"
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                                className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-1000"
                             />
                             <div className="absolute inset-0 bg-primary/20 mix-blend-multiply opacity-0 group-hover:opacity-40 transition-opacity"></div>
                             <div className="absolute inset-0 flex items-center justify-center">

@@ -245,7 +245,7 @@ export default async function FarbleitsystemPage({ params }) {
                         heroImage
                     ]).map((src, i) => (
                         <div key={i} className="aspect-[3/4] rounded-lg md:rounded-2xl overflow-hidden shadow-2xl border border-slate-100 bg-white relative group">
-                            <img src={src} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                            <img src={src} className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110" />
                         </div>
                     ))}
                 </div>

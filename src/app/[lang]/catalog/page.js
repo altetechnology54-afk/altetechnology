@@ -79,7 +79,7 @@ export default async function CatalogPage({ params }) {
                                         <>
                                             {section.data.image1 && (
                                                 <div className="rounded-3xl md:rounded-[60px] overflow-hidden shadow-2xl border border-slate-50 hover:scale-[1.02] transition-transform duration-700 bg-white">
-                                                    <img src={section.data.image1} alt="Catalog Feature" className="w-full h-auto object-cover" />
+                                                    <img src={section.data.image1} alt="Catalog Feature" className="w-full h-auto object-contain" />
                                                 </div>
                                             )}
                                             {section.data.image2 && (

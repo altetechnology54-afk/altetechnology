@@ -13,7 +13,7 @@ export default function HomeAbout({ data, lang }) {
                     <img
                         src={about.image || 'https://images.unsplash.com/photo-1576091160550-2173bdd9962a?q=80&w=2070&auto=format&fit=crop'}
                         alt="About Us"
-                        className="relative rounded-[50px] shadow-2xl border-8 border-white object-cover aspect-[4/3] w-full"
+                        className="relative rounded-[50px] shadow-2xl border-8 border-white object-contain aspect-[4/3] w-full"
                     />
                 </div>
                 <div className="space-y-8 animate-in fade-in slide-in-from-right-8 duration-1000">

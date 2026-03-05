@@ -76,7 +76,7 @@ export default async function SubCatalogPage({ params }) {
                                 <img
                                     src={productData.images.hero}
                                     alt={`${productName} Hero`}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-contain"
                                 />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center text-slate-200 font-black text-4xl md:text-8xl uppercase">
@@ -256,7 +256,7 @@ export default async function SubCatalogPage({ params }) {
                             <img
                                 src={productData.images.hero}
                                 alt={`${productName} Hero`}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-contain"
                             />
                         ) : (
                             <div className="w-full h-full flex items-center justify-center text-slate-200 font-black text-4xl md:text-8xl uppercase">

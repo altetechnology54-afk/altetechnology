@@ -82,7 +82,7 @@ export default async function AboutPage({ params }) {
                             <img
                                 src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=2070&auto=format&fit=crop"
                                 alt="History"
-                                className="relative rounded-[50px] shadow-2xl border-8 border-white object-cover aspect-[4/3] w-full"
+                                className="relative rounded-[50px] shadow-2xl border-8 border-white object-contain aspect-[4/3] w-full"
                             />
                         </div>
                         <div className="w-full md:w-1/2 space-y-8">
