@@ -54,10 +54,6 @@ export default function CartPage({ params }) {
                             <p className="text-2xl font-black text-slate-900">{cartCount}</p>
                         </div>
                         <div className="w-px h-10 bg-slate-200"></div>
-                        <div className="text-right">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total</p>
-                            <p className="text-2xl font-black text-primary italic">€{cartTotal.toFixed(2)}</p>
-                        </div>
                     </div>
                 </header>
 
@@ -84,7 +80,6 @@ export default function CartPage({ params }) {
                                                 <span>Art.{item.id.split('-')[0]}</span>
                                             </div>
                                         </div>
-                                        <p className="text-xl font-black text-primary italic">€{item.price.toFixed(2)}</p>
                                     </div>
 
                                     <div className="flex items-center justify-between pt-4">
@@ -124,37 +119,10 @@ export default function CartPage({ params }) {
 
                             <h2 className="text-3xl font-black uppercase tracking-tighter italic">Summary</h2>
 
-                            <div className="space-y-6">
-                                <div className="flex justify-between items-center text-white/60 font-medium">
-                                    <span>Subtotal</span>
-                                    <span>€{cartTotal.toFixed(2)}</span>
-                                </div>
-                                <div className="flex justify-between items-center text-white/60 font-medium">
-                                    <span>VAT (19%)</span>
-                                    <span>Included</span>
-                                </div>
-                                <div className="flex justify-between items-center text-white/60 font-medium">
-                                    <span>Shipping</span>
-                                    <span className="text-green-400">FREE</span>
-                                </div>
-                                <div className="h-px bg-white/10 my-8"></div>
-                                <div className="flex justify-between items-end">
-                                    <div className="space-y-1">
-                                        <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.3em]">Grand Total</p>
-                                        <p className="text-4xl font-black italic">€{cartTotal.toFixed(2)}</p>
-                                    </div>
-                                </div>
-                            </div>
-
                             <button className="w-full bg-white text-[#1B3A5A] py-6 rounded-3xl font-black uppercase tracking-widest text-sm hover:bg-slate-50 transition-all transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-4 italic shadow-2xl shadow-black/20 group">
-                                {isDe ? 'Zur Kasse' : 'Checkout Now'}
+                                {isDe ? 'Ihre Bestellung abschließen' : 'Complete Your Order'}
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                             </button>
-
-                            <p className="text-[10px] text-white/30 text-center font-bold uppercase tracking-widest leading-relaxed">
-                                Prices inclusive of 19% VAT. <br />
-                                Fast worldwide shipping within 2-5 days.
-                            </p>
                         </div>
 
                         <Link href={`/${lang}/catalog`} className="flex items-center justify-center gap-3 mt-10 text-slate-400 hover:text-primary transition-all font-black uppercase tracking-widest text-[10px]">

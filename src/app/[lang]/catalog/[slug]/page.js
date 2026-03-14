@@ -96,7 +96,7 @@ export default async function SubCatalogPage({ params }) {
                 </section>
 
                 <section className="px-3 md:px-12 max-w-[1600px] mx-auto pb-16 md:pb-32">
-                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-12 max-w-5xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-4 md:gap-8">
                         {productData.variants.map((variant, idx) => (
                             <div key={idx} className="flex flex-col items-center bg-slate-50/50 p-3 md:p-8 rounded-xl md:rounded-[40px] border border-slate-100 shadow-sm group">
                                 <div className="flex flex-col items-center mb-3 md:mb-8">
@@ -117,15 +117,9 @@ export default async function SubCatalogPage({ params }) {
                                     </div>
                                     <div className="bg-white divide-y divide-slate-50">
                                         {variant.lengths.map((len, lIdx) => (
-                                            <div key={lIdx} className="group relative text-center text-xs md:text-lg font-black text-[#1B3A5A] py-1 md:py-2 transition-colors hover:bg-slate-50 uppercase flex items-center justify-center gap-2 md:gap-4">
-                                                <span>{len}</span>
-                                                <AddToCartButton
-                                                    product={productData}
-                                                    variant={variant}
-                                                    length={len}
-                                                    className="opacity-0 group-hover:opacity-100 transition-opacity"
-                                                />
-                                            </div>
+                                        <div key={lIdx} className="text-center text-[10px] sm:text-xs md:text-sm lg:text-sm font-black text-[#1B3A5A] py-1.5 md:py-2 transition-colors hover:bg-slate-50 uppercase px-1 md:px-2">
+                                            <span className="whitespace-nowrap tracking-tighter">{len}</span>
+                                        </div>
                                         ))}
                                     </div>
                                 </div>
@@ -310,7 +304,7 @@ export default async function SubCatalogPage({ params }) {
             </div>
 
             <section className="px-3 md:px-12 max-w-[1600px] mx-auto pb-16 md:pb-48">
-                <div className={`grid grid-cols-2 md:grid-cols-2 ${(slug === 'safe' || productData.id === 'safe') ? 'lg:grid-cols-3 md:max-w-5xl' : 'lg:grid-cols-5'} gap-3 md:gap-12 mx-auto items-stretch`}>
+                <div className={`grid grid-cols-1 md:grid-cols-2 ${(slug === 'safe' || productData.id === 'safe') ? 'lg:grid-cols-2 xl:grid-cols-3' : 'lg:grid-cols-2 xl:grid-cols-3'} gap-4 md:gap-6 mx-auto items-stretch max-w-7xl`}>
                     {productData.variants.map((variant, idx) => (
                         <div key={idx} className={`flex flex-col items-center group h-full ${(slug === 'safe' || productData.id === 'safe') ? 'bg-slate-50/50 p-3 md:p-8 rounded-xl md:rounded-[40px] border border-slate-100 shadow-sm' : ''}`}>
                             {variant.boxImage && (
@@ -342,14 +336,8 @@ export default async function SubCatalogPage({ params }) {
                                 </div>
                                 <div className="bg-white divide-y divide-slate-50 flex-grow">
                                     {variant.lengths.map((len, lIdx) => (
-                                        <div key={lIdx} className="group relative text-center text-xs md:text-lg font-black text-[#1B3A5A] py-1 md:py-2 transition-colors hover:bg-slate-50 uppercase flex items-center justify-center gap-2 md:gap-4">
-                                            <span>{len}</span>
-                                            <AddToCartButton
-                                                product={productData}
-                                                variant={variant}
-                                                length={len}
-                                                className="opacity-0 group-hover:opacity-100 transition-opacity"
-                                            />
+                                        <div key={lIdx} className="text-center text-[10px] sm:text-xs md:text-sm lg:text-sm font-black text-[#1B3A5A] py-1.5 md:py-2 transition-colors hover:bg-slate-50 uppercase px-1 md:px-2">
+                                            <span className="whitespace-nowrap tracking-tighter">{len}</span>
                                         </div>
                                     ))}
                                 </div>
