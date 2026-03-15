@@ -43,6 +43,24 @@ export default function CatalogTabs({
 
     return (
         <div className="w-full bg-slate-50 min-h-screen">
+                 <div className="max-w-7xl mx-auto px-2 md:px-4 pt-2 md:pt-4">
+                <div className="bg-[#1B3A5A] text-white rounded-lg md:rounded-xl p-2 md:p-3 mb-2 shadow-sm">
+                    <div className="text-[8px] md:text-[10px] font-bold uppercase tracking-wider text-blue-200 mb-1">
+                        {lang === 'de' ? 'Kontakt Information' : 'Contact Information'}
+                    </div>
+                    <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
+                        <a href="tel:+498974747760" className="flex items-center gap-1 md:gap-2 text-[10px] md:text-xs font-bold hover:text-blue-300 transition-colors">
+                            <Phone className="w-3 h-3 md:w-4 md:h-4" />
+                            +49 89 7474 7760
+                        </a>
+                        <a href="mailto:at-implantate@t-online.de" className="flex items-center gap-1 md:gap-2 text-[10px] md:text-xs font-bold hover:text-blue-300 transition-colors">
+                            <Mail className="w-3 h-3 md:w-4 md:h-4" />
+                            at-implantate@t-online.de
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
             {/* Tab Navigation - Matching the reference image style */}
             <div className="max-w-7xl mx-auto px-2 md:px-4">
                 <div className="bg-white border border-slate-200 rounded-t-lg md:rounded-t-xl overflow-hidden shadow-sm">
@@ -108,16 +126,6 @@ export default function CatalogTabs({
                                     dangerouslySetInnerHTML={{ __html: (impressum?.content?.[lang] || '').replace(/\n/g, '<br/>') }}
                                 />
 
-                                {impressum?.data && (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-12 border-t border-slate-100 italic font-medium text-slate-500">
-                                        {Object.entries(impressum.data).map(([key, value]) => (
-                                            <div key={key}>
-                                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1">{key}</span>
-                                                <p>{value}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
                             </div>
                         </div>
                     )}
