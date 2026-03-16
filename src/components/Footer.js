@@ -36,9 +36,10 @@ export default function Footer({ lang, dict }) {
                     <div className="space-y-6">
                         <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Office</h4>
                         <p className="text-slate-600 text-sm font-bold leading-relaxed">
-                            Musterstraße 123<br />
-                            12345 Berlin, Germany<br />
-                           at-implantate@t-online.de
+                            Al Technology GmbH <br />
+                            Haxthausen 10<br />
+                            85354 Freising <br />
+                            Germany
                         </p>
                     </div>
                 </div>

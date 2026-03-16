@@ -28,9 +28,10 @@ export default async function ImpressumPage({ params }) {
                         <section>
                             <h3 className="text-slate-900 font-black uppercase tracking-widest text-sm mb-4">Angaben gemäß § 5 TMG</h3>
                             <p>
-                                AL-Technology Implants GmbH<br />
-                                Musterstraße 123<br />
-                                12345 Berlin
+                                Al Technology GmbH <br />
+                                Haxthausen 10<br />
+                                85354 Freising <br />
+                                Germany
                             </p>
                         </section>
 
