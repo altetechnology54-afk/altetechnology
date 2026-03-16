@@ -51,7 +51,7 @@ export default function CatalogTabs({
                     <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-4">
                         <a href="tel:+498974747760" className="flex items-center gap-1 md:gap-2 text-[10px] md:text-xs font-bold hover:text-blue-300 transition-colors">
                             <Phone className="w-3 h-3 md:w-4 md:h-4" />
-                            +49 89 7474 7760
+                            +49 1515 2453223
                         </a>
                         <a href="mailto:at-implantate@t-online.de" className="flex items-center gap-1 md:gap-2 text-[10px] md:text-xs font-bold hover:text-blue-300 transition-colors">
                             <Mail className="w-3 h-3 md:w-4 md:h-4" />

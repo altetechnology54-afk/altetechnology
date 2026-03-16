@@ -112,15 +112,21 @@ export default async function SubCatalogPage({ params }) {
                                 <div className="text-sm md:text-xl font-bold text-slate-800 mb-3 md:mb-8">Ø {variant.diameter}</div>
 
                                 <div className="w-full mb-4 md:mb-10 overflow-hidden rounded-lg md:rounded-2xl border border-slate-100 shadow-sm group-hover:shadow-md transition-shadow bg-white">
-                                    <div className="bg-primary/80 text-[8px] md:text-[10px] font-black text-white uppercase tracking-[0.1em] md:tracking-[0.2em] text-center py-1 md:py-2">
-                                        Länge / Length
+                                    <div className="grid grid-cols-2 bg-primary/80 text-[8px] md:text-[10px] font-black text-white uppercase tracking-[0.1em] md:tracking-[0.2em] text-center py-1 md:py-2">
+                                        <div>Länge / Length</div>
+                                        <div>Cat.Nr.</div>
                                     </div>
                                     <div className="bg-white divide-y divide-slate-50">
-                                        {variant.lengths.map((len, lIdx) => (
-                                        <div key={lIdx} className="text-center text-[10px] sm:text-xs md:text-sm lg:text-sm font-black text-[#1B3A5A] py-1.5 md:py-2 transition-colors hover:bg-slate-50 uppercase px-1 md:px-2">
-                                            <span className="whitespace-nowrap tracking-tighter">{len}</span>
-                                        </div>
-                                        ))}
+                                        {variant.lengths.map((len, lIdx) => {
+                                            const [displayLen, ...catNrParts] = len.split('-');
+                                            const catNr = catNrParts.length > 0 ? catNrParts.join('-').trim() : '';
+                                            return (
+                                                <div key={lIdx} className="grid grid-cols-2 text-center text-[10px] sm:text-xs md:text-sm lg:text-sm font-black text-[#1B3A5A] py-1.5 md:py-2 transition-colors hover:bg-slate-50 uppercase px-1 md:px-2">
+                                                    <div className="whitespace-nowrap tracking-tighter border-r border-slate-100">{displayLen.trim()}</div>
+                                                    <div className="whitespace-nowrap tracking-tighter text-[#3A608F]">{catNr}</div>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 </div>
 
@@ -331,15 +337,21 @@ export default async function SubCatalogPage({ params }) {
                             </div>
 
                             <div className="w-full mb-4 md:mb-10 overflow-hidden rounded-lg md:rounded-2xl border border-slate-100 shadow-sm group-hover:shadow-md transition-shadow bg-white flex flex-col flex-grow min-h-[150px] md:min-h-[300px]">
-                                <div className={`text-[8px] md:text-[10px] font-black text-white uppercase tracking-[0.1em] md:tracking-[0.2em] text-center py-1 md:py-2 ${(slug === 'safe' || productData.id === 'safe') ? 'bg-primary/80' : 'bg-[#1B3A5A]'}`}>
-                                    Länge / Length
+                                <div className={`grid grid-cols-2 text-[8px] md:text-[10px] font-black text-white uppercase tracking-[0.1em] md:tracking-[0.2em] text-center py-1 md:py-2 ${(slug === 'safe' || productData.id === 'safe') ? 'bg-primary/80' : 'bg-[#1B3A5A]'}`}>
+                                    <div>Länge / Length</div>
+                                    <div>Cat.Nr.</div>
                                 </div>
                                 <div className="bg-white divide-y divide-slate-50 flex-grow">
-                                    {variant.lengths.map((len, lIdx) => (
-                                        <div key={lIdx} className="text-center text-[10px] sm:text-xs md:text-sm lg:text-sm font-black text-[#1B3A5A] py-1.5 md:py-2 transition-colors hover:bg-slate-50 uppercase px-1 md:px-2">
-                                            <span className="whitespace-nowrap tracking-tighter">{len}</span>
-                                        </div>
-                                    ))}
+                                    {variant.lengths.map((len, lIdx) => {
+                                        const [displayLen, ...catNrParts] = len.split('-');
+                                        const catNr = catNrParts.length > 0 ? catNrParts.join('-').trim() : '';
+                                        return (
+                                            <div key={lIdx} className="grid grid-cols-2 text-center text-[10px] sm:text-xs md:text-sm lg:text-sm font-black text-[#1B3A5A] py-1.5 md:py-2 transition-colors hover:bg-slate-50 uppercase px-1 md:px-2">
+                                                <div className="whitespace-nowrap tracking-tighter border-r border-slate-100">{displayLen.trim()}</div>
+                                                <div className="whitespace-nowrap tracking-tighter text-[#3A608F]">{catNr}</div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
 
