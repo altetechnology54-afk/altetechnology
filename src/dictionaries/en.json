@@ -1,120 +1,120 @@
 {
-    "navigation": {
-        "home": "Home",
-        "catalog": "Catalog",
-        "legal": "Legal",
-        "implantSystems": "Implant Systems",
-        "instructions": "Instructions",
-        "surgicalTrays": "Surgery - Surgical Tray",
-        "prosthetics": "Prosthetics",
-        "cart": "Cart",
-        "about": "About Us",
-        "contact": "Contact",
-        "impressum": "Legal Notice",
-        "datenschutz": "Privacy Policy",
-        "agb": "T&C"
-    },
-    "cart": {
-        "title": "Shopping Cart",
-        "empty": "Your cart is empty.",
-        "backToShop": "back to shop",
-        "toCheckout": "to checkout",
-        "image": "Image",
-        "description": "Description",
-        "unitPrice": "Unit Price",
-        "quantity": "Quantity",
-        "totalPrice": "Total Price",
-        "delete": "Delete",
-        "subtotal": "Subtotal",
-        "inclVat": "Incl. VAT",
-        "grandTotal": "Grand Total"
-    },
-    "hero": {
-        "welcome": "Welcome to AL-Technology Implants",
-        "subtitle": "High-precision dental implant systems for professionals since 2001.",
-        "cta": "View Catalog"
-    },
-    "products": {
-        "shark": "Shark Implants",
-        "cylinder": "Cylinder Implants",
-        "safe": "Safe Implants",
-        "smart": "Smart Implants",
-        "orderNow": "Order Now!",
-        "prosthetics": "Holistic Prosthetics",
-        "surgicalTrays": "Surgery - Surgical Tray"
-    },
-    "catalogPage": {
-        "parentTitle": "The Implant System",
-        "subTitle": "The Special Implant System",
-        "intro": "Stability of conical design. Uniform distribution of occlusal forces through internal hex connection. Ideal integration with the bone through SLA surface treatment.",
-        "sections": {
-            "conicalDesign": {
-                "title": "The Special Conical Implant Design",
-                "content": "The special self-tapping and deep threads of the implant shape allow for easy implantation, guarantee high primary stability immediately after implantation, and are suitable for all bone types."
-            },
-            "hexConnection": {
-                "title": "The Internal Hex Connection",
-                "content": "Enables increased prosthetic accuracy, strength, stability, and easier placement of abutments and impression posts, and ensures uniform distribution of occlusal forces."
-            },
-            "combinedBenefits": {
-                "title": "The Special Conical Design and Deep Internal Hex Connection",
-                "content": "Combine the surgical flexibility of a parallel-walled and conical implant design with the stability and aesthetic benefits of an internal prosthetic connection."
-            },
-            "slaSurface": {
-                "title": "SLA Surface Treatment: (Sand-blasted, Acid-etched)",
-                "content": "The SLA surface is created by coarse sandblasting with corundum particles, achieving a macro-roughness of the titanium surface.",
-                "advantages": {
-                    "title": "Advantages of SLA Surface Treatment:",
-                    "items": [
-                        "Guarantees ideal integration and rapid anchoring of the implant in the surrounding bone, resulting in fast healing and osseointegration.",
-                        "A proven process for the implant contact surface.",
-                        "Offers excellent and rapid bone integration of SLA implants in the initial healing phase."
-                    ]
-                }
-            }
+  "navigation": {
+    "home": "Home",
+    "catalog": "Catalog",
+    "legal": "Legal",
+    "implantSystems": "Implant Systems",
+    "instructions": "Instructions",
+    "surgicalTrays": "Surgery - Surgical Tray",
+    "prosthetics": "Prosthetics",
+    "cart": "Cart",
+    "about": "About Us",
+    "contact": "Contact",
+    "impressum": "Legal Notice",
+    "datenschutz": "Privacy Policy",
+    "agb": "T&C"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty.",
+    "backToShop": "back to shop",
+    "toCheckout": "to checkout",
+    "image": "Image",
+    "description": "Description",
+    "unitPrice": "Unit Price",
+    "quantity": "Quantity",
+    "totalPrice": "Total Price",
+    "delete": "Delete",
+    "subtotal": "Subtotal",
+    "inclVat": "Incl. VAT",
+    "grandTotal": "Grand Total"
+  },
+  "hero": {
+    "welcome": "Welcome to AL-Technology Implants",
+    "subtitle": "High-precision dental implant systems for professionals since 2001.",
+    "cta": "View Catalog"
+  },
+  "products": {
+    "shark": "Shark Implants",
+    "cylinder": "Cylinder Implants",
+    "safe": "Safe Implants",
+    "smart": "Smart Implants",
+    "orderNow": "Order Now!",
+    "prosthetics": "Holistic Prosthetics",
+    "surgicalTrays": "Surgery - Surgical Tray"
+  },
+  "catalogPage": {
+    "parentTitle": "The Implant System",
+    "subTitle": "The Special Implant System",
+    "intro": "Stability of conical design. Uniform distribution of occlusal forces through internal hex connection. Ideal integration with the bone through SLA surface treatment.",
+    "sections": {
+      "conicalDesign": {
+        "title": "The Special Conical Implant Design",
+        "content": "The special self-tapping and deep threads of the implant shape allow for easy implantation, guarantee high primary stability immediately after implantation, and are suitable for all bone types."
+      },
+      "hexConnection": {
+        "title": "The Internal Hex Connection",
+        "content": "Enables increased prosthetic accuracy, strength, stability, and easier placement of abutments and impression posts, and ensures uniform distribution of occlusal forces."
+      },
+      "combinedBenefits": {
+        "title": "The Special Conical Design and Deep Internal Hex Connection",
+        "content": "Combine the surgical flexibility of a parallel-walled and conical implant design with the stability and aesthetic benefits of an internal prosthetic connection."
+      },
+      "slaSurface": {
+        "title": "SLA Surface Treatment: (Sand-blasted, Acid-etched)",
+        "content": "The SLA surface is created by coarse sandblasting with corundum particles, achieving a macro-roughness of the titanium surface.",
+        "advantages": {
+          "title": "Advantages of SLA Surface Treatment:",
+          "items": [
+            "Guarantees ideal integration and rapid anchoring of the implant in the surrounding bone, resulting in fast healing and osseointegration.",
+            "A proven process for the implant contact surface.",
+            "Offers excellent and rapid bone integration of SLA implants in the initial healing phase."
+          ]
         }
-    },
-    "aboutPage": {
-        "title": "About AL-Technology",
-        "subtitle": "Premium dental implant systems since 2001.",
-        "mission": "Our mission is to provide dentists and surgeons worldwide with high-precision, reliable, and aesthetically pleasing implant solutions.",
-        "historyTitle": "Our History",
-        "historyContent": "AL-Technology was founded with the aim of improving the quality of dental implantology through innovation and technical excellence.",
-        "values": {
-            "precision": "Precision in every micrometer",
-            "safety": "Tested safety for patients",
-            "innovation": "Constant development"
-        }
-    },
-    "contactPage": {
-        "title": "Contact Us",
-        "subtitle": "We are here for you. Have questions about our products?",
-        "form": {
-            "name": "Name",
-            "email": "Email",
-            "subject": "Subject",
-            "message": "Message",
-            "submit": "Send Message"
-        },
-        "info": {
-            "title": "Headquarters",
-            "address": "Musterstraße 123, 12345 Berlin, Germany",
-            "email": "info@at-implantate.de",
-            "phone": "+49 (0) 30 1234567"
-        }
-    },
-    "legalPages": {
-        "impressum": {
-            "title": "Legal Notice",
-            "content": "Responsible for content according to § 5 TMG..."
-        },
-        "datenschutz": {
-            "title": "Privacy Policy",
-            "content": "Information on the protection of your personal data..."
-        },
-        "agb": {
-            "title": "Terms & Conditions",
-            "content": "General Terms and Conditions..."
-        }
+      }
     }
+  },
+  "aboutPage": {
+    "title": "About AL-Technology",
+    "subtitle": "Premium dental implant systems since 2001.",
+    "mission": "Our mission is to provide dentists and surgeons worldwide with high-precision, reliable, and aesthetically pleasing implant solutions.",
+    "historyTitle": "Our History",
+    "historyContent": "AL-Technology was founded with the aim of improving the quality of dental implantology through innovation and technical excellence.",
+    "values": {
+      "precision": "Precision in every micrometer",
+      "safety": "Tested safety for patients",
+      "innovation": "Constant development"
+    }
+  },
+  "contactPage": {
+    "title": "Contact Us",
+    "subtitle": "We are here for you. Have questions about our products?",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send Message"
+    },
+    "info": {
+      "title": "Headquarters",
+      "address": "Musterstraße 123, 12345 Berlin, Germany",
+      "email": "info@at-implantate.de",
+      "phone": "+49 89 7474 7760"
+    }
+  },
+  "legalPages": {
+    "impressum": {
+      "title": "Legal Notice",
+      "content": "Responsible for content according to § 5 TMG..."
+    },
+    "datenschutz": {
+      "title": "Privacy Policy",
+      "content": "Information on the protection of your personal data..."
+    },
+    "agb": {
+      "title": "Terms & Conditions",
+      "content": "General Terms and Conditions..."
+    }
+  }
 }

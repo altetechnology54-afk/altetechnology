@@ -38,7 +38,7 @@ export default function Footer({ lang, dict }) {
                         <p className="text-slate-600 text-sm font-bold leading-relaxed">
                             Musterstraße 123<br />
                             12345 Berlin, Germany<br />
-                            info@at-implantate.de
+                           at-implantate@t-online.de
                         </p>
                     </div>
                 </div>

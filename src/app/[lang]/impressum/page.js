@@ -42,8 +42,8 @@ export default async function ImpressumPage({ params }) {
                         <section>
                             <h3 className="text-slate-900 font-black uppercase tracking-widest text-sm mb-4">Kontakt</h3>
                             <p>
-                                Telefon: +49 (0) 30 1234567<br />
-                                E-Mail: info@at-implantate.de
+                                Telefon: +49 89 7474 7760<br />
+                                E-Mail:at-implantate@t-online.de
                             </p>
                         </section>
 
