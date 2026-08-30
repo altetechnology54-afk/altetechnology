@@ -1,157 +1,267 @@
-import { getDictionary } from '@/lib/get-dictionary';
-import { fetchCatalogSection } from '@/lib/api';
+import React from 'react';
 import AddToCartButton from '@/components/AddToCartButton';
 
 export default async function BohrsystemPage({ params }) {
     const resolvedParams = await params;
     const lang = resolvedParams?.lang || "de";
-    const dict = await getDictionary(lang);
 
-    const sectionData = await fetchCatalogSection('bohrsystem');
-
-    if (!sectionData) {
-        return <div className="p-20 text-center font-bold text-slate-400 uppercase tracking-widest">Loading Drilling System...</div>;
-    }
-
-    const getT = (field) => {
-        if (!field) return '';
-        if (typeof field === 'string') return field;
-        return field[lang] || field['de'] || field['en'] || '';
-    };
-
-    const name = getT(sectionData.name);
-    const title = getT(sectionData.title);
-    const description = getT(sectionData.description);
-    const subDescription = getT(sectionData.subDescription);
-    const applicationArea = getT(sectionData.applicationArea);
-
-    const drillSets = [
-        { length: '10mm', title: lang === 'de' ? 'Länge / Length 10mm\nfor 10 mm Implantlength' : 'Length 10mm\nfor 10 mm Implantlength', stopper: 'Stopper 10mm' },
-        { length: '11,5mm', title: lang === 'de' ? 'Länge / Length 11,5mm\nfor 11,5 mm Implantlength' : 'Length 11.5mm\nfor 11.5 mm Implantlength', stopper: 'Stopper 11,5mm' },
-        { length: '13mm', title: lang === 'de' ? 'Länge / Length 13mm\nfor 13 mm Implantlength' : 'Length 13mm\nfor 13 mm Implantlength', stopper: 'Stopper 13mm' }
+    const specialDrills = [
+        {
+            artNr: 'Ros 1',
+            image: '/images/bohrsystem/ros1.png',
+            descDe: 'Rosenbohrer /Round Bar Drillø 2,0 mm\nLänge/ Length 22 mm. 3 mm',
+            descEn: 'Round Bar Drill ø 2,0 mm\nLength 22 mm. 3 mm'
+        },
+        {
+            artNr: 'Cor 2',
+            image: '/images/bohrsystem/cor2.png',
+            descDe: 'Corticalis-Bohrer / Cortical Drill',
+            descEn: 'Cortical Drill'
+        },
+        {
+            artNr: 'Cer 3',
+            image: '/images/bohrsystem/cer3.png',
+            descDe: 'Keramikbohrer /Ceramic drills ø 2,0 mm\naußerordentlich scharf und unterliegen keinem Verschleiß',
+            descEn: 'Ceramic drills ø 2,0 mm\nextremely sharp with no wear'
+        }
     ];
 
-    // Group articles by category
-    const categories = Array.from(new Set(sectionData.articles?.map(a => getT(a.category)) || []));
+    const conicalDrills = [
+        { artNr: 'CON 32', image: '/images/bohrsystem/con32.png', desc: 'ø3,2 mm / ø2,6 mm Länge / Length 6 mm' },
+        { artNr: 'CON 38', image: '/images/bohrsystem/con38.png', desc: 'ø3,8 mm / ø3,0 mm Länge / Length 6 mm' },
+        { artNr: 'CON 42', image: '/images/bohrsystem/con42.png', desc: 'ø4,2 mm / ø3,4 mm Länge / Length 6 mm' },
+        { artNr: 'CON 52', image: '/images/bohrsystem/con52.png', desc: 'ø5,2 mm / ø4,4 mm Länge / Length 6 mm' }
+    ];
+
+    const cylindricalDrills = [
+        { artNr: 'Cy2010', image: '/images/bohrsystem/cy2010.png', desc: 'ø2,0mm Länge / Length 10 mm' },
+        { artNr: 'Cy2810', image: '/images/bohrsystem/cy2810.png', desc: 'ø2,8mm Länge / Length 10 mm' },
+        { artNr: 'Cy3210', image: '/images/bohrsystem/cy3210.png', desc: 'ø3,2mm Länge / Length 10 mm' },
+        { artNr: 'Cy3810', image: '/images/bohrsystem/cy3810.png', desc: 'ø3,8mm Länge / Length 10 mm' },
+        { artNr: 'Cy4210', image: '/images/bohrsystem/cy4210.png', desc: 'ø4,2mm Länge / Length 10mm' },
+        { artNr: 'Cy5210', image: '/images/bohrsystem/cy5210.png', desc: 'ø5,2mm Länge / Length 10mm' },
+
+        { artNr: 'Cy20115', image: '/images/bohrsystem/cy20115.png', desc: 'ø2,0mm Länge / Length 11,5mm' },
+        { artNr: 'Cy28115', image: '/images/bohrsystem/cy28115.png', desc: 'ø2,8mm Länge / Length 11,5 mm' },
+        { artNr: 'Cy32115', image: '/images/bohrsystem/cy32115.png', desc: 'ø3,2mm Länge / Length 11,5 mm' },
+        { artNr: 'Cy38115', image: '/images/bohrsystem/cy38115.png', desc: 'ø3,8mm Länge / Length 11,5 mm' },
+        { artNr: 'Cy42115', image: '/images/bohrsystem/cy42115.png', desc: 'ø4,2mm Länge / Length 11,5 mm' },
+        { artNr: 'Cy52115', image: '/images/bohrsystem/cy52115.png', desc: 'ø5,2mm Länge / Length 11,5 mm' },
+
+        { artNr: 'Cy2013', image: '/images/bohrsystem/cy2013.png', desc: 'ø2,0mm Länge / Length 13 mm' },
+        { artNr: 'Cy2813', image: '/images/bohrsystem/cy2813.png', desc: 'ø2,8mm Länge / Length 13 mm' },
+        { artNr: 'Cy3213', image: '/images/bohrsystem/cy3213.png', desc: 'ø3,2mm Länge / Length 13 mm' },
+        { artNr: 'Cy3813', image: '/images/bohrsystem/cy3813.png', desc: 'ø3,8mm Länge / Length 13 mm' },
+        { artNr: 'Cy4213', image: '/images/bohrsystem/cy4213.png', desc: 'ø4,2mm Länge / Length 13 mm' },
+        { artNr: 'Cy5213', image: '/images/bohrsystem/cy5213.png', desc: 'ø5,2mm Länge / Length 13 mm' },
+    ];
+
+    const bohrsystemProduct = {
+        id: 'bohrsystem',
+        name: { de: 'Bohrsystem', en: 'Drilling System' }
+    };
 
     return (
-        <main className="min-h-screen bg-white font-sans text-slate-900 pb-16 md:pb-48 overflow-x-hidden">
-            {/* Legend / Info Header */}
-            <header className="pt-4 md:pt-20 px-2 md:px-6 lg:px-12 mb-6 md:mb-20 animate-fade-in">
-                <h1 className="text-lg md:text-4xl lg:text-7xl font-light text-slate-200 tracking-[-0.04em] mb-4 md:mb-12 uppercase">
-                    {sectionData.id}
+        <main className="min-h-screen bg-white font-sans text-slate-900 pb-24 px-4 md:px-12 max-w-[1200px] mx-auto">
+            {/* Header Title */}
+            <div className="pt-8 md:pt-12 mb-8 border-b border-slate-100 pb-4">
+                <h1 className="text-3xl md:text-5xl font-light text-slate-800 tracking-tight">
+                    Bohrsystem
                 </h1>
-
-                <div className="grid grid-cols-1 gap-1 px-1 bg-slate-100 border border-slate-200 rounded-lg md:rounded-2xl overflow-hidden shadow-2xl">
-                    <div className="bg-[#E8EAF6] p-3 md:p-8 lg:p-12 space-y-2 md:space-y-6">
-                        <h2 className="text-[#1B3A5A] font-black text-sm md:text-xl lg:text-2xl uppercase tracking-tighter">
-                            {title}
-                        </h2>
-                        <div className="space-y-2 md:space-y-4 text-slate-700 font-medium leading-relaxed text-[10px] md:text-sm lg:text-base">
-                            <p className="border-l-2 border-blue-600 pl-2">{description}</p>
-                            <p>{subDescription}</p>
-                            <p className="text-[9px] md:text-xs lg:text-sm italic text-slate-500">{applicationArea}</p>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            {/* Drill Sets Section */}
-            <div className="space-y-6 md:space-y-16 lg:space-y-32 mb-8 md:mb-40">
-                {drillSets.map((set, sIdx) => (
-                    <section key={sIdx} className="px-2 md:px-6 lg:px-12">
-                        <div className="flex flex-col gap-3 md:gap-8 items-start">
-                            <div className="w-full space-y-1 md:space-y-4">
-                                <h3 className="text-xs md:text-xl lg:text-3xl font-black text-slate-800 whitespace-pre-line leading-tight">
-                                    {set.title}
-                                </h3>
-                            </div>
-                            <div className="w-full bg-[#DDE2EF] rounded-xl md:rounded-3xl lg:rounded-[60px] p-3 md:p-8 lg:p-12 shadow-inner border border-white/50 flex justify-between items-end relative overflow-hidden group">
-                                <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/20 to-transparent"></div>
-                                <div className="flex justify-between items-end w-full">
-                                    {sectionData.variants?.map((v, vIdx) => (
-                                        <div key={vIdx} className="flex flex-col items-center gap-1 md:gap-4 group/drill relative z-10 transition-all hover:-translate-y-4">
-                                            <div className="relative h-16 md:h-40 lg:h-64 w-8 md:w-16 lg:w-24 flex items-center justify-center">
-                                                {v.implantImage || v.boxImage ? (
-                                                    <img
-                                                        src={v.implantImage || v.boxImage}
-                                                        alt={`Drill ø${v.diameter}`}
-                                                        className="w-full h-full object-contain filter drop-shadow-lg"
-                                                    />
-                                                ) : (
-                                                    <div className="w-0.5 md:w-1 lg:w-1.5 h-full bg-slate-300 rounded-full relative overflow-hidden shadow-sm">
-                                                        <div className="absolute top-2 md:top-6 lg:top-10 inset-x-0 h-0.5" style={{ backgroundColor: v.hex }}></div>
-                                                        <div className="absolute bottom-1 md:bottom-3 lg:bottom-4 inset-x-0 h-3 md:h-6 lg:h-10 bg-gradient-to-b from-slate-400 to-slate-200 skew-y-12"></div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <span className="text-[8px] md:text-[10px] lg:text-xs font-black text-slate-900 bg-white/60 px-1 md:px-2 lg:px-3 py-0.5 rounded-full shadow-sm border border-white">
-                                                ø{v.diameter}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                ))}
             </div>
 
-            {/* Detailed Articles Table */}
-            <section className="px-2 md:px-6 lg:px-12 border-t border-slate-100 pt-6 md:pt-16 lg:pt-32">
-                <header className="mb-4 md:mb-10 lg:mb-16">
-                    <div className="space-y-2">
-                        <h2 className="text-base md:text-2xl lg:text-4xl font-black text-slate-900 tracking-tighter uppercase italic">{lang === 'de' ? 'Artikelübersicht' : 'Article Overview'}</h2>
-                        <div className="h-0.5 md:h-1 lg:h-1.5 w-12 md:w-20 lg:w-24 bg-blue-600 rounded-full"></div>
-                    </div>
-                </header>
+            {/* Bilingual Header Subtitles */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                <div>
+                    <h2 className="text-[#1A3694] font-black text-lg md:text-xl">
+                        Das Inteligenteste Bohrsystem der Welt
+                    </h2>
+                </div>
+                <div>
+                    <h2 className="text-slate-900 font-black text-lg md:text-xl">
+                        The Inteligent drilling system in the World
+                    </h2>
+                </div>
+            </div>
 
-                <div className="space-y-4 md:space-y-10 lg:space-y-20">
-                    {categories.map((cat, cIdx) => (
-                        <div key={cIdx} className="space-y-2 md:space-y-4">
-                            <h3 className="text-[10px] md:text-base lg:text-xl font-black text-blue-900 tracking-tight flex items-center gap-1 md:gap-3 uppercase bg-slate-50 p-1.5 md:p-3 lg:p-4 rounded-lg md:rounded-xl border border-slate-100">
-                                <span className="w-0.5 md:w-1.5 h-3 md:h-6 bg-blue-600 rounded-full"></span>
-                                {cat}
-                            </h3>
-                            <div className="divide-y divide-slate-100 border border-slate-100 rounded-lg md:rounded-2xl lg:rounded-[40px] overflow-hidden bg-white shadow-xl">
-                                {sectionData.articles?.filter(a => getT(a.category) === cat).map((article, aIdx) => (
-                                    <div key={aIdx} className="flex flex-col p-2 md:p-4 lg:p-8 items-start gap-1.5 md:gap-3 hover:bg-slate-50 transition-colors group">
-                                        <div className="flex items-center gap-2 md:gap-4 w-full">
-                                            <div className="font-black text-slate-800 text-[10px] md:text-sm lg:text-lg uppercase">{article.artNr}</div>
-                                            <div className="w-12 h-8 md:w-24 md:h-14 lg:w-32 lg:h-20 bg-slate-50 rounded-md md:rounded-xl border border-slate-100 overflow-hidden shadow-sm flex-shrink-0">
-                                                {article.image ? (
-                                                    <img src={article.image} alt={article.artNr} className="w-full h-full object-contain" />
-                                                ) : (
-                                                    <div className="w-full h-full flex flex-col items-center justify-center space-y-0.5">
-                                                        <div className="w-8 md:w-16 h-0.5 bg-slate-300 rounded-full"></div>
-                                                        <div className="w-6 md:w-12 h-0.5 bg-slate-200 rounded-full"></div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div className="text-slate-600 font-medium leading-relaxed italic text-[8px] md:text-xs lg:text-sm">
-                                            {getT(article.description)}
-                                        </div>
-                                        <div className="flex justify-start mt-1">
-                                            <AddToCartButton
-                                                product={sectionData}
-                                                article={article}
-                                                className="!bg-orange-600 !text-white hover:!bg-orange-700 px-2 md:px-4 lg:px-6 py-1 md:py-2 lg:py-3 rounded-md md:rounded-lg shadow-lg shadow-orange-500/20 text-[8px] md:text-xs lg:text-sm"
-                                            />
-                                        </div>
+            {/* Bilingual Explanatory Blue Boxes */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-slate-200 rounded-lg overflow-hidden mb-12 shadow-sm">
+                {/* German Box */}
+                <div className="bg-[#D8E2F0] p-6 space-y-4 text-xs md:text-sm text-slate-900 border-b md:border-b-0 md:border-r border-slate-300">
+                    <p className="font-semibold">Schluss mit Bohrerstopper und Bohrhülsen</p>
+                    <p className="font-semibold">Nehmen Sie einfach den Bohrer, der zu der Implantatlänge passt!</p>
+                    <p className="leading-relaxed">
+                        Das AL-Techno-System bietet ein sicheres und einfaches Bohrverfahren durch die drei Bohrerlängen 10 mm, 11,5 mm und 13 mm passend zu den Implantatlängen.
+                    </p>
+                    <p className="leading-relaxed">
+                        Sie nehmen die passende Bohrerlänge und bohren bis zum Anschlag, einfacher und sicherer geht es nicht.
+                    </p>
+                </div>
+
+                {/* English Box */}
+                <div className="bg-[#D8E2F0] p-6 space-y-4 text-xs md:text-sm text-slate-900">
+                    <p className="font-semibold">No more drill stopper and drill cores</p>
+                    <p className="font-semibold">Just take the drill that fits the implant length</p>
+                    <p className="leading-relaxed">
+                        The A -Techno system offers a safe and easy drilling by the three drill length 10 mm, 11.5 mm and 13 mm to match the implant length
+                    </p>
+                    <p className="leading-relaxed">
+                        Take the Matching drill length and drill to the stop, easier and safer it gets.
+                    </p>
+                </div>
+            </div>
+
+            {/* 3 Drill Stage Diagrams */}
+            <div className="space-y-6 mb-16">
+                <div className="w-full flex justify-center">
+                    <img
+                        src="/images/bohrsystem/stage_10mm.png"
+                        alt="Bohrsystem Länge 10mm"
+                        className="w-full max-w-4xl h-auto object-contain rounded-lg shadow-sm border border-slate-200"
+                    />
+                </div>
+                <div className="w-full flex justify-center">
+                    <img
+                        src="/images/bohrsystem/stage_115mm.png"
+                        alt="Bohrsystem Länge 11,5mm"
+                        className="w-full max-w-4xl h-auto object-contain rounded-lg shadow-sm border border-slate-200"
+                    />
+                </div>
+                <div className="w-full flex justify-center">
+                    <img
+                        src="/images/bohrsystem/stage_13mm.png"
+                        alt="Bohrsystem Länge 13mm"
+                        className="w-full max-w-4xl h-auto object-contain rounded-lg shadow-sm border border-slate-200"
+                    />
+                </div>
+            </div>
+
+            {/* Order Section Heading */}
+            <div className="mb-6 pt-6 border-t border-slate-200">
+                <h3 className="text-base md:text-lg font-bold text-slate-900">
+                    Für Ihre Bestellungen Klicken sie bitte auf Cat.Nr.
+                </h3>
+            </div>
+
+            {/* TABLE 1: Special Drills (Rosenbohrer, Corticalis, Keramik) */}
+            <section className="mb-12">
+                <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
+                    {/* Header */}
+                    <div className="grid grid-cols-[100px_1fr_120px] bg-[#EAEFF7] py-2.5 px-4 text-xs md:text-sm font-bold text-[#1A3694] border-b border-slate-200">
+                        <div>Art. Nr.</div>
+                        <div className="text-center">Artikelbeschreibug</div>
+                        <div></div>
+                    </div>
+
+                    {/* Rows */}
+                    <div className="divide-y divide-slate-100 bg-white">
+                        {specialDrills.map((drill, idx) => (
+                            <div key={idx} className="grid grid-cols-[100px_1fr_120px] items-center py-3 px-4 text-xs md:text-sm">
+                                <div className="font-black text-slate-800">{drill.artNr}</div>
+                                <div className="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-4">
+                                    <div className="bg-[#D8E2F0] p-2 rounded flex items-center justify-center">
+                                        <img src={drill.image} alt={drill.artNr} className="max-h-12 w-auto object-contain" />
                                     </div>
-                                ))}
+                                    <div className="text-slate-800 font-medium whitespace-pre-line text-xs md:text-sm">
+                                        {drill.descDe}
+                                    </div>
+                                </div>
+                                <div className="flex justify-end">
+                                    <AddToCartButton
+                                        product={bohrsystemProduct}
+                                        article={{ artNr: drill.artNr, description: { de: drill.descDe } }}
+                                        className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-3 !py-1 md:!px-4 md:!py-1.5 !rounded-md !text-[11px] md:!text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
+                                    >
+                                        Jetzt bestellen!
+                                    </AddToCartButton>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </section>
 
-            <div className="px-2 md:px-6 lg:px-12 mt-8 md:mt-24 lg:mt-48">
-                <p className="text-slate-400 font-bold italic border-t border-slate-100 pt-3 md:pt-6 uppercase tracking-widest text-[8px] md:text-[10px] lg:text-sm text-center">
-                    {getT(sectionData.benefitBar)}
-                </p>
-            </div>
+            {/* TABLE 2: Konische Bohrer / Conical Drills */}
+            <section className="mb-12">
+                <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
+                    {/* Header */}
+                    <div className="grid grid-cols-[100px_1fr_120px] bg-[#EAEFF7] py-2.5 px-4 text-xs md:text-sm font-bold text-[#1A3694] border-b border-slate-200">
+                        <div>Art. Nr.</div>
+                        <div className="flex justify-between px-4">
+                            <span>konische Bohrer / Conical Drills</span>
+                            <span>Artikelbezeichnung</span>
+                        </div>
+                        <div></div>
+                    </div>
+
+                    {/* Rows */}
+                    <div className="divide-y divide-slate-100 bg-white">
+                        {conicalDrills.map((drill, idx) => (
+                            <div key={idx} className="grid grid-cols-[100px_1fr_120px] items-center py-3 px-4 text-xs md:text-sm">
+                                <div className="font-black text-slate-800">{drill.artNr}</div>
+                                <div className="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-4">
+                                    <div className="bg-[#D8E2F0] p-2 rounded flex items-center justify-center">
+                                        <img src={drill.image} alt={drill.artNr} className="max-h-12 w-auto object-contain" />
+                                    </div>
+                                    <div className="text-slate-800 font-medium text-xs md:text-sm">
+                                        {drill.desc}
+                                    </div>
+                                </div>
+                                <div className="flex justify-end">
+                                    <AddToCartButton
+                                        product={bohrsystemProduct}
+                                        article={{ artNr: drill.artNr, description: { de: `Konischer Bohrer ${drill.artNr} ${drill.desc}` } }}
+                                        className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-3 !py-1 md:!px-4 md:!py-1.5 !rounded-md !text-[11px] md:!text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
+                                    >
+                                        Jetzt bestellen!
+                                    </AddToCartButton>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* TABLE 3: Zylindrische Bohrer / Cylindrical Drills */}
+            <section className="mb-16">
+                <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
+                    {/* Header */}
+                    <div className="grid grid-cols-[100px_1fr_120px] bg-[#EAEFF7] py-2.5 px-4 text-xs md:text-sm font-bold text-[#1A3694] border-b border-slate-200">
+                        <div>Art. Nr.</div>
+                        <div className="flex justify-between px-4">
+                            <span>Zylindrische Bohrer / Cylindrical Drills</span>
+                            <span>Artikelbezeichnung</span>
+                        </div>
+                        <div></div>
+                    </div>
+
+                    {/* Rows */}
+                    <div className="divide-y divide-slate-100 bg-white">
+                        {cylindricalDrills.map((drill, idx) => (
+                            <div key={idx} className="grid grid-cols-[100px_1fr_120px] items-center py-2.5 px-4 text-xs md:text-sm">
+                                <div className="font-black text-slate-800">{drill.artNr}</div>
+                                <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] items-center gap-4">
+                                    <div className="bg-[#D8E2F0] p-1.5 rounded flex items-center justify-center">
+                                        <img src={drill.image} alt={drill.artNr} className="max-h-8 w-auto object-contain" />
+                                    </div>
+                                    <div className="text-slate-800 font-medium text-xs md:text-sm">
+                                        {drill.desc}
+                                    </div>
+                                </div>
+                                <div className="flex justify-end">
+                                    <AddToCartButton
+                                        product={bohrsystemProduct}
+                                        article={{ artNr: drill.artNr, description: { de: `Zylindrischer Bohrer ${drill.artNr} ${drill.desc}` } }}
+                                        className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-3 !py-1 md:!px-4 md:!py-1.5 !rounded-md !text-[11px] md:!text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
+                                    >
+                                        Jetzt bestellen!
+                                    </AddToCartButton>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
         </main>
     );
 }

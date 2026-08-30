@@ -74,6 +74,11 @@ export default function CatalogLayout({ children, params }) {
             items: [] // No children
         },
         {
+            title: "Prothetik",
+            id: 'prothetik',
+            items: [] // No children
+        },
+        {
             title: "Garantie + Reparatur",
             id: 'garantie-reparatur',
             items: [] // No children

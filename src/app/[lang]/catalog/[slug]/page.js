@@ -1,4 +1,4 @@
-import { getDictionary } from '@/lib/get-dictionary';
+import React from 'react';
 import Link from 'next/link';
 import { fetchCatalogSection } from '@/lib/api';
 import AddToCartButton from '@/components/AddToCartButton';
@@ -7,434 +7,264 @@ export default async function SubCatalogPage({ params }) {
     const resolvedParams = await params;
     const lang = resolvedParams?.lang || "de";
     const slug = resolvedParams?.slug;
-    const dict = await getDictionary(lang);
 
     const productData = await fetchCatalogSection(slug);
 
     if (!productData) {
         return (
-            <main className="min-h-screen bg-white">
-                <div className="bg-slate-50 border-b border-slate-200 py-8 md:py-20 px-3 md:px-12">
-                    <div className="max-w-6xl mx-auto">
-                        <nav className="flex mb-4 md:mb-6 text-[8px] md:text-sm font-bold text-slate-400 gap-1 md:gap-2 items-center uppercase tracking-widest">
-                            <Link href={`/${lang}/catalog`} className="hover:text-primary transition-colors">Katalog</Link>
-                            <span>/</span>
-                            <span className="text-slate-900">{slug}</span>
-                        </nav>
-                        <h1 className="text-2xl md:text-5xl lg:text-7xl font-black text-slate-900 tracking-tighter leading-none mb-4 md:mb-8">
-                            {slug}
-                        </h1>
-                    </div>
-                </div>
-                <section className="py-12 md:py-24 px-3 md:px-12 max-w-6xl mx-auto text-center">
-                    <h2 className="text-xl md:text-3xl font-bold text-primary mb-4 md:mb-6">Dokumentation in Vorbereitung</h2>
-                    <p className="text-slate-600 text-sm md:text-lg font-light leading-relaxed">
-                        Wir bereiten derzeit die vollständigen technischen Spezifikationen und Katalogdaten für das System vor.
-                    </p>
-                </section>
+            <main className="min-h-screen bg-white py-20 px-4 text-center">
+                <h1 className="text-3xl font-black text-slate-800 uppercase mb-4">{slug}</h1>
+                <p className="text-slate-500">Dokumentation in Vorbereitung</p>
             </main>
         );
     }
 
-    // Helper to get translated content
     const getT = (field) => {
         if (!field) return '';
         if (typeof field === 'string') return field;
         return field[lang] || field['de'] || field['en'] || '';
     };
 
-    const productName = getT(productData.name) || productData.id;
+    const productName = getT(productData.name) || slug;
     const productTitle = getT(productData.title);
-    const productDescription = getT(productData.description);
-    const productSubDescription = getT(productData.subDescription);
-    const productBenefitBar = getT(productData.benefitBar);
-    const productApplicationArea = getT(productData.applicationArea);
+    const productDesc = getT(productData.description);
+    const productSubDesc = getT(productData.subDescription);
+    const productBenefit = getT(productData.benefitBar);
+    const productAppArea = getT(productData.applicationArea);
 
-    // Group articles by category
-    const categories = Array.from(new Set(productData.articles?.map(a => getT(a.category)) || []));
+    const variants = productData.variants || [];
+    const articles = productData.articles || [];
 
-    // Special layout for SMART (One-piece system)
-    if (slug === 'smart' || productData.id === 'smart') {
-        return (
-            <main className="min-h-screen bg-white font-sans text-slate-900">
-                <div className="pt-6 md:pt-12 px-3 md:px-12 max-w-[1600px] mx-auto">
-                    <h1 className="text-xl md:text-4xl lg:text-5xl font-light text-slate-400 mb-4 md:mb-8 tracking-tight italic">
-                        <span className="font-bold text-slate-800">{productName}</span> Shop
-                    </h1>
-                </div>
-
-                <div className="bg-[#1B3A5A] text-white py-2 md:py-4 mb-6 md:mb-12">
-                    <div className="max-w-[1600px] mx-auto px-3 md:px-12">
-                        <p className="text-sm md:text-xl lg:text-2xl font-bold tracking-tight uppercase italic">{productTitle || productName}</p>
-                    </div>
-                </div>
-
-                <section className="px-3 md:px-12 max-w-[1600px] mx-auto mb-12 md:mb-24">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-16 items-start">
-                        <div className="relative rounded-xl md:rounded-3xl overflow-hidden shadow-2xl border border-slate-100 aspect-[4/5] bg-slate-50">
-                            {productData.images?.hero ? (
-                                <img
-                                    src={productData.images.hero}
-                                    alt={`${productName} Hero`}
-                                    className="w-full h-full object-contain"
-                                />
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center text-slate-200 font-black text-4xl md:text-8xl uppercase">
-                                    {productName[0]}
-                                </div>
-                            )}
-                        </div>
-                        <div className="space-y-4 md:space-y-8">
-                            <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-[#1B3A5A] uppercase tracking-tighter">{productName}</h2>
-                            <div className="prose prose-sm md:prose-lg text-slate-600 space-y-3 md:space-y-6">
-                                <p className="text-sm md:text-xl font-medium leading-relaxed">{productDescription}</p>
-                                <p className="text-[#3A608F] font-bold text-xs md:text-lg leading-relaxed">{productApplicationArea}</p>
-                                <p className="italic text-slate-500 border-l-4 border-primary pl-3 md:pl-6 py-1 md:py-2 text-xs md:text-base">{productSubDescription}</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section className="px-3 md:px-12 max-w-[1600px] mx-auto pb-16 md:pb-32">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto gap-4 md:gap-8">
-                        {productData.variants.map((variant, idx) => (
-                            <div key={idx} className="flex flex-col items-center bg-slate-50/50 p-3 md:p-8 rounded-xl md:rounded-[40px] border border-slate-100 shadow-sm group">
-                                <div className="flex flex-col items-center mb-3 md:mb-8">
-                                    <div
-                                        className="px-3 md:px-6 py-1 md:py-2 rounded-full text-white font-black text-xs md:text-xl shadow-lg mb-1 md:mb-2 flex items-center gap-1 md:gap-2 transform group-hover:scale-105 transition-transform"
-                                        style={{ backgroundColor: variant.hex || '#1B3A5A', color: (variant.hex === '#FFFFFF' || !variant.hex) ? '#64748b' : 'white' }}
-                                    >
-                                        <span className="opacity-70 text-[8px] md:text-sm">Ø</span> {variant.diameter}
-                                    </div>
-                                    <div className="h-0.5 md:h-1 w-8 md:w-12 bg-primary rounded-full"></div>
-                                </div>
-
-                                <div className="text-sm md:text-xl font-bold text-slate-800 mb-3 md:mb-8">Ø {variant.diameter}</div>
-
-                                <div className="w-full mb-4 md:mb-10 overflow-hidden rounded-lg md:rounded-2xl border border-slate-100 shadow-sm group-hover:shadow-md transition-shadow bg-white">
-                                    <div className="grid grid-cols-2 bg-primary/80 text-[8px] md:text-[10px] font-black text-white uppercase tracking-[0.1em] md:tracking-[0.2em] text-center py-1 md:py-2">
-                                        <div>Länge / Length</div>
-                                        <div>Cat.Nr.</div>
-                                    </div>
-                                    <div className="bg-white divide-y divide-slate-50">
-                                        {variant.lengths.map((len, lIdx) => {
-                                            const [displayLen, ...catNrParts] = len.split('-');
-                                            const catNr = catNrParts.length > 0 ? catNrParts.join('-').trim() : '';
-                                            return (
-                                                <div key={lIdx} className="grid grid-cols-2 text-center text-[10px] sm:text-xs md:text-sm lg:text-sm font-black text-[#1B3A5A] py-1.5 md:py-2 transition-colors hover:bg-slate-50 uppercase px-1 md:px-2">
-                                                    <div className="whitespace-nowrap tracking-tighter border-r border-slate-100">{displayLen.trim()}</div>
-                                                    <div className="whitespace-nowrap tracking-tighter text-[#3A608F]">{catNr}</div>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-
-                                <div className="text-center space-y-2 md:space-y-4">
-                                    {variant.implantImage ? (
-                                        <div className="w-16 h-24 md:w-32 md:h-44 group-hover:scale-110 transition-transform duration-700">
-                                            <img src={variant.implantImage} alt="Implant Render" className="w-full h-full object-contain drop-shadow-lg" />
-                                        </div>
-                                    ) : (
-                                        <div className="w-16 h-24 md:w-32 md:h-44 bg-slate-100 rounded-xl md:rounded-2xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center p-2 md:p-4 text-slate-400">
-                                            <div className="font-bold text-[8px] md:text-xs uppercase mb-1 md:mb-2">Technical Render</div>
-                                            <div className="w-8 h-12 md:w-16 md:h-24 bg-slate-200 rounded-lg relative overflow-hidden">
-                                                <div className="absolute top-0 inset-x-0 h-4 md:h-8 bg-[#B0BEC5]"></div>
-                                                <div className="absolute top-4 md:top-8 inset-x-0 h-0.5 md:h-1 bg-green-500/50"></div>
-                                            </div>
-                                            <div className="mt-1 md:mt-2 text-[8px] md:text-[10px] font-bold">Smart One-Piece</div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {categories.length > 0 && (
-                    <section className="px-3 md:px-12 max-w-[1600px] mx-auto mb-16 md:mb-40 border-t border-slate-100 pt-16 md:pt-32">
-                        <header className="mb-12 md:mb-24 text-center">
-                            <h2 className="text-2xl md:text-5xl font-black text-[#1B3A5A] tracking-tighter uppercase italic mb-4">
-                                {lang === 'de' ? 'Artikelübersicht' : 'Article Overview'}
-                            </h2>
-                            <div className="h-1.5 w-24 bg-primary mx-auto rounded-full"></div>
-                        </header>
-
-                        <div className="space-y-24 md:space-y-48">
-                            {categories.map((cat, cIdx) => (
-                                <div key={cIdx} className="space-y-12 md:space-y-20 animate-fade-in" style={{ animationDelay: `${cIdx * 100}ms` }}>
-                                    <div className="flex items-center gap-6">
-                                        <span className="text-3xl md:text-6xl font-black text-slate-100">0{cIdx + 1}</span>
-                                        <h3 className="text-xl md:text-3xl font-black text-[#1B3A5A] uppercase tracking-tighter">{cat}</h3>
-                                        <div className="h-px bg-slate-100 flex-1"></div>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 gap-16 md:gap-32">
-                                        {productData.articles?.filter(a => getT(a.category) === cat).map((article, aIdx) => (
-                                            <div key={aIdx} className="group relative flex flex-col items-center">
-                                                <div className="w-full bg-white rounded-3xl md:rounded-[60px] overflow-hidden shadow-2xl border border-slate-50 transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.1)] group-hover:-translate-y-2">
-                                                    <div className="relative flex items-center justify-center bg-white">
-                                                        {article.image ? (
-                                                            <img
-                                                                src={article.image}
-                                                                alt={article.artNr}
-                                                                className="w-full h-auto block"
-                                                            />
-                                                        ) : (
-                                                            <div className="flex flex-col items-center gap-4 opacity-20 py-20">
-                                                                <div className="w-24 md:w-48 h-2 md:h-4 bg-slate-200 rounded-full"></div>
-                                                                <div className="w-16 md:w-32 h-2 md:h-4 bg-slate-100 rounded-full"></div>
-                                                            </div>
-                                                        )}
-
-                                                        {/* Floating Add to Cart for Desktop */}
-                                                        <div className="absolute bottom-8 right-8 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                            <AddToCartButton
-                                                                product={productData}
-                                                                article={article}
-                                                                className="!bg-primary !text-white !px-10 !py-5 !rounded-full !text-lg !font-black !shadow-2xl hover:!scale-105 active:!scale-95 transition-all"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="bg-slate-50/50 p-6 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-slate-100">
-                                                        <div className="text-center md:text-left space-y-2">
-                                                            <div className="font-black text-slate-900 text-xl md:text-3xl tracking-tighter uppercase">
-                                                                {article.artNr}
-                                                            </div>
-                                                            <div className="text-slate-500 font-bold leading-relaxed italic text-sm md:text-xl max-w-2xl">
-                                                                {getT(article.description)}
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="md:hidden w-full">
-                                                            <AddToCartButton
-                                                                product={productData}
-                                                                article={article}
-                                                                className="!bg-[#1B3A5A] !text-white w-full py-4 rounded-2xl font-black text-sm"
-                                                            />
-                                                        </div>
-                                                        <div className="hidden md:block">
-                                                            <AddToCartButton
-                                                                product={productData}
-                                                                article={article}
-                                                                className="!bg-[#1B3A5A] !text-white px-12 py-5 rounded-3xl hover:!bg-primary transition-colors font-black text-sm uppercase tracking-widest shadow-lg"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-                )}
-
-                <footer className="max-w-[1600px] mx-auto px-3 md:px-12 pb-12 md:pb-24">
-                    <p className="text-slate-400 font-bold italic border-t border-slate-100 pt-4 md:pt-8 uppercase tracking-widest text-[10px] md:text-sm text-center">
-                        Für Ihre Bestellungen Klicken sie bitte auf die jeweilige Cat.Nr.
-                    </p>
-                </footer>
-            </main>
-        );
-    }
+    // Helper for table background colors
+    const getTableStyle = (hex) => {
+        if (hex === '#FFEB3B' || hex === '#FFD500' || hex === '#ffeb3b') {
+            return { bg: 'bg-[#FFD200]', text: 'text-black', border: 'border-[#E6BD00]' };
+        }
+        if (hex === '#F44336' || hex === '#E53935' || hex === '#f44336') {
+            return { bg: 'bg-[#FF0000]', text: 'text-white', border: 'border-[#D50000]' };
+        }
+        if (hex === '#03A9F4' || hex === '#1E88E5' || hex === '#2196F3') {
+            return { bg: 'bg-[#1E70E8]', text: 'text-white', border: 'border-[#1558B8]' };
+        }
+        if (hex === '#4CAF50' || hex === '#2E7D32' || hex === '#008000') {
+            return { bg: 'bg-[#008A00]', text: 'text-white', border: 'border-[#006600]' };
+        }
+        return { bg: 'bg-white', text: 'text-black', border: 'border-slate-300' };
+    };
 
     return (
-        <main className="min-h-screen bg-white font-sans text-slate-900">
-            <div className="pt-6 md:pt-12 px-3 md:px-12 max-w-[1600px] mx-auto">
-                <h1 className="text-xl md:text-4xl lg:text-5xl font-light text-slate-400 mb-4 md:mb-8 tracking-tight italic">
-                    <span className="font-bold text-slate-800">{productName}</span> Shop
+        <main className="min-h-screen bg-white font-sans text-slate-900 pb-20 px-4 md:px-12 max-w-[1200px] mx-auto">
+            {/* 1. SHOP TITLE */}
+            <div className="pt-6 md:pt-10 mb-6 md:mb-8">
+                <h1 className="text-3xl md:text-5xl font-light text-slate-700 tracking-tight font-sans">
+                    {productName} Shop
                 </h1>
             </div>
 
-            <section className="px-3 md:px-12 max-w-[1600px] mx-auto mb-8 md:mb-16">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
-                    <div className="relative rounded-xl md:rounded-3xl overflow-hidden shadow-2xl border border-slate-100 aspect-[4/3] bg-slate-50">
-                        {productData.images?.hero ? (
-                            <img
-                                src={productData.images.hero}
-                                alt={`${productName} Hero`}
-                                className="w-full h-full object-contain"
-                            />
-                        ) : (
-                            <div className="w-full h-full flex items-center justify-center text-slate-200 font-black text-4xl md:text-8xl uppercase">
-                                {productName[0]}
-                            </div>
-                        )}
-                    </div>
+            {/* 2. HERO BLOCK */}
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-start mb-6">
+                {/* Hero Image */}
+                <div className="w-full max-w-[450px]  bg-slate-50 rounded-lg overflow-hidden border border-slate-100 shadow-sm flex items-center justify-center">
+                    {productData.images?.hero ? (
+                        <img
+                            src={productData.images.hero}
+                            alt={`${productName} Hero`}
+                            className="w-full h-full object-cover"
+                        />
+                    ) : (
+                        <div className="text-slate-300 font-bold text-6xl uppercase">{slug[0]}</div>
+                    )}
+                </div>
 
-                    <div className="space-y-4 md:space-y-8">
-                        <div className="space-y-2 md:space-y-4">
-                            <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-[#1B3A5A] uppercase tracking-tighter leading-[0.9] flex flex-col">
-                                {productTitle && productTitle.includes(': ') ? (
-                                    <>
-                                        <span className="text-primary italic">{productTitle.split(': ')[0]}</span>
-                                        <span className="text-base md:text-2xl mt-2 md:mt-4 normal-case text-[#3A608F] leading-tight font-bold">{productTitle.split(': ')[1]}</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <span className="text-primary italic">{productName.split(' ')[0]}</span>
-                                        <span>{productName.split(' ').slice(1).join(' ')}</span>
-                                        {productTitle && <span>{productTitle}</span>}
-                                    </>
-                                )}
-                            </h2>
-                            <p className="text-sm md:text-xl lg:text-2xl text-[#3A608F] font-semibold tracking-tight leading-tight max-w-md">
-                                {productDescription}
-                            </p>
-                        </div>
-
-                        <div className="bg-slate-50 border-l-4 md:border-l-8 border-primary p-3 md:p-6 rounded-r-xl md:rounded-r-2xl">
-                            <p className="text-sm md:text-xl lg:text-2xl font-bold text-slate-800 leading-tight italic">
-                                "{productSubDescription}"
-                            </p>
-                        </div>
-                    </div>
+                {/* Hero Information */}
+                <div className="space-y-4 pt-2">
+                    <h2 className="text-[#1A3694] font-black text-xl md:text-2xl tracking-tight uppercase leading-snug">
+                        {productTitle || productName}
+                    </h2>
+                    {productDesc && (
+                        <p className="text-[#1A3694] font-medium text-base md:text-lg leading-relaxed">
+                            {productDesc}
+                        </p>
+                    )}
+                    {productSubDesc && (
+                        <p className="text-slate-900 font-bold text-sm md:text-base leading-relaxed">
+                            {productSubDesc}
+                        </p>
+                    )}
                 </div>
             </section>
 
-            <div className="bg-[#1B3A5A] py-3 md:py-6 mb-8 md:mb-16 shadow-xl relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(45deg, white 25%, transparent 25%, transparent 50%, white 50%, white 75%, transparent 75%, transparent)', backgroundSize: '20px 20px' }}></div>
-                <div className="max-w-[1600px] mx-auto px-3 md:px-12 relative z-10">
-                    <p className="text-white text-xs md:text-2xl lg:text-3xl font-black tracking-tighter flex flex-wrap justify-center lg:justify-between items-center uppercase gap-2 md:gap-4 italic text-center">
-                        {(productBenefitBar || '').split(' - ').map((benefit, i, arr) => (
-                            <span key={i} className="flex items-center">
-                                {benefit}
-                                {i < arr.length - 1 && <span className="hidden lg:inline ml-4 w-2 h-2 bg-primary rounded-full"></span>}
-                            </span>
-                        ))}
+            {/* 3. BENEFIT BAR & APPLICATION AREA */}
+            <div className="mb-10 space-y-1">
+                {productBenefit && (
+                    <p className="text-[#1A3694] font-black text-base md:text-lg">
+                        {productBenefit}
                     </p>
-                </div>
+                )}
+                {productAppArea && (
+                    <p className="text-[#1A3694] font-bold text-sm md:text-base">
+                        {productAppArea}
+                    </p>
+                )}
             </div>
 
-            <section className="px-3 md:px-12 max-w-[1600px] mx-auto pb-16 md:pb-48">
-                <div className={`grid grid-cols-1 md:grid-cols-2 ${(slug === 'safe' || productData.id === 'safe') ? 'lg:grid-cols-2 xl:grid-cols-3' : 'lg:grid-cols-2 xl:grid-cols-3'} gap-4 md:gap-6 mx-auto items-stretch max-w-7xl`}>
-                    {productData.variants.map((variant, idx) => (
-                        <div key={idx} className={`flex flex-col items-center group h-full ${(slug === 'safe' || productData.id === 'safe') ? 'bg-slate-50/50 p-3 md:p-8 rounded-xl md:rounded-[40px] border border-slate-100 shadow-sm' : ''}`}>
-                            {variant.boxImage && (
-                                <div className="w-full aspect-[4/5] bg-white rounded-xl md:rounded-3xl border border-slate-100 flex items-center justify-center p-2 md:p-4 shadow-sm group-hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-2 relative mb-3 md:mb-6">
-                                    <img
-                                        src={variant.boxImage}
-                                        alt={`Packaging for ${variant.diameter}`}
-                                        className="w-full h-full object-contain"
-                                    />
-                                    <div className="absolute -bottom-2 md:-bottom-4 right-2 md:right-4 w-8 h-8 md:w-12 md:h-12 rounded-full border-2 md:border-4 border-white shadow-lg overflow-hidden flex items-center justify-center font-black text-[8px] md:text-xs" style={{ backgroundColor: variant.hex || '#1B3A5A', color: (variant.hex === '#FFFFFF' || !variant.hex) ? '#cbd5e1' : 'white' }}>
-                                        Ø{variant.diameter}
+            {/* 4. VARIANTS OVERVIEW (PACKAGING & 3D RENDERS) */}
+            {variants.length > 0 && (
+                <section className="mb-16 pt-4 border-t border-slate-100">
+                    <div className={`grid grid-cols-${variants.length} gap-2 md:gap-4 items-end max-w-5xl mx-auto`}>
+                        {variants.map((variant, idx) => (
+                            <div key={idx} className="flex flex-col items-center text-center space-y-3">
+                                {/* Packaging Box */}
+                                {variant.boxImage && (
+                                    <div className="w-full aspect-square max-w-[350px] p-1 bg-white border border-slate-100 rounded-lg shadow-sm flex items-center justify-center">
+                                        <img
+                                            src={variant.boxImage}
+                                            alt={`Box Ø ${variant.diameter}`}
+                                            className="w-full h-full object-contain"
+                                        />
                                     </div>
-                                </div>
-                            )}
+                                )}
 
-                            <div className="flex flex-col items-center mb-3 md:mb-8">
+                                {/* Colored Diameter Badge */}
                                 <div
-                                    className="px-3 md:px-6 py-1 md:py-2 rounded-full text-white font-black text-xs md:text-xl shadow-lg mb-1 md:mb-2 flex items-center gap-1 md:gap-2 transform group-hover:scale-105 transition-transform"
-                                    style={{ backgroundColor: variant.hex || '#1B3A5A', color: (variant.hex === '#FFFFFF' || !variant.hex) ? '#64748b' : 'white' }}
+                                    className="w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center font-black text-xs md:text-sm shadow-md"
+                                    style={{
+                                        backgroundColor: variant.hex || '#FFEB3B',
+                                        color: (variant.hex === '#FFFFFF' || !variant.hex) ? '#000000' : (variant.hex === '#FFEB3B' ? '#000000' : '#FFFFFF'),
+                                        border: variant.hex === '#FFFFFF' ? '2px solid #333' : 'none'
+                                    }}
                                 >
-                                    <span className="opacity-70 text-[8px] md:text-sm">Ø</span> {variant.diameter}
+                                    Ø {variant.diameter}
                                 </div>
-                                <div className="h-0.5 md:h-1 w-8 md:w-12 bg-primary rounded-full"></div>
-                            </div>
 
-                            <div className="w-full mb-4 md:mb-10 overflow-hidden rounded-lg md:rounded-2xl border border-slate-100 shadow-sm group-hover:shadow-md transition-shadow bg-white flex flex-col flex-grow min-h-[150px] md:min-h-[300px]">
-                                <div className={`grid grid-cols-2 text-[8px] md:text-[10px] font-black text-white uppercase tracking-[0.1em] md:tracking-[0.2em] text-center py-1 md:py-2 ${(slug === 'safe' || productData.id === 'safe') ? 'bg-primary/80' : 'bg-[#1B3A5A]'}`}>
-                                    <div>Länge / Length</div>
+                                {/* 3D Render Image */}
+                                {variant.implantImage && (
+                                    <div className="w-16 h-28 md:w-24 md:h-44 flex items-center justify-center pt-2">
+                                        <img
+                                            src={variant.implantImage}
+                                            alt={`Implant Ø ${variant.diameter}`}
+                                            className="h-full w-auto object-contain drop-shadow-md"
+                                        />
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {/* 5. ORDER TABLES SECTION */}
+            <section className="mb-16 pt-8 border-t-2 border-slate-200">
+                <h3 className="text-sm md:text-base font-bold text-slate-700 mb-6">
+                    Für Ihre Bestellungen Klicken sie bitte auf Cat.Nr
+                </h3>
+
+                <div className="space-y-6 max-w-4xl">
+                    {variants.map((variant, vIdx) => {
+                        const style = getTableStyle(variant.hex);
+                        const variantArticles = articles.filter(a =>
+                            a.category?.[lang]?.includes(variant.diameter) ||
+                            a.category?.de?.includes(variant.diameter) ||
+                            a.description?.[lang]?.includes(variant.diameter) ||
+                            a.description?.de?.includes(variant.diameter) ||
+                            variant.lengths.some(l => l.includes(a.artNr))
+                        );
+
+                        const lengthItems = variant.lengths && variant.lengths.length > 0
+                            ? variant.lengths
+                            : variantArticles.map(a => `${a.artNr}`);
+
+                        return (
+                            <div key={vIdx} className="overflow-hidden rounded-lg shadow-sm border border-slate-200">
+                                {/* Table Header */}
+                                <div className="grid grid-cols-4 bg-slate-100 text-xs md:text-sm font-bold text-slate-800 py-2.5 px-4 border-b border-slate-200 text-center">
+                                    <div>Diameter</div>
+                                    <div>Lenght</div>
                                     <div>Cat.Nr.</div>
+                                    <div></div>
                                 </div>
-                                <div className="bg-white divide-y divide-slate-50 flex-grow">
-                                    {variant.lengths.map((len, lIdx) => {
-                                        const [displayLen, ...catNrParts] = len.split('-');
-                                        const catNr = catNrParts.length > 0 ? catNrParts.join('-').trim() : '';
+
+                                {/* Table Body with Variant's Distinct Color */}
+                                <div className={`${style.bg} ${style.text} divide-y divide-black/10 font-bold text-xs md:text-sm`}>
+                                    {lengthItems.map((lenStr, lIdx) => {
+                                        const [lenPart, ...catParts] = lenStr.split('-');
+                                        const displayLen = lenPart ? lenPart.trim() : '';
+                                        const catNr = catParts.length > 0 ? catParts.join('-').trim() : (variantArticles[lIdx]?.artNr || '');
+                                        const matchedArticle = articles.find(a => a.artNr === catNr) || { artNr: catNr, description: { de: `${productName} Ø ${variant.diameter} ${displayLen}` } };
+
                                         return (
-                                            <div key={lIdx} className="grid grid-cols-2 text-center text-[10px] sm:text-xs md:text-sm lg:text-sm font-black text-[#1B3A5A] py-1.5 md:py-2 transition-colors hover:bg-slate-50 uppercase px-1 md:px-2">
-                                                <div className="whitespace-nowrap tracking-tighter border-r border-slate-100">{displayLen.trim()}</div>
-                                                <div className="whitespace-nowrap tracking-tighter text-[#3A608F]">{catNr}</div>
+                                            <div key={lIdx} className="grid grid-cols-4 items-center py-2.5 px-4 text-center">
+                                                <div>{variant.diameter.includes('mm') ? variant.diameter : `${variant.diameter} mm`}</div>
+                                                <div>{displayLen}</div>
+                                                <div className="font-black tracking-wider">{catNr}</div>
+                                                <div className="flex justify-center">
+                                                    <AddToCartButton
+                                                        product={productData}
+                                                        article={matchedArticle}
+                                                        className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-3 !py-1 md:!px-5 md:!py-1.5 !rounded-md !text-[11px] md:!text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
+                                                    >
+                                                        Jetzt bestellen!
+                                                    </AddToCartButton>
+                                                </div>
                                             </div>
                                         );
                                     })}
                                 </div>
                             </div>
+                        );
+                    })}
+                </div>
+            </section>
 
-                            {variant.implantImage ? (
-                                <div className="relative w-12 h-24 md:w-24 md:h-48 group-hover:scale-110 transition-transform duration-700 mt-auto">
-                                    <img
-                                        src={variant.implantImage}
-                                        alt={`Product render ${variant.diameter}`}
-                                        className="w-full h-full object-contain drop-shadow-[0_20px_20px_rgba(0,0,0,0.15)]"
-                                    />
-                                </div>
-                            ) : null}
-                        </div>
-                    ))}
+            {/* 6. DRILL PROCEDURE CHART */}
+            <section className="mt-16 pt-12 border-t-2 border-slate-200">
+                <div className="mb-6">
+                    <h2 className="text-[#1A3694] font-black text-lg md:text-xl">
+                        Drill-Verfahren {productName}: Hängt von der Knochenstärke ab
+                    </h2>
+                    <p className="text-slate-500 font-bold text-sm md:text-base italic">
+                        drill procedure {productName}: Depending on the Bone Condition
+                    </p>
                 </div>
 
-                {categories.length > 0 && (
-                    <div className="mt-20 md:mt-40 space-y-24 md:space-y-48 border-t border-slate-100 pt-20 max-w-[1600px] mx-auto">
-                        <header className="mb-12 md:mb-24 text-center">
-                            <h2 className="text-2xl md:text-5xl font-black text-[#1B3A5A] tracking-tighter uppercase italic mb-4">
-                                {lang === 'de' ? 'Artikelübersicht' : 'Article Overview'}
-                            </h2>
-                            <div className="h-1.5 w-24 bg-primary mx-auto rounded-full"></div>
-                        </header>
-
-                        <div className="space-y-24 md:space-y-48">
-                            {categories.map((cat, cIdx) => (
-                                <div key={cIdx} className="space-y-12 md:space-y-20 animate-fade-in" style={{ animationDelay: `${cIdx * 100}ms` }}>
-                                    <div className="flex items-center gap-6">
-                                        <span className="text-3xl md:text-6xl font-black text-slate-100">0{cIdx + 1}</span>
-                                        <h3 className="text-xl md:text-3xl font-black text-[#1B3A5A] uppercase tracking-tighter">{cat}</h3>
-                                        <div className="h-px bg-slate-100 flex-1"></div>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 gap-16 md:gap-32">
-                                        {productData.articles?.filter(a => getT(a.category) === cat).map((article, aIdx) => (
-                                            <div key={aIdx} className="group relative flex flex-col items-center">
-                                                <div className="w-full bg-white rounded-3xl md:rounded-[60px] overflow-hidden shadow-2xl border border-slate-50 transition-all duration-700 group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.1)] group-hover:-translate-y-2">
-                                                    <div className="relative flex items-center justify-center bg-white">
-                                                        {article.image ? (
-                                                            <img
-                                                                src={article.image}
-                                                                alt={article.artNr}
-                                                                className="w-full h-auto block"
-                                                            />
-                                                        ) : (
-                                                            <div className="flex flex-col items-center gap-4 opacity-20 py-20">
-                                                                <div className="w-24 md:w-48 h-2 md:h-4 bg-slate-200 rounded-full"></div>
-                                                                <div className="w-16 md:w-32 h-2 md:h-4 bg-slate-100 rounded-full"></div>
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    <div className="bg-slate-50/50 p-6 md:p-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-slate-100">
-                                                        <div className="text-center md:text-left space-y-2">
-                                                            <div className="font-black text-slate-900 text-xl md:text-3xl tracking-tighter uppercase">
-                                                                {article.artNr}
-                                                            </div>
-                                                            <div className="text-slate-500 font-bold leading-relaxed italic text-sm md:text-xl max-w-2xl">
-                                                                {getT(article.description)}
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="w-full md:w-auto">
-                                                            <AddToCartButton
-                                                                product={productData}
-                                                                article={article}
-                                                                className="!bg-[#1B3A5A] !text-white w-full md:px-12 py-4 md:py-5 rounded-2xl md:rounded-3xl hover:!bg-primary transition-colors font-black text-sm uppercase tracking-widest shadow-lg"
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            ))}
+                <div className="w-full flex justify-center py-4 bg-slate-50 border border-slate-200 rounded-xl p-4">
+                    {slug === 'smart' ? (
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full text-center">
+                            <div className="flex justify-center p-2 bg-white rounded-xl shadow-sm border border-slate-100">
+                                <img
+                                    src="/images/smart/cxd.png"
+                                    alt="Smart Drill 10mm"
+                                    className="w-full h-auto max-h-[500px] object-contain"
+                                />
+                            </div>
+                            <div className="flex justify-center p-2 bg-white rounded-xl shadow-sm border border-slate-100">
+                                <img
+                                    src="/images/smart/ffg.png"
+                                    alt="Smart Drill 11.5mm"
+                                    className="w-full h-auto max-h-[500px] object-contain"
+                                />
+                            </div>
+                            <div className="flex justify-center p-2 bg-white rounded-xl shadow-sm border border-slate-100">
+                                <img
+                                    src="/images/smart/gbf.png"
+                                    alt="Smart Drill 13mm"
+                                    className="w-full h-auto max-h-[500px] object-contain"
+                                />
+                            </div>
                         </div>
-                    </div>
-                )}
-
-                <div className="mt-8 md:mt-20 border-t border-slate-100 pt-4 md:pt-8 text-slate-400 font-bold italic uppercase tracking-widest text-[10px] md:text-sm text-center">
-                    Für Ihre Bestellungen Klicken sie bitte auf die jeweilige Cat.Nr.
+                    ) : slug === 'shark' ? (
+                        <img
+                            src="/images/products/sark.jpg"
+                            alt={`Drill procedure ${productName}`}
+                            className="max-w-4xl w-full h-auto object-contain"
+                        />
+                    ) : (
+                        <img
+                            src={productData.images?.diagramImage || "/images/products/sark.jpg"}
+                            alt={`Drill procedure ${productName}`}
+                            className="max-w-4xl w-full h-auto object-contain"
+                        />
+                    )}
                 </div>
             </section>
         </main>

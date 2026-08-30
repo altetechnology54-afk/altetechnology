@@ -1,176 +1,217 @@
-import { getDictionary } from '@/lib/get-dictionary';
-import { fetchCatalogSection } from '@/lib/api';
+import React from 'react';
 import AddToCartButton from '@/components/AddToCartButton';
 
 export default async function ChirurgieOPTrayPage({ params }) {
     const resolvedParams = await params;
     const lang = resolvedParams?.lang || "de";
-    const dict = await getDictionary(lang);
 
-    const sectionData = await fetchCatalogSection('chirurgie-op-tray');
+    const trayArticles = [
+        {
+            artNr: 'OPTL',
+            image: '/images/chirurgie-op-tray/OPTL.gif',
+            titleDe: 'Op-Tray Leer inkl. Platte',
+            titleEn: 'empty Surgical Kit',
+            descDe: '',
+            descEn: ''
+        },
+        {
+            artNr: 'OPTK',
+            image: '/images/chirurgie-op-tray/OPTK.png',
+            titleDe: 'Op-Tray komplett',
+            titleEn: 'Surgical Kit completely',
+            descDe: '',
+            descEn: ''
+        },
+        {
+            artNr: 'ISM',
+            image: '/images/chirurgie-op-tray/ISM.png',
+            titleDe: 'Implantschlüssel maschinell',
+            titleEn: 'Motor Implant Driver',
+            descDe: '',
+            descEn: ''
+        },
+        {
+            artNr: 'IMS',
+            image: '/images/chirurgie-op-tray/IMS.png',
+            titleDe: 'Implantatschlüssel lang / 18mm',
+            titleEn: 'Implant Driver Hex long',
+            descDe: '',
+            descEn: ''
+        },
+        {
+            artNr: 'SRS',
+            image: '/images/chirurgie-op-tray/SRS.png',
+            titleDe: 'Einbringschlüssel',
+            titleEn: 'Prothetic Driver 1,25mm',
+            descDe: '',
+            descEn: ''
+        },
+        {
+            artNr: 'ROS1',
+            image: '/images/chirurgie-op-tray/ROS1.png',
+            titleDe: 'Rosenbohrer / Round Bar Drill ø 2,0 mm',
+            titleEn: 'Round Bar Drill ø 2,0 mm',
+            descDe: 'Länge / Length 22mm\nOberflächenglättung des Kieferkamms',
+            descEn: 'Length 22mm\nSurface smoothing of the alveolar ridge'
+        },
+        {
+            artNr: 'GS',
+            image: '/images/chirurgie-op-tray/GS.png',
+            titleDe: 'Gingivastanze für Motor/ Punch ø 4,0 - Länge / Length 23mm',
+            titleEn: 'Gingiva punch for motor ø 4.0 - Length 23mm',
+            descDe: 'Schleimhautstanze für Eingriffe ohne Lappenbildung, zum sauberen Präparieren der Gingiva auf den Durchmesser des Implantates bei Eingriffen ohne Lappenbildung.',
+            descEn: 'Mucosal punch for flapless procedures, for clean preparation of the gingiva to the diameter of the implant.'
+        },
+        {
+            artNr: 'CER3',
+            image: '/images/chirurgie-op-tray/CER3.png',
+            titleDe: 'Keramikbohrer / Ceramic drills ø 2,0 mm',
+            titleEn: 'Ceramic drills ø 2.0 mm',
+            descDe: 'außerordentlich scharf und unterliegen keinem Verschleiß',
+            descEn: 'extremely sharp with no wear'
+        },
+        {
+            artNr: 'TM20',
+            image: '/images/chirurgie-op-tray/TM20.png',
+            titleDe: 'Tiefenmesser / Depth Gauge 2,0mm',
+            titleEn: 'Depth Gauge 2.0mm',
+            descDe: '6mm, 8mm, 10mm, 11,5mm, 13mm',
+            descEn: '6mm, 8mm, 10mm, 11.5mm, 13mm'
+        },
+        {
+            artNr: 'TM28',
+            image: '/images/chirurgie-op-tray/TM28.png',
+            titleDe: 'Tiefenmesser / Depth Gauge 2,8mm',
+            titleEn: 'Depth Gauge 2.8mm',
+            descDe: '',
+            descEn: ''
+        },
+        {
+            artNr: 'BV',
+            image: '/images/chirurgie-op-tray/BV.png',
+            titleDe: 'Bohrerverlängerung',
+            titleEn: 'Drill Extension',
+            descDe: '',
+            descEn: ''
+        },
+        {
+            artNr: 'COR2',
+            image: '/images/chirurgie-op-tray/COR2.png',
+            titleDe: 'Corticalis-Bohrer / Cortical Drill',
+            titleEn: 'Cortical Drill',
+            descDe: 'Eröffnung des corticalen Bereichs',
+            descEn: 'Opening of the cortical area'
+        }
+    ];
 
-    if (!sectionData) {
-        return <div className="p-20 text-center font-bold text-slate-400 uppercase tracking-widest">Loading Surgery Kit...</div>;
-    }
-
-    const getT = (field) => {
-        if (!field) return '';
-        if (typeof field === 'string') return field;
-        return field[lang] || field['de'] || field['en'] || '';
+    const trayProduct = {
+        id: 'chirurgie-op-tray',
+        name: { de: 'Chirurgie - OP-Tray', en: 'Surgery OP-Tray' }
     };
 
-    const categories = Array.from(new Set(sectionData.articles?.map(a => getT(a.category)) || []));
-
     return (
-        <main className="min-h-screen bg-white font-sans text-slate-900 pb-16 md:pb-48">
-            <header className="pt-8 md:pt-20 px-3 md:px-12 max-w-7xl mx-auto mb-8 md:mb-20 animate-fade-in">
-                <h1 className="text-3xl md:text-5xl lg:text-7xl font-light text-slate-200 tracking-[-0.04em] mb-6 md:mb-12 uppercase italic">
-                    {sectionData.id}
+        <main className="min-h-screen bg-white font-sans text-slate-900 pb-24 px-4 md:px-12 max-w-[1200px] mx-auto">
+            {/* Header */}
+            <div className="pt-8 md:pt-12 mb-8 border-b border-slate-100 pb-4">
+                <h1 className="text-3xl md:text-5xl font-light text-slate-800 tracking-tight">
+                    Chirurgie - OP-Tray
                 </h1>
+            </div>
 
-                <div className="bg-slate-50 border border-slate-200 rounded-xl md:rounded-[40px] p-4 md:p-12 shadow-2xl relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-600/5 -skew-x-12 translate-x-1/2"></div>
-                    <div className="relative z-10 max-w-3xl">
-                        <h2 className="text-xl md:text-4xl lg:text-5xl font-black text-slate-900 uppercase tracking-tighter mb-3 md:mb-6">
-                            {getT(sectionData.title)}
-                        </h2>
-                        <p className="text-sm md:text-xl text-slate-500 font-medium leading-relaxed italic border-l-2 md:border-l-4 border-blue-600 pl-3 md:pl-6">
-                            {getT(sectionData.description)}
-                        </p>
-                    </div>
-                </div>
-            </header>
-
-            {/* Diagram Section */}
-            <section className="px-3 md:px-12 max-w-7xl mx-auto mb-16 md:mb-40">
-                <div className="bg-white rounded-xl md:rounded-[60px] border border-slate-100 shadow-2xl p-4 md:p-16 relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#1B3A5A 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
-
-                    <div className="relative z-10 flex flex-col items-center">
-                        {/* Legend for Drills at the top */}
-                        <div className="grid grid-cols-6 gap-2 md:gap-8 mb-8 md:mb-20 w-full max-w-4xl">
-                            {['2,0mm', '2,8mm', '3,2mm', '3,8mm', '4,2mm', '5,2mm'].map((size, i) => (
-                                <div key={i} className="flex flex-col items-center gap-1 md:gap-4 group">
-                                    <span className="text-[6px] md:text-[10px] font-black text-slate-400 uppercase tracking-widest">ø{size}</span>
-                                    <div className="w-0.5 h-12 md:h-32 bg-slate-200 relative group-hover:bg-blue-600 transition-colors">
-                                        <div className={`absolute top-0 inset-x-[-2px] md:inset-x-[-4px] h-1 md:h-2 rounded-full ${i === 0 ? 'bg-slate-400' : i === 1 ? 'bg-yellow-400' : i === 2 ? 'bg-red-500' : i === 3 ? 'bg-blue-500' : i === 4 ? 'bg-green-500' : 'bg-white border'}`}></div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Tray Visualization */}
-                        <div className="w-full aspect-[2/1] bg-[#F5F7FA] rounded-xl md:rounded-[60px] border-4 md:border-8 border-white shadow-inner relative flex items-center justify-center p-3 md:p-12 group overflow-hidden">
-                            {sectionData.images?.diagramImage ? (
-                                <img src={sectionData.images.diagramImage} className="w-full h-full object-contain" alt="Surgery Tray Diagram" />
-                            ) : (
-                                <>
-                                    <div className="absolute inset-x-3 md:inset-x-12 inset-y-2 md:inset-y-8 bg-slate-200/50 rounded-xl md:rounded-[40px] border-2 border-dashed border-slate-300 flex flex-col items-center justify-center space-y-2 md:space-y-4">
-                                        <p className="text-[6px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-slate-400">Surgery Tray Architecture</p>
-                                        <div className="hidden md:grid grid-cols-8 gap-4 opacity-30">
-                                            {Array.from({ length: 24 }).map((_, i) => (
-                                                <div key={i} className="w-8 h-8 rounded-full bg-white shadow-sm"></div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Floating Labels simulating image calls */}
-                                    <div className="absolute bottom-2 md:bottom-12 left-2 md:left-12 bg-white/90 backdrop-blur p-1.5 md:p-4 rounded-lg md:rounded-2xl shadow-xl border border-slate-100 animate-bounce">
-                                        <p className="text-[6px] md:text-[10px] font-black text-blue-600 uppercase tracking-widest">Tiefensonde</p>
-                                    </div>
-                                    <div className="absolute top-2 md:top-12 right-2 md:right-20 bg-white/90 backdrop-blur p-1.5 md:p-4 rounded-lg md:rounded-2xl shadow-xl border border-slate-100 animate-pulse">
-                                        <p className="text-[6px] md:text-[10px] font-black text-red-600 uppercase tracking-widest">Drehmoment-Ratsche</p>
-                                    </div>
-                                </>
-                            )}
-                        </div>
-
-                        <div className="mt-6 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12 w-full max-w-5xl">
-                            <div className="p-3 md:p-8 bg-slate-50 rounded-xl md:rounded-3xl border border-slate-100 space-y-2 md:space-y-4">
-                                <h4 className="text-[10px] md:text-sm font-black text-slate-800 uppercase tracking-widest flex items-center gap-2 md:gap-3">
-                                    <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-blue-600 rounded-full animate-ping"></span>
-                                    {lang === 'de' ? 'Tiefensonde' : 'Depth Measurements'}
-                                </h4>
-                                <p className="text-slate-500 text-[10px] md:text-sm leading-relaxed italic">
-                                    {lang === 'de' ? '8/10/11,5/13/16 ø 1,9mm/2,7mm zur Prüfung der Knochenpräparation und Sinusmembran.' : '8/10/11.5/13/16 ø 1.9mm/2.7mm for examination of bone preparation and sinus membrane.'}
-                                </p>
-                            </div>
-                            <div className="p-3 md:p-8 bg-slate-50 rounded-xl md:rounded-3xl border border-slate-100 space-y-2 md:space-y-4">
-                                <h4 className="text-[10px] md:text-sm font-black text-slate-800 uppercase tracking-widest flex items-center gap-2 md:gap-3">
-                                    <span className="w-1.5 h-1.5 md:w-2 md:h-2 bg-red-600 rounded-full"></span>
-                                    {lang === 'de' ? 'Ratsche' : 'Torque Ratchet'}
-                                </h4>
-                                <p className="text-slate-500 text-[10px] md:text-sm leading-relaxed italic">
-                                    {lang === 'de' ? 'Notwendig um prothetische Versorgungen mit einem definierten Drehmoment zu fixieren.' : 'Necessary to fix prosthetic restorations with a defined torque.'}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+            {/* Top Komplettsystem Diagram */}
+            <section className="mb-16">
+                <div className="w-full flex justify-center py-4 bg-white rounded-xl shadow-sm border border-slate-100 p-2">
+                    <img
+                        src="/images/chirurgie-op-tray/komplettsystem.png"
+                        alt="Chirurgie OP-Tray Komplettsystem"
+                        className="max-w-4xl w-full h-auto object-contain"
+                    />
                 </div>
             </section>
+
+            {/* Table Header */}
+            <div className="mb-6">
+                <h2 className="text-base md:text-lg font-bold text-slate-900">
+                    Für Ihre Bestellungen Klicken sie bitte auf Cat.Nr.
+                </h2>
+            </div>
 
             {/* Articles Table */}
-            <section className="px-3 md:px-12 max-w-7xl mx-auto">
-                <div className="space-y-8 md:space-y-24">
-                    {categories.map((cat, cIdx) => (
-                        <div key={cIdx} className="space-y-4 md:space-y-8 animate-fade-in" style={{ animationDelay: `${cIdx * 100}ms` }}>
-                            <div className="flex items-center gap-3 md:gap-6">
-                                <span className="text-xl md:text-4xl font-black text-slate-200">0{cIdx + 1}</span>
-                                <h3 className="text-sm md:text-2xl font-black text-[#1B3A5A] uppercase tracking-tighter">{cat}</h3>
-                                <div className="h-px bg-slate-100 flex-1"></div>
-                            </div>
+            <section className="mb-16">
+                <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
+                    <div className="grid grid-cols-[100px_1fr_120px] bg-[#EAEFF7] py-2.5 px-4 text-xs md:text-sm font-bold text-[#1A3694] border-b border-slate-200">
+                        <div>Art. Nr.</div>
+                        <div className="text-center font-black">Artikelbezeichnung</div>
+                        <div></div>
+                    </div>
 
-                            <div className="bg-white border border-slate-100 rounded-xl md:rounded-[48px] overflow-hidden shadow-2xl">
-                                <div className="hidden md:grid grid-cols-12 bg-slate-900 text-white p-7 text-[10px] font-black uppercase tracking-[0.3em]">
-                                    <div className="col-span-2">Cat. Nr.</div>
-                                    <div className="col-span-3 text-center">Visual</div>
-                                    <div className="col-span-5">Product Description</div>
-                                    <div className="col-span-2 text-right">Cart</div>
+                    <div className="divide-y divide-slate-100 bg-white">
+                        {trayArticles.map((art, idx) => (
+                            <div key={idx} className="grid grid-cols-[100px_1fr_120px] items-center py-3 px-4 text-xs md:text-sm hover:bg-slate-50/50 transition-colors">
+                                <div className="font-black text-slate-800">{art.artNr}</div>
+                                <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] items-center gap-4">
+                                    <div className="bg-[#D8E2F0] p-2 rounded flex items-center justify-center min-h-[70px]">
+                                        <img src={art.image} alt={art.artNr} className="max-h-16 w-auto object-contain" />
+                                    </div>
+                                    <div className="space-y-1">
+                                        <p className="font-bold text-slate-900">{art.titleDe}</p>
+                                        {art.titleEn && <p className="text-slate-500 italic text-xs">{art.titleEn}</p>}
+                                        {art.descDe && <p className="text-slate-700 text-xs whitespace-pre-line leading-relaxed">{art.descDe}</p>}
+                                    </div>
                                 </div>
-
-                                <div className="divide-y divide-slate-100">
-                                    {sectionData.articles?.filter(a => getT(a.category) === cat).map((article, aIdx) => (
-                                        <div key={aIdx} className="flex flex-col md:grid md:grid-cols-12 p-3 md:p-10 items-start md:items-center gap-2 md:gap-8 hover:bg-slate-50/80 transition-all group">
-                                            <div className="md:col-span-2 font-black text-slate-800 text-sm md:text-xl tracking-tighter uppercase">{article.artNr}</div>
-                                            <div className="md:col-span-3 flex justify-start md:justify-center">
-                                                <div className="w-20 h-14 md:w-40 md:h-24 bg-white rounded-lg md:rounded-3xl border border-slate-100 shadow-sm overflow-hidden flex items-center justify-center p-2 md:p-4 group-hover:scale-110 transition-transform duration-500">
-                                                    {article.image ? (
-                                                        <img src={article.image} alt={article.artNr} className="w-full h-full object-contain" />
-                                                    ) : (
-                                                        <div className="flex flex-col items-center gap-1 md:gap-2 opacity-20">
-                                                            <div className="w-10 md:w-16 h-1 md:h-1.5 bg-slate-400 rounded-full"></div>
-                                                            <div className="w-6 md:w-10 h-1 md:h-1.5 bg-slate-300 rounded-full"></div>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div className="md:col-span-5 text-slate-600 font-bold leading-relaxed italic text-[10px] md:text-base md:pr-12">
-                                                {getT(article.description)}
-                                            </div>
-                                            <div className="md:col-span-2 flex justify-start md:justify-end mt-2 md:mt-0">
-                                                <AddToCartButton
-                                                    product={sectionData}
-                                                    article={article}
-                                                    className="!bg-[#1B3A5A] !text-white hover:!bg-blue-600 px-3 md:px-8 py-2 md:py-4 rounded-lg md:rounded-2xl shadow-xl group-hover:!bg-primary text-xs md:text-sm"
-                                                />
-                                            </div>
-                                        </div>
-                                    ))}
+                                <div className="flex justify-end">
+                                    <AddToCartButton
+                                        product={trayProduct}
+                                        article={{ artNr: art.artNr, description: { de: `${art.titleDe} (${art.artNr})` } }}
+                                        className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-3 !py-1 md:!px-4 md:!py-1.5 !rounded-md !text-[11px] md:!text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
+                                    >
+                                        Jetzt bestellen!
+                                    </AddToCartButton>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </section>
 
-            <footer className="max-w-7xl mx-auto px-3 md:px-12 mt-16 md:mt-40">
-                <div className="p-4 md:p-12 bg-slate-50 rounded-xl md:rounded-[40px] border border-slate-100 text-center space-y-2 md:space-y-4">
-                    <p className="text-slate-400 font-black italic uppercase tracking-[0.1em] md:tracking-[0.2em] text-[10px] md:text-sm">
-                        {getT(sectionData.benefitBar)}
-                    </p>
-                    <p className="text-[8px] md:text-xs text-slate-400 font-medium">© AL-Technology Dental Implant Systems. All rights reserved.</p>
+            {/* Bottom Two Feature Panels: Tiefensonde & Drehmoment-Ratsche */}
+            <section className="space-y-8">
+                {/* 1. Tiefensonde (TS) */}
+                <div className="w-full bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                    <img
+                        src="/images/chirurgie-op-tray/TS_box.png"
+                        alt="Tiefensonde TS"
+                        className="w-full max-w-2xl h-auto object-contain"
+                    />
+                    <div className="flex flex-col items-center gap-2">
+                        <AddToCartButton
+                            product={trayProduct}
+                            article={{ artNr: 'TS', description: { de: 'Tiefensonde / Depth Measurements' } }}
+                            className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-4 !py-2 !rounded-md !text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
+                        >
+                            Jetzt bestellen!
+                        </AddToCartButton>
+                    </div>
                 </div>
-            </footer>
+
+                {/* 2. Drehmoment-Ratsche (DMR) */}
+                <div className="w-full bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                    <img
+                        src="/images/chirurgie-op-tray/DMR_box.png"
+                        alt="Drehmoment-Ratsche DMR"
+                        className="w-full max-w-2xl h-auto object-contain"
+                    />
+                    <div className="flex flex-col items-center gap-2">
+                        <AddToCartButton
+                            product={trayProduct}
+                            article={{ artNr: 'DMR', description: { de: 'Drehmoment-Ratsche / Torque Ratchet' } }}
+                            className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-4 !py-2 !rounded-md !text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
+                        >
+                            Jetzt bestellen!
+                        </AddToCartButton>
+                    </div>
+                </div>
+            </section>
         </main>
     );
 }
