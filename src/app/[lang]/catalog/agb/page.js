@@ -5,17 +5,17 @@ export default async function CatalogAgbPage({ params }) {
     const lang = resolvedParams?.lang || "de";
 
     return (
-        <main className="min-h-screen bg-white font-sans text-slate-900 pb-24 px-4 md:px-12 max-w-[1000px] mx-auto">
-            <header className="pt-8 md:pt-12 mb-8 border-b border-slate-100 pb-4">
-                <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight font-sans">
+        <main className="min-h-screen bg-white font-sans text-slate-900 pb-24 px-3 sm:px-6 md:px-12 max-w-[1000px] mx-auto">
+            <header className="pt-6 md:pt-12 mb-6 md:mb-8 border-b border-slate-100 pb-4">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl font-black text-slate-900 tracking-tight font-sans">
                     Verkaufs- und Lieferungsbedingungen
                 </h1>
             </header>
 
-            <div className="space-y-8 text-sm md:text-base text-slate-800 leading-relaxed font-normal">
+            <div className="space-y-6 md:space-y-8 text-xs sm:text-sm md:text-base text-slate-800 leading-relaxed font-normal">
                 {/* 1 */}
                 <section className="space-y-2">
-                    <h2 className="text-base md:text-lg font-bold text-slate-900">
+                    <h2 className="text-sm md:text-lg font-bold text-slate-900">
                         1. Allgemein
                     </h2>
                     <p>
@@ -25,7 +25,7 @@ export default async function CatalogAgbPage({ params }) {
 
                 {/* 2 */}
                 <section className="space-y-2">
-                    <h2 className="text-base md:text-lg font-bold text-slate-900">
+                    <h2 className="text-sm md:text-lg font-bold text-slate-900">
                         2. Vertragsabschluss, Vertragsinhalt
                     </h2>
                     <p>
@@ -35,7 +35,7 @@ export default async function CatalogAgbPage({ params }) {
 
                 {/* 3 */}
                 <section className="space-y-2">
-                    <h2 className="text-base md:text-lg font-bold text-slate-900">
+                    <h2 className="text-sm md:text-lg font-bold text-slate-900">
                         3. Preise und Zahlungen
                     </h2>
                     <p>
@@ -45,7 +45,7 @@ export default async function CatalogAgbPage({ params }) {
 
                 {/* 4 */}
                 <section className="space-y-2">
-                    <h2 className="text-base md:text-lg font-bold text-slate-900">
+                    <h2 className="text-sm md:text-lg font-bold text-slate-900">
                         4. Gefahrenübergang, Kontrolle, Reklamationspflicht
                     </h2>
                     <p>
@@ -55,7 +55,7 @@ export default async function CatalogAgbPage({ params }) {
 
                 {/* 5 */}
                 <section className="space-y-2">
-                    <h2 className="text-base md:text-lg font-bold text-slate-900">
+                    <h2 className="text-sm md:text-lg font-bold text-slate-900">
                         5. Gewährleistungen, Rückgaberecht
                     </h2>
                     <p>
@@ -65,20 +65,17 @@ export default async function CatalogAgbPage({ params }) {
 
                 {/* 6 */}
                 <section className="space-y-2">
-                    <h2 className="text-base md:text-lg font-bold text-slate-900">
+                    <h2 className="text-sm md:text-lg font-bold text-slate-900">
                         6. Ausschluss von Schadensersatz, Haftungsbegrenzung, Rücktritt
                     </h2>
                     <p>
-                        Bei von uns verschuldeter Unmöglichkeiten ist der Kunde berechtigt, vom Liefervertrag zurückzutreten bzw. Schadenersatz zu verlangen. Der Schadenersatzanspruch beschränkt sich auf 5 v. H. des bestellten Warenwertes. Bei leicht fahrlässiger Verletzung wesentlicher Vertragspflichten, begrenzen wir unsere Schadensersatzhaftung auf den vertragstypischen, vorhersehbaren Schaden. Bei leicht fahrlässiger Verletzung von nicht wesentlichen Nebenpflichten, schließen wir unsere Schadensersatzhaftung aus. In allen Fällen einer Haftung auf Schadensersatz aufgrund fahrlässiger Pflichtverletzung, gleich welcher Rechtsgrundlage, wird unsere Haftung auf Schadensersatz auf den für uns vorhersehbaren Schaden begrenzt.
-                    </p>
-                    <p>
-                        Weitergehende Schadensersatzansprüche des Kunden, gleich aus welchem Rechtsgrund, sind ausgeschlossen. Dies gilt nicht, soweit z.B. bei Personenschäden nach dem Produkthaftungsgesetz oder in Fällen des Vorsatzes, der groben Fahrlässigkeit oder des Fehlens zugesicherter Eigenschaften zwingend gehaftet wird. Sollten wir auf Schadensersatz aus Produzentenhaftung nach § 823 BGB (deliktische Anspruchsgrundlage) in Anspruch genommen werden, begrenzen wir unsere Haftung über die vorstehenden Bestimmungen hinaus auf die Ersatzleistung unseres Haftpflichtversicherers. Soweit die Versicherung nicht oder nicht vollständig eintritt, bleibt unsere Haftung, begrenzt auf die Höhe der Versicherungssumme unberührt. Ist die Versicherungssumme nicht schadens-, vertrags-, sachtypisch abgeschlossen, begrenzen wir unsere Haftung in diesen Fällen auf den schadens-, vertrags- und sachtypischen Schadensbetrag. Die vorstehenden Bestimmungen gelten nicht, wenn es sich um Schäden an Leben, Körper und Gesundheit und/oder um Ansprüche nach Produkthaftungsgesetz handelt. Die gesetzlichen Rücktrittsrechte bleiben unberührt.
+                        Bei von uns verschuldeter Unmöglichkeiten ist der Kunde berechtigt, vom Liefervertrag zurückzutreten bzw. Schadenersatz zu verlangen. Der Schadenersatzanspruch beschränkt sich auf 5 v. H. des bestellten Warenwertes. Bei leicht fahrlässiger Verletzung wesentlicher Vertragspflichten, begrenzen wir unsere Schadensersatzhaftung auf den vertragstypischen, vorhersehbaren Schaden.
                     </p>
                 </section>
 
                 {/* 7 */}
                 <section className="space-y-2">
-                    <h2 className="text-base md:text-lg font-bold text-slate-900">
+                    <h2 className="text-sm md:text-lg font-bold text-slate-900">
                         7. Eigentumsvorbehalt
                     </h2>
                     <p>
@@ -88,21 +85,11 @@ export default async function CatalogAgbPage({ params }) {
 
                 {/* 8 */}
                 <section className="space-y-2">
-                    <h2 className="text-base md:text-lg font-bold text-slate-900">
+                    <h2 className="text-sm md:text-lg font-bold text-slate-900">
                         8. Gerichtsstand
                     </h2>
                     <p>
                         Gerichtsstand für alle Streitigkeiten aus oder in Verbindung mit diesem Vertrag ist München.
-                    </p>
-                </section>
-
-                {/* 9 */}
-                <section className="space-y-2">
-                    <h2 className="text-base md:text-lg font-bold text-slate-900">
-                        9. Nebenabreden
-                    </h2>
-                    <p>
-                        Nebenabreden bedürfen der Schriftform. Sollten einzelne Bestimmungen unwirksam sein, so wird die Gültigkeit der übrigen hiervon nicht berührt. Die unwirksame Bestimmung wird durch eine möglichst gleichwertige wirksame Regelung ersetzt.
                     </p>
                 </section>
             </div>

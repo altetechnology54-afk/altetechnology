@@ -110,17 +110,17 @@ export default async function ChirurgieOPTrayPage({ params }) {
     };
 
     return (
-        <main className="min-h-screen bg-white font-sans text-slate-900 pb-24 px-4 md:px-12 max-w-[1200px] mx-auto">
+        <main className="min-h-screen bg-white font-sans text-slate-900 pb-24 px-3 sm:px-6 md:px-12 max-w-[1200px] mx-auto">
             {/* Header */}
-            <div className="pt-8 md:pt-12 mb-8 border-b border-slate-100 pb-4">
-                <h1 className="text-3xl md:text-5xl font-light text-slate-800 tracking-tight">
+            <div className="pt-6 md:pt-12 mb-6 md:mb-8 border-b border-slate-100 pb-4">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl font-light text-slate-800 tracking-tight">
                     Chirurgie - OP-Tray
                 </h1>
             </div>
 
             {/* Top Komplettsystem Diagram */}
-            <section className="mb-16">
-                <div className="w-full flex justify-center py-4 bg-white rounded-xl shadow-sm border border-slate-100 p-2">
+            <section className="mb-12 md:mb-16">
+                <div className="w-full flex justify-center py-2 md:py-4 bg-white rounded-xl shadow-sm border border-slate-100 p-2">
                     <img
                         src="/images/chirurgie-op-tray/komplettsystem.png"
                         alt="Chirurgie OP-Tray Komplettsystem"
@@ -131,51 +131,53 @@ export default async function ChirurgieOPTrayPage({ params }) {
 
             {/* Table Header */}
             <div className="mb-6">
-                <h2 className="text-base md:text-lg font-bold text-slate-900">
+                <h2 className="text-sm md:text-lg font-bold text-slate-900">
                     Für Ihre Bestellungen Klicken sie bitte auf Cat.Nr.
                 </h2>
             </div>
 
-            {/* Articles Table */}
+            {/* Articles Table (Scrollable on small screens) */}
             <section className="mb-16">
-                <div className="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
-                    <div className="grid grid-cols-[100px_1fr_120px] bg-[#EAEFF7] py-2.5 px-4 text-xs md:text-sm font-bold text-[#1A3694] border-b border-slate-200">
-                        <div>Art. Nr.</div>
-                        <div className="text-center font-black">Artikelbezeichnung</div>
-                        <div></div>
-                    </div>
+                <div className="overflow-x-auto pb-2 -mx-3 px-3">
+                    <div className="min-w-[480px] md:min-w-0 overflow-hidden rounded-lg border border-slate-200 shadow-sm">
+                        <div className="grid grid-cols-[80px_1fr_110px] sm:grid-cols-[100px_1fr_120px] bg-[#EAEFF7] py-2.5 px-3 sm:px-4 text-xs md:text-sm font-bold text-[#1A3694] border-b border-slate-200">
+                            <div>Art. Nr.</div>
+                            <div className="text-center font-black">Artikelbezeichnung</div>
+                            <div></div>
+                        </div>
 
-                    <div className="divide-y divide-slate-100 bg-white">
-                        {trayArticles.map((art, idx) => (
-                            <div key={idx} className="grid grid-cols-[100px_1fr_120px] items-center py-3 px-4 text-xs md:text-sm hover:bg-slate-50/50 transition-colors">
-                                <div className="font-black text-slate-800">{art.artNr}</div>
-                                <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] items-center gap-4">
-                                    <div className="bg-[#D8E2F0] p-2 rounded flex items-center justify-center min-h-[70px]">
-                                        <img src={art.image} alt={art.artNr} className="max-h-16 w-auto object-contain" />
+                        <div className="divide-y divide-slate-100 bg-white">
+                            {trayArticles.map((art, idx) => (
+                                <div key={idx} className="grid grid-cols-[80px_1fr_110px] sm:grid-cols-[100px_1fr_120px] items-center py-3 px-3 sm:px-4 text-xs md:text-sm hover:bg-slate-50/50 transition-colors">
+                                    <div className="font-black text-slate-800">{art.artNr}</div>
+                                    <div className="grid grid-cols-1 md:grid-cols-[160px_1fr] items-center gap-3">
+                                        <div className="bg-[#D8E2F0] p-1.5 rounded flex items-center justify-center min-h-[55px] sm:min-h-[70px]">
+                                            <img src={art.image} alt={art.artNr} className="max-h-12 sm:max-h-16 w-auto object-contain" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <p className="font-bold text-slate-900 text-xs sm:text-sm">{art.titleDe}</p>
+                                            {art.titleEn && <p className="text-slate-500 italic text-[11px] sm:text-xs">{art.titleEn}</p>}
+                                            {art.descDe && <p className="text-slate-700 text-[11px] sm:text-xs whitespace-pre-line leading-relaxed">{art.descDe}</p>}
+                                        </div>
                                     </div>
-                                    <div className="space-y-1">
-                                        <p className="font-bold text-slate-900">{art.titleDe}</p>
-                                        {art.titleEn && <p className="text-slate-500 italic text-xs">{art.titleEn}</p>}
-                                        {art.descDe && <p className="text-slate-700 text-xs whitespace-pre-line leading-relaxed">{art.descDe}</p>}
+                                    <div className="flex justify-end">
+                                        <AddToCartButton
+                                            product={trayProduct}
+                                            article={{ artNr: art.artNr, description: { de: `${art.titleDe} (${art.artNr})` } }}
+                                            className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-2.5 !py-1 sm:!px-4 sm:!py-1.5 !rounded-md !text-[10px] sm:!text-[11px] md:!text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
+                                        >
+                                            Jetzt bestellen!
+                                        </AddToCartButton>
                                     </div>
                                 </div>
-                                <div className="flex justify-end">
-                                    <AddToCartButton
-                                        product={trayProduct}
-                                        article={{ artNr: art.artNr, description: { de: `${art.titleDe} (${art.artNr})` } }}
-                                        className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-3 !py-1 md:!px-4 md:!py-1.5 !rounded-md !text-[11px] md:!text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
-                                    >
-                                        Jetzt bestellen!
-                                    </AddToCartButton>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* Bottom Two Feature Panels: Tiefensonde & Drehmoment-Ratsche */}
-            <section className="space-y-8">
+            <section className="space-y-6 md:space-y-8">
                 {/* 1. Tiefensonde (TS) */}
                 <div className="w-full bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
                     <img
@@ -183,11 +185,11 @@ export default async function ChirurgieOPTrayPage({ params }) {
                         alt="Tiefensonde TS"
                         className="w-full max-w-2xl h-auto object-contain"
                     />
-                    <div className="flex flex-col items-center gap-2">
+                    <div className="flex flex-col items-center gap-2 flex-shrink-0 w-full md:w-auto">
                         <AddToCartButton
                             product={trayProduct}
                             article={{ artNr: 'TS', description: { de: 'Tiefensonde / Depth Measurements' } }}
-                            className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-4 !py-2 !rounded-md !text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
+                            className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-6 !py-2.5 !rounded-md !text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase w-full md:w-auto"
                         >
                             Jetzt bestellen!
                         </AddToCartButton>
@@ -201,11 +203,11 @@ export default async function ChirurgieOPTrayPage({ params }) {
                         alt="Drehmoment-Ratsche DMR"
                         className="w-full max-w-2xl h-auto object-contain"
                     />
-                    <div className="flex flex-col items-center gap-2">
+                    <div className="flex flex-col items-center gap-2 flex-shrink-0 w-full md:w-auto">
                         <AddToCartButton
                             product={trayProduct}
                             article={{ artNr: 'DMR', description: { de: 'Drehmoment-Ratsche / Torque Ratchet' } }}
-                            className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-4 !py-2 !rounded-md !text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase"
+                            className="!bg-gradient-to-b !from-[#FF8C00] !to-[#E65100] hover:!from-[#FFA500] hover:!to-[#FF6F00] !text-white !px-6 !py-2.5 !rounded-md !text-xs !font-black !shadow !border !border-orange-600 active:!scale-95 transition-all !uppercase w-full md:w-auto"
                         >
                             Jetzt bestellen!
                         </AddToCartButton>
