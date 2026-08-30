@@ -3,14 +3,22 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { ChevronRight, ChevronDown } from 'lucide-react';
+import { ChevronRight, ChevronDown, Menu, X, ShoppingCart } from 'lucide-react';
 import CatalogTabs from './CatalogTabs';
+import { useCart } from '@/lib/CartContext';
 
 export default function CatalogLayout({ children, params }) {
     const pathname = usePathname();
     const [dict, setDict] = useState(null);
     const [lang, setLang] = useState('de');
-    const [expandedGroups, setExpandedGroups] = useState({ 0: true });
+    const [expandedGroups, setExpandedGroups] = useState({ 0: true, 1: true });
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+    const { cartCount, cart } = useCart();
+
+    const total = cart.reduce((sum, item) => {
+        if (item.price) return sum + item.price * item.quantity;
+        return sum;
+    }, 0);
 
     useEffect(() => {
         const pathParts = pathname.split('/');
@@ -21,14 +29,18 @@ export default function CatalogLayout({ children, params }) {
         import(`../../../dictionaries/${currentLang}.json`).then(m => setDict(m.default));
     }, [pathname]);
 
+    // Close mobile drawer on route change
+    useEffect(() => {
+        setIsMobileSidebarOpen(false);
+    }, [pathname]);
+
     // Update expansion states based on current pathname
     useEffect(() => {
         if (!dict) return;
         const subPath = pathname.split('/catalog/')[1] || '';
 
-        // Find which group contains the active path
         navGroups.forEach((group, gIdx) => {
-            if (group.items.some(item => item.id === subPath)) {
+            if (group.items && group.items.some(item => item.id === subPath)) {
                 setExpandedGroups(prev => ({ ...prev, [gIdx]: true }));
             }
         });
@@ -56,52 +68,52 @@ export default function CatalogLayout({ children, params }) {
         {
             title: "Anweisung",
             id: 'anweisung',
-            items: [] // No children
+            items: []
         },
         {
             title: "Farbleitsystem",
             id: 'farbleitsystem',
-            items: [] // No children
+            items: []
         },
         {
             title: "Bohrsystem",
             id: 'bohrsystem',
-            items: [] // No children
+            items: []
         },
         {
             title: "Chirurgie - OP-Tray",
             id: 'chirurgie-op-tray',
-            items: [] // No children
+            items: []
         },
         {
             title: "Prothetik",
             id: 'prothetik',
-            items: [] // No children
+            items: []
         },
         {
             title: "Garantie + Reparatur",
             id: 'garantie-reparatur',
-            items: [] // No children
+            items: []
         },
         {
             title: "Versand",
             id: 'versand',
-            items: [] // No children
+            items: []
         },
         {
             title: "Bezahlung",
             id: 'bezahlung',
-            items: [] // No children
+            items: []
         },
         {
             title: "Widerrufsrecht",
             id: 'widerrufsrecht',
-            items: [] // No children
+            items: []
         },
         {
             title: "AGB",
             id: 'agb',
-            items: [] // No children
+            items: []
         }
     ];
 
@@ -117,171 +129,193 @@ export default function CatalogLayout({ children, params }) {
         return pathname === targetPath;
     };
 
-    return (
-        <div className="flex min-h-[calc(100vh-80px)] bg-white relative">
-            <style jsx global>{`
-                .sidebar-header-pattern {
-                    background-image: linear-gradient(
-                        45deg,
-                        rgba(255, 255, 255, 0.1) 25%,
-                        transparent 25%,
-                        transparent 50%,
-                        rgba(255, 255, 255, 0.1) 50%,
-                        rgba(255, 255, 255, 0.1) 75%,
-                        transparent 75%,
-                        transparent
-                    );
-                    background-size: 8px 8px;
-                }
-                .text-shadow-premium {
-                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                }
-                .custom-scrollbar::-webkit-scrollbar {
-                    width: 4px;
-                }
-                .custom-scrollbar::-webkit-scrollbar-track {
-                    background: transparent;
-                }
-                .custom-scrollbar::-webkit-scrollbar-thumb {
-                    background: rgba(255, 255, 255, 0.1);
-                    border-radius: 10px;
-                }
-            `}</style>
+    // Find current active page title for mobile top bar
+    const currentSlug = pathname.split('/catalog/')[1] || '';
+    let activePageTitle = dict.catalogPage.parentTitle;
+    for (const g of navGroups) {
+        if (g.id === currentSlug && currentSlug !== '') activePageTitle = g.title;
+        if (g.items) {
+            const found = g.items.find(i => i.id === currentSlug);
+            if (found) activePageTitle = found.name;
+        }
+    }
 
-            {/* Catalog Sidebar - Always visible, narrower on mobile */}
-            <aside className="w-40 md:w-56 lg:w-80 bg-slate-900 text-white flex flex-col sticky top-0 lg:top-[80px] h-screen lg:h-[calc(100vh-80px)] border-r border-slate-800 shadow-2xl z-30 flex-shrink-0">
-                <nav className="flex-1 overflow-y-auto custom-scrollbar">
-                    {navGroups.map((group, groupIdx) => (
-                        <div key={groupIdx} className="border-b border-white/5">
-                            {/* Group with no sub-items: plain link */}
-                            {group.items.length === 0 && (
-                                <Link
-                                    href={`/${lang}/catalog/${group.id}`}
-                                    className={`block relative group transition-all hover:bg-white/5 ${isActive(group.id) ? 'bg-primary/20 border-r-4 border-primary' : ''}`}
-                                >
-                                    <div className="relative p-3 md:p-4 lg:p-6 flex justify-between items-center">
-                                        <span className={`font-bold text-[10px] md:text-xs lg:text-lg tracking-tight uppercase italic ${isActive(group.id) ? 'text-white' : 'text-slate-100'}`}>{group.title}</span>
-                                        <ChevronRight className={`w-3 h-3 md:w-4 md:h-4 ${isActive(group.id) ? 'text-white' : 'text-slate-400'}`} strokeWidth={2.5} />
-                                    </div>
-                                </Link>
-                            )}
+    // Sidebar navigation items renderer
+    const renderNavItems = () => (
+        <nav className="flex-1 overflow-y-auto custom-scrollbar">
+            {navGroups.map((group, groupIdx) => (
+                <div key={groupIdx} className="border-b border-white/5">
+                    {/* Plain Link without sub-items */}
+                    {group.items.length === 0 && (
+                        <Link
+                            href={`/${lang}/catalog/${group.id}`}
+                            className={`block relative group transition-all hover:bg-white/5 ${isActive(group.id) ? 'bg-primary/30 border-r-4 border-primary text-white' : 'text-slate-200'}`}
+                        >
+                            <div className="relative p-3.5 md:p-4 lg:p-5 flex justify-between items-center">
+                                <span className={`font-bold text-xs md:text-sm tracking-tight uppercase italic ${isActive(group.id) ? 'text-white font-black' : 'text-slate-200'}`}>
+                                    {group.title}
+                                </span>
+                                <ChevronRight className={`w-3.5 h-3.5 ${isActive(group.id) ? 'text-white' : 'text-slate-400'}`} strokeWidth={2.5} />
+                            </div>
+                        </Link>
+                    )}
 
-                            {/* Group WITH sub-items AND its own id: title is a link, sub-items always visible */}
-                            {group.items.length > 0 && group.id !== undefined && (
-                                <>
+                    {/* Group with sub-items AND its own link */}
+                    {group.items.length > 0 && group.id !== undefined && (
+                        <>
+                            <Link
+                                href={`/${lang}/catalog${group.id ? `/${group.id}` : ''}`}
+                                className={`block relative group transition-all hover:bg-white/5 ${isActive(group.id) ? 'bg-primary/30 border-r-4 border-primary' : ''}`}
+                            >
+                                <div className="relative p-3.5 md:p-4 lg:p-5 flex justify-between items-center">
+                                    <span className="font-bold text-xs md:text-sm text-slate-100 tracking-tight uppercase italic">{group.title}</span>
+                                    <ChevronDown className="w-3.5 h-3.5 text-slate-400" strokeWidth={2.5} />
+                                </div>
+                            </Link>
+                            <div className="bg-black/30">
+                                {group.items.map((item) => (
                                     <Link
-                                        href={`/${lang}/catalog${group.id ? `/${group.id}` : ''}`}
-                                        className={`block relative group transition-all hover:bg-white/5 ${isActive(group.id) ? 'bg-primary/20 border-r-4 border-primary' : ''}`}
+                                        key={item.id}
+                                        href={`/${lang}/catalog${item.id ? `/${item.id}` : ''}`}
+                                        className={`block px-5 md:px-6 lg:px-8 py-2.5 md:py-3 text-[11px] md:text-xs font-bold border-b border-white/5 transition-all duration-200 uppercase italic ${isActive(item.id)
+                                            ? 'text-white bg-primary/50'
+                                            : 'text-slate-300 hover:text-white hover:bg-white/5'
+                                        }`}
                                     >
-                                        <div className={`absolute inset-0 bg-gradient-to-r ${isActive(group.id) || group.items.some(item => isActive(item.id)) ? 'from-primary/20 to-transparent' : 'from-transparent to-transparent'}`}></div>
-                                        <div className="relative p-3 md:p-4 lg:p-6 flex justify-between items-center">
-                                            <span className="font-bold text-[10px] md:text-xs lg:text-lg text-slate-100 tracking-tight uppercase italic">{group.title}</span>
-                                            <ChevronDown className="w-3 h-3 md:w-4 md:h-4 text-slate-400 rotate-0" strokeWidth={2.5} />
-                                        </div>
+                                        {item.name}
                                     </Link>
-                                    <div className="bg-black/20">
-                                        {group.items.map((item) => (
-                                            <Link
-                                                key={item.id}
-                                                href={`/${lang}/catalog${item.id ? `/${item.id}` : ''}`}
-                                                className={`block px-4 md:px-6 lg:px-10 py-2 md:py-3 lg:py-4 text-[9px] md:text-xs lg:text-sm font-bold border-b border-white/5 transition-all duration-200 uppercase italic ${isActive(item.id)
-                                                    ? 'text-white bg-primary/40'
-                                                    : 'text-slate-400 hover:text-white hover:bg-white/5'
-                                                    }`}
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </>
-                            )}
+                                ))}
+                            </div>
+                        </>
+                    )}
 
-                            {/* Group WITH sub-items but NO own id: collapsible toggle */}
-                            {group.items.length > 0 && group.id === undefined && (
-                                <>
-                                    <button
-                                        onClick={() => toggleGroup(groupIdx)}
-                                        className="w-full relative group transition-all"
-                                    >
-                                        <div className={`absolute inset-0 bg-gradient-to-r ${group.items.some(item => isActive(item.id)) ? 'from-primary/20 to-transparent' : 'from-transparent to-transparent'}`}></div>
-                                        <div className="relative p-3 md:p-4 lg:p-6 flex justify-between items-center text-left hover:bg-white/5 transition-colors">
-                                            <span className="font-bold text-[10px] md:text-xs lg:text-lg text-slate-100 tracking-tight uppercase italic">{group.title}</span>
-                                            <ChevronDown
-                                                className={`w-3 h-3 md:w-4 md:h-4 text-slate-400 transition-transform duration-300 ${expandedGroups[groupIdx] ? 'rotate-0' : '-rotate-90'}`}
-                                                strokeWidth={2.5}
-                                            />
-                                        </div>
-                                    </button>
-                                    <div className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedGroups[groupIdx] ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                                        <div className="bg-black/20">
-                                            {group.items.map((item) => (
-                                                <Link
-                                                    key={item.id}
-                                                    href={`/${lang}/catalog${item.id ? `/${item.id}` : ''}`}
-                                                    className={`block px-4 md:px-6 lg:px-10 py-2 md:py-3 lg:py-4 text-[9px] md:text-xs lg:text-sm font-bold border-b border-white/5 transition-all duration-200 uppercase italic ${isActive(item.id)
-                                                        ? 'text-white bg-primary/40'
-                                                        : 'text-slate-400 hover:text-white hover:bg-white/5'
-                                                        }`}
-                                                >
-                                                    {item.name}
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </>
-                            )}
+                    {/* Collapsible toggle group */}
+                    {group.items.length > 0 && group.id === undefined && (
+                        <>
+                            <button
+                                onClick={() => toggleGroup(groupIdx)}
+                                className="w-full relative group transition-all text-left"
+                            >
+                                <div className={`relative p-3.5 md:p-4 lg:p-5 flex justify-between items-center ${group.items.some(item => isActive(item.id)) ? 'bg-gradient-to-r from-[#2b7cb7] to-[#1e5a87] text-white' : 'hover:bg-white/5 text-slate-100'}`}>
+                                    <span className="font-black text-xs md:text-sm tracking-tight uppercase italic">{group.title}</span>
+                                    <ChevronDown
+                                        className={`w-3.5 h-3.5 text-slate-200 transition-transform duration-300 ${expandedGroups[groupIdx] ? 'rotate-0' : '-rotate-90'}`}
+                                        strokeWidth={2.5}
+                                    />
+                                </div>
+                            </button>
+                            <div className={`overflow-hidden transition-all duration-300 ease-in-out ${expandedGroups[groupIdx] ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                                <div className="bg-black/30">
+                                    {group.items.map((item) => (
+                                        <Link
+                                            key={item.id}
+                                            href={`/${lang}/catalog${item.id ? `/${item.id}` : ''}`}
+                                            className={`block px-5 md:px-6 lg:px-8 py-2.5 md:py-3 text-[11px] md:text-xs font-bold border-b border-white/5 transition-all duration-200 uppercase italic ${isActive(item.id)
+                                                ? 'text-white bg-[#1e70e8] font-black'
+                                                : 'text-slate-300 hover:text-white hover:bg-white/5'
+                                            }`}
+                                        >
+                                            {item.name}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+                        </>
+                    )}
+                </div>
+            ))}
+
+            {/* Warenkorb / Cart Status */}
+            <div className="mx-3 my-4 p-4 bg-blue-900/40 rounded-2xl border border-white/10 backdrop-blur-md">
+                <h4 className="text-slate-400 font-black text-xs uppercase italic tracking-tighter mb-2">Warenkorb</h4>
+                <div className="space-y-2">
+                    <div className="flex justify-between items-center text-xs font-bold text-slate-300">
+                        <span>{cartCount} {cartCount === 1 ? 'Produkt' : 'Produkte'}</span>
+                        {total > 0 && <span className="text-white font-black">{total.toFixed(2)} EUR</span>}
+                    </div>
+                    <Link href={`/${lang}/cart`} className="flex items-center gap-1 text-[11px] font-black uppercase text-primary hover:text-white transition-colors justify-end mt-2">
+                        <ShoppingCart className="w-3.5 h-3.5" />
+                        Zum Warenkorb »
+                    </Link>
+                </div>
+            </div>
+
+            {/* Certifications footer */}
+            <div className="px-4 py-4 space-y-3 mt-auto">
+                <div className="flex justify-between items-center opacity-40">
+                    {['ISO\n9001', 'ISO\n13485', 'CE\n0473'].map((label) => (
+                        <div key={label} className="w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-[7px] font-black text-center leading-none whitespace-pre-line text-white">
+                            {label}
                         </div>
                     ))}
+                </div>
+                <div className="opacity-40 text-center">
+                    <Link href={`/${lang}/contact`} className="block text-[9px] uppercase tracking-widest font-black hover:text-white transition-colors text-slate-300">
+                        {dict.navigation.contact}
+                    </Link>
+                </div>
+            </div>
+        </nav>
+    );
 
-                    {/* Warenkorb / Cart Status - Matching old site */}
-                    <div className="mx-2 md:mx-4 lg:mx-6 my-4 md:my-6 lg:my-8 p-3 md:p-4 lg:p-6 bg-blue-900/40 rounded-xl lg:rounded-3xl border border-white/10 backdrop-blur-md">
-                        <h4 className="text-slate-400 font-black text-[10px] md:text-sm lg:text-xl uppercase italic tracking-tighter mb-2 md:mb-4">Warenkorb</h4>
-                        <div className="space-y-2">
-                            <div className="flex justify-between items-center">
-                                <span className="text-[8px] md:text-[10px] lg:text-xs font-bold text-slate-300">0 Produkte</span>
-                                <span className="text-[8px] md:text-[10px] lg:text-xs font-black text-white">- 0.00 EUR</span>
-                            </div>
-                            <Link href={`/${lang}/cart`} className="block text-[8px] lg:text-[10px] font-black uppercase text-primary hover:text-white transition-colors text-right mt-2">
-                                Zum Warenkorb &raquo;
-                            </Link>
+    return (
+        <div className="flex flex-col lg:flex-row min-h-[calc(100vh-80px)] bg-white relative">
+            <style jsx global>{`
+                .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+                .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+                .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+            `}</style>
+
+            {/* 📱 Mobile & Tablet Sticky Navigation Bar (< 1024px) */}
+            <div className="lg:hidden sticky top-0 z-40 bg-[#0f2744] text-white px-3 py-2.5 flex items-center justify-between border-b border-slate-800 shadow-md">
+                <button
+                    onClick={() => setIsMobileSidebarOpen(true)}
+                    className="flex items-center gap-2 bg-[#1b4e78] hover:bg-[#256ca6] text-white px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider transition-colors shadow-sm"
+                >
+                    <Menu className="w-4 h-4" />
+                    <span>Katalog Menü</span>
+                </button>
+                <div className="text-[11px] font-bold text-slate-300 truncate max-w-[190px] uppercase italic text-right">
+                    {activePageTitle}
+                </div>
+            </div>
+
+            {/* 📱 Mobile Slide-over Drawer (< 1024px) */}
+            {isMobileSidebarOpen && (
+                <div className="lg:hidden fixed inset-0 z-50 flex">
+                    {/* Backdrop */}
+                    <div
+                        className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+                        onClick={() => setIsMobileSidebarOpen(false)}
+                    />
+
+                    {/* Drawer Content */}
+                    <div className="relative w-72 max-w-[85vw] bg-[#0f2744] text-white h-full flex flex-col shadow-2xl z-10 animate-in slide-in-from-left duration-300">
+                        {/* Drawer Header */}
+                        <div className="p-4 border-b border-white/10 flex justify-between items-center bg-[#0a1c32]">
+                            <span className="font-black text-sm uppercase tracking-wider text-slate-100">Katalog Navigation</span>
+                            <button
+                                onClick={() => setIsMobileSidebarOpen(false)}
+                                className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
                         </div>
+
+                        {/* Navigation Items */}
+                        {renderNavItems()}
                     </div>
+                </div>
+            )}
 
-                    <div className="px-3 md:px-6 lg:px-10 py-4 md:py-6 lg:py-8 space-y-4 md:space-y-6 mt-auto hidden md:block">
-                        {/* ISO/CE Logos - Matching old site */}
-                        <div className="flex justify-between items-center opacity-40 grayscale group-hover:grayscale-0 transition-all">
-                            <div className="flex flex-col items-center">
-                                <div className="w-8 md:w-10 lg:w-12 h-8 md:h-10 lg:h-12 rounded-full border-2 border-white flex items-center justify-center text-[6px] md:text-[7px] lg:text-[8px] font-black text-center leading-none">
-                                    ISO<br />9001
-                                </div>
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <div className="w-8 md:w-10 lg:w-12 h-8 md:h-10 lg:h-12 rounded-full border-2 border-white flex items-center justify-center text-[6px] md:text-[7px] lg:text-[8px] font-black text-center leading-none">
-                                    ISO<br />13485
-                                </div>
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <div className="w-8 md:w-10 lg:w-12 h-8 md:h-10 lg:h-12 rounded-full border-2 border-white flex items-center justify-center text-[7px] md:text-[8px] lg:text-[10px] font-black text-center leading-none">
-                                    CE<br />0473
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="space-y-2 opacity-30 hidden lg:block">
-                            <Link href={`/${lang}/contact`} className="block text-[10px] uppercase tracking-widest font-black hover:text-white transition-colors">
-                                {dict.navigation.contact}
-                            </Link>
-                            <Link href={`/${lang}/legal`} className="block text-[10px] uppercase tracking-widest font-black hover:text-white transition-colors">
-                                {dict.navigation.legal}
-                            </Link>
-                        </div>
-                    </div>
-                </nav>
+            {/* 💻 Desktop Sidebar (>= 1024px) */}
+            <aside className="hidden lg:flex w-72 xl:w-80 bg-[#0f2744] text-white flex-col sticky top-0 lg:top-[80px] h-screen lg:h-[calc(100vh-80px)] border-r border-slate-800 shadow-2xl z-30 flex-shrink-0">
+                {renderNavItems()}
             </aside>
 
-            {/* Main Content Area */}
-            <div className="flex-1 flex flex-col min-h-screen relative">
-                <div className="flex-1">
+            {/* 📄 Main Content Area (Gets 100% width on mobile) */}
+            <div className="flex-1 w-full min-w-0 flex flex-col min-h-screen relative">
+                <div className="flex-1 w-full min-w-0">
                     <CatalogTabs lang={lang} dict={dict}>
                         {children}
                     </CatalogTabs>
